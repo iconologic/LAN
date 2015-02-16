@@ -1,0 +1,187 @@
+
+.markets__projects {}
+
+.markets__projects-header {
+  display:block;
+  margin:0;
+  padding:10px 20px 15px;
+  color:#f6f6f6;
+  background-color:#353a42;  
+}
+.markets__projects-container {
+  background-color:#4f5261;
+}
+.markets__projects-caption {
+  color:#e7e6e1;
+  background-color:#4f5261;
+  font-size:.80em;
+  padding:5px 15px 30px;
+}
+
+.col-responsive {
+  .markets__projects-caption.img-caption {
+    color: #ffffff;
+  } 
+}
+
+
+.markets__graphs {
+
+  background: #ffffff; 
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto !important;
+    margin: 0 auto;    
+  }
+
+  .small img {
+    @media (max-width: @screen-sm-min) {      
+      max-width: 75%;
+    }
+  }
+}
+.markets__graphs-caption > small {
+  padding-left:15px;
+  padding-right:15px;
+  display:block;
+  margin-top:1.5em;
+}
+
+.markets__graphs-caption {
+  font-size: 14px;
+  padding: 0 18px;
+  line-height: 19px;
+
+  @media (max-width: @screen-xs-max) {      
+      padding-bottom: 30px;
+    }
+
+
+}
+
+
+.markets__stats {
+  vertical-align: middle;
+
+  > div[class*='col-'] {
+    @media only screen and (min-width: 660px) and (max-width: @screen-xs-max) {
+      width: 50% !important;
+    }
+  }  
+}
+
+.market-title{
+  background-color: @cararra;
+  padding: 40px 0;
+
+  p{
+    padding:0 15px;
+  }
+}
+
+.page__intro {
+
+  padding:1.5em 0 1.5em;  
+  color:#ffffff;     
+
+  > * {
+    position: relative;
+    z-index: 2;
+    font-size:1.2em;
+    line-height:1.25;
+    margin-bottom:1.25em;
+    font-family: 'Roboto Thin', sans-serif;
+  }
+  
+  .dropcap {
+    position: absolute;
+    z-index:-1;
+    margin-left:-75px;
+    font-family: 'Roboto Thin', sans-serif;
+    font-size:12em;
+    color:#00aeef;
+    font-weight: 300;
+    margin-top:-24px;
+    padding:.25em 0 .25em;
+  }
+}  
+
+
+//market btns top of market page
+
+.market-btns{
+
+  padding-top: 30px;
+
+    @media (max-width: @screen-xs-max) {  
+      li{
+        
+        padding-bottom: 15px;
+
+         a{   
+              font-weight: bold;
+              height: 50px;
+              width:180px;
+              padding-top: 13px;
+            
+
+          }
+
+        }
+    }
+
+}
+
+
+//remove row padding on mobile
+
+.related-row{
+
+  @media (max-width: @screen-xs-max) {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+//Leadership
+
+.leadership{
+  background-color: #fff;
+
+}
+
+.market__title{
+
+  @media (max-width: @screen-sm-max) {
+    padding: 25px 15px 0 15px;
+    margin: 0;
+  }
+
+}
+
+
+//Outlook section
+.outlook-container{
+    padding-bottom: 0;
+
+      @media (min-width: @screen-md-min) {
+      padding-bottom: 60px;
+    }
+  }
+
+.market-outlook{
+  top:0;
+
+  //container
+  &-container{
+    padding-bottom: 30px;
+
+    //container A TAGS
+    a{
+      color:#222222;
+    }
+  }
+}
+

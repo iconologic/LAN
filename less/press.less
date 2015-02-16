@@ -1,0 +1,184 @@
+.press-container{
+  @media (max-width: @screen-xs-max) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+}
+
+.press {	
+
+  // padding-top: 55px;
+  margin-top: 37px;
+
+	.panel {
+		position: relative;
+		margin-bottom: 3em;
+		border: none;
+		background-color: #ffffff;
+    @media (max-width: 767px) {
+      background-color: transparent;
+    }
+	}
+
+  .post {
+    margin-left:77px;
+    margin-right: 5px;
+
+    @media (max-width: 767px) {
+      margin-left: auto;
+      margin-right: auto;
+    }  
+  }  
+
+  h2 {
+    color: @trout;
+    margin-bottom: 18px;
+
+    @media (max-width: 767px) {
+      text-align: center;
+    }  
+  }
+}
+
+.press__date {
+  position: absolute;
+  left: -77px;
+  top: 0;
+  width: 77px;
+  height: 77px;
+  padding-bottom: .5em;
+  overflow: hidden;
+  color: #ffffff;
+  background: @cerulean;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+
+  @media (max-width: 767px) {
+      left:0px;
+    }  
+
+
+  > span {
+  	display: block;
+  	font-size: 2.5em;
+  	line-height: 1;
+  }
+
+  .month {
+  	diplay: block;
+  	font-size:.6em;
+  	padding-right: 3px;
+  	padding-left: 3px;
+  }
+
+  .day {
+  	
+  }
+}
+
+.press__title {
+	margin: 0 0 20px;
+	font-size:1.2em;
+	font-family: 'Exo 2 Semi Bold', sans-serif;
+}
+
+
+.press__image {
+	padding: 0;
+
+  @media (max-width: 767px) {
+    margin-left: auto;
+    margin-right: auto;
+    float:none;
+    max-width: 500px;
+    background: #fff;
+
+    img{
+      float:none !important;
+    }
+  }
+
+
+}
+
+
+.press__body {
+  
+  p{
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    padding: 15px 15px 0 15px;
+    max-width: 500px;
+    margin-right: auto;
+    margin-left:auto;
+    float:none;
+    background-color: #fff;
+    
+    p{
+      margin-bottom: 10px;
+    }
+  }
+
+}
+
+
+
+.featured-press .press__date {
+  background: @brick;  
+}
+
+
+
+
+
+
+.posts {
+  hr {
+    border-color: #bbbbbb;
+    background-color: #bbbbbb;
+  }
+}
+
+.post {
+  font-size: 80%;
+  line-height:1.4;
+
+  a {
+  	color: @trout;
+  }
+
+  .btn-default {
+    margin-top: 1.5em;
+    color: #ffffff;
+    background-color: @cerulean;
+    border-color: @cerulean;
+  }
+}
+
+
+.posts-pagination {
+  margin: 3em 0;
+  padding: 0;
+
+  li {
+    display: block;
+    float: left;
+    margin: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-right: 1px solid #bbbbbb;
+
+    &:last-child {border: none;}
+
+    a {
+      display: block;      
+      
+      &.active {
+        color: @brick;
+      }  
+    }
+  }
+}

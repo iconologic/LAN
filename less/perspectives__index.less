@@ -1,0 +1,480 @@
+
+////////////////////////////////////
+//PERSPECTIVE HELPERS
+////////////////////////////////////
+.gradient__bottom{
+  width: 100%;
+  position: absolute;
+  bottom:0;
+  background: linear-gradient(to bottom,rgba(0,0,0,0)0,rgba(0,0,0,.85)100%);
+  background: -webkit-linear-gradient(to bottom,rgba(0,0,0,0)0,rgba(0,0,0,.85)100%);
+  background: -moz-linear-gradient(to bottom,rgba(0,0,0,0)0,rgba(0,0,0,.85)100%);
+  background: -o-linear-gradient(to bottom,rgba(0,0,0,0)0,rgba(0,0,0,.85)100%);
+  background: -ms-linear-gradient(to bottom,rgba(0,0,0,0)0,rgba(0,0,0,.85)100%);
+  height:80%;
+  transition: all .25s linear;
+  opacity: 1;
+}
+
+
+
+.red{
+  background: @brick;
+  -webkit-transition: background .25s ease-in-out;
+  -moz-transition: background .25s ease-in-out;
+  -ms-transition: background .25s ease-in-out;
+  -o-transition: background .25s ease-in-out;
+  transition: background .25s ease-in-out;
+
+  &:hover{
+    background: #B02F1E;
+  }
+
+}
+
+.grey{
+  background: @mako;
+  -webkit-transition: background .25s ease-in-out;
+  -moz-transition: background .25s ease-in-out;
+  -ms-transition: background .25s ease-in-out;
+  -o-transition: background .25s ease-in-out;
+  transition: background .25s ease-in-out;
+
+  &:hover{
+    background: @trout;
+  }
+
+
+}
+
+////////////////////////////////////
+//PERSPECTIVE HEADER
+////////////////////////////////////
+
+.has_overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.perspective__header{
+  background-color:#000000;
+}
+
+.perspective__header--img{
+  opacity: .65;
+}
+
+.perspective__header--title {
+
+  font-weight: normal;
+  font-size: 2em;
+  margin-top: 55px;
+  margin-bottom: 20px;
+  color:#fff;
+
+  ///////////////MQ LARGE/////////////////////
+  @media all and (min-width: @screen-md-min) {
+
+    font-size: 3em;
+
+  } //end MQ LARGE
+}
+
+.perspective__header--blurb{
+
+  p{
+    font-family: 'Roboto Light', 'Helvetica', arial, sans-serif;
+  }
+
+  ///////////////MQ MEDIUM/////////////////////
+  @media all and (min-width: @screen-md-min) {
+    width:95%;
+    p{
+      font-size: 1em;
+    }
+  } //end MQ MEDIUM
+
+  ///////////////MQ LARGE/////////////////////
+  @media all and (min-width: @screen-lg-min) {
+    width:75%;
+    p{
+      font-size: 1em;
+    }
+  } //end MQ LARGE
+
+  ///////////////MQ X-LARGE/////////////////////
+  @media all and (min-width: 1650px) {
+    width:50%;
+  } //end MQ X-LARGE
+
+
+
+}
+
+.row-block {
+  margin-top: 1em;
+  padding-top: 1em;
+  padding-bottom: 3em;
+  border-bottom: 1px solid #c5c6cb
+}
+
+////////////////////////////////////
+//PERSPECTIVE TITLE DIVIDERS
+////////////////////////////////////
+
+.featured{
+  padding:0;
+  margin:0 auto;
+  max-width: 1983px;
+
+   //  PERSPECTIVE INDEX
+
+  .perspectives__title {
+    padding: 15px 20px 0;
+    position: relative;
+    color: @cerulean;
+    height: 100px;
+    background:@quillGray;
+
+    h2{
+      font-family: 'Exo 2 Semi Bold', sans-serif;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    a{
+      color:@mako;
+      display: block;
+      position: absolute;
+      top:40%;
+      right:20px;
+
+      font-weight: 600;
+      font-family: 'Exo 2 Medium', sans-serif;
+    }
+
+    ///////////////MQ SMALL/////////////////////
+    @media all and (min-width: @screen-sm-min) {
+      padding: 30px 40px 0;
+      height: 135px;
+      
+      h2{
+        font-size: 2.5em;
+
+      }
+
+      a{
+        color:@mako;
+        display: block;
+        position: absolute;
+        top:45%;
+        right:40px;
+
+        text-transform: uppercase;
+
+      }
+    } //end MQ SMALL
+
+    ///////////////MQ MEDIUM/////////////////////
+    @media all and (min-width: @screen-md-min) {
+      padding: 20px 40px 0;
+      height: 115px;
+
+      a{
+        top:42%;
+        right:40px;
+      }
+
+    } //end MQ MEDIUM
+
+    ///////////////MQ LARGE/////////////////////
+    @media all and (min-width: @screen-lg-min) {
+      padding: 50px 80px 0;
+      height: 175px;
+
+      a{
+        top:45%;
+        right:80px;
+      }
+    } //end MQ LARGE
+
+  }//end perspectives title
+
+  //END PERSPECTIVES INDEX
+
+} //end featured
+
+@media all and (@screen-md-min){
+
+  .featured{
+    padding:0;
+  }
+
+}
+
+@media all and (@screen-lg-min){
+
+  .featured{
+    padding:0 10%;
+
+  }
+
+
+} //end mq large
+
+
+////////////////////////////////////
+//PERSPECTIVE GRID
+////////////////////////////////////
+
+//MAIN CONTAINER
+.featured__wrapper{
+  background: #000;
+  height: auto;
+  padding:0;
+  margin:0 auto;
+  max-width: 1983px;
+
+  a{
+    opacity: 1;
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    text-indent: -9099px;
+    -webkit-transition: background .25s ease-in-out;
+    -moz-transition: background .25s ease-in-out;
+    -ms-transition: background .25s ease-in-out;
+    -o-transition: background .25s ease-in-out;
+    transition: background .25s ease-in-out;
+  }
+}
+
+////////////////////////////////////
+//FEATURED STORIES
+////////////////////////////////////
+
+
+.featured__story--wrapper{
+  padding:0;
+  position: relative;
+  background: #878787;
+
+  -webkit-transition: background .25s ease-in-out;
+  -moz-transition: background .25s ease-in-out;
+  -ms-transition: background .25s ease-in-out;
+  -o-transition: background .25s ease-in-out;
+  transition: background .25s ease-in-out;
+//  transition: all .25s linear;
+
+
+  .featured__story--title{
+    position:absolute;
+    //       background: transparent;
+    bottom:0;
+    left:0;
+    padding: 2em;
+    color:white;
+  }
+
+  .no-img{
+    position:relative;
+  }
+
+  .featured-story{
+    height: 100%;
+  }
+
+  &:hover {
+
+    background: #A6A6A6;
+
+
+    img{
+      opacity: 1;
+    }
+
+    .gradient__bottom{
+      opacity: .7;
+    }
+
+  }//end HOVER
+  
+
+
+
+  ///////////////MQ XS/////////////////////
+  @media all and (max-width: @screen-xs-min) {
+    .featured__story--title{
+      padding: 1em;
+      h3{
+        font-size:1.5em;
+      }
+    }
+
+  } //end MQ XS
+
+  ///////////////MQ SMALL/////////////////////
+  @media all and (min-width: @screen-sm-min) {
+    .featured__story--title{
+
+      h3{
+        font-size:2.8em;
+      }
+    }
+
+  } //end MQ SMALL
+
+
+  ///////////////MQ MEDIUM/////////////////////
+  @media all and (min-width: @screen-md-min) {
+    .featured__story--title{
+
+      h3{
+        font-size:2em;
+      }
+    }
+
+  } //end MQ MEDIUM
+
+  ///////////////MQ LARGE/////////////////////
+  @media all and (min-width: @screen-lg-min) {
+    .featured__story--title{
+
+      h3{
+        font-size:2em;
+      }
+    }
+
+  } //end MQ LARGE
+
+  ///////////////MQ XL/////////////////////
+  @media all and (min-width: 1600px) {
+    .featured__story--title{
+
+      h3{
+        font-size:2.8em;
+      }
+    }
+
+  } //end XL
+
+} //end story container
+
+////////////////////////////////////
+//SUPPORT STORIES
+////////////////////////////////////
+
+.support__story--container{
+  background: #000;
+  padding:0;
+
+  .support__story{
+    padding:0;
+    margin:0;
+    position: relative;
+
+    -webkit-transition: background .25s ease-in-out;
+    -moz-transition: background .25s ease-in-out;
+    -ms-transition: background .25s ease-in-out;
+    -o-transition: background .25s ease-in-out;
+    transition: background .25s ease-in-out;
+
+    .gradient__bottom{
+      width:100%;
+      height: 75%;
+      background: linear-gradient(to bottom,rgba(0,0,0,0)0,rgba(0,0,0,.95)100%);
+    }
+
+    &:hover {
+
+      img{
+        opacity: 1;
+      }
+
+      .gradient__bottom{
+        opacity: .7;
+      }
+
+
+    }//end HOVER
+
+  }//end support story
+
+  .story__title--support {
+    position:absolute;
+    background: transparent;
+    bottom:0;
+    left:0;
+    padding: 2em 2.5em;
+    color:white;
+    text-align: center;
+    width:100%;
+
+    font-family: 'Exo 2 Medium', sans-serif;
+    font-size: 1.25em;
+    line-height: 1.4;
+
+  }
+
+  .img__gradient--container{
+    position:relative;
+    height:100%;
+    width:100%;
+  }
+
+  ///////////////MQ SMALL/////////////////////
+  @media all and (min-width: @screen-sm-min) {
+    padding:0 0;
+
+    .support__story{
+      padding:0;
+
+    }
+
+
+  } //end MQ SMALL
+
+  ///////////////MQ MEDIUM/////////////////////
+  @media all and (min-width: @screen-md-min) {
+    padding:0 0;
+
+    .support__story{
+      padding:0;
+      margin:0;
+    }
+
+    .story__title--support{
+      padding: 2em 2.5em 1em 2.5em;
+    }
+  } //end MQ MEDIUM
+
+} //end SUPPORT CONTAINER
+
+
+////////////////////////////////////
+//SOCAIL CONTAINER CONTENT BLOCK
+////////////////////////////////////
+
+.social-container{
+  padding: 0;
+  margin:0 auto;
+  max-width: 1983px;
+  min-height: 292px;
+
+  .social-img{
+    min-width: 712px;
+    min-height: 292px;
+    width:100%;
+  }
+
+  ///////////////MQ LARGE/////////////////////
+  @media all and (min-width: @screen-sm-min) {
+
+//  left:0;
+
+  } //end MQ LARGE
+}
+

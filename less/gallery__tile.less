@@ -1,0 +1,44 @@
+// media queries used in this stylesheet
+/*
+@media (min-width:970px)  // for .gallery__tile
+*/
+
+.gallery__tile {
+  width:99.98%;
+  margin:1.5em auto;
+  background:#ffffff !important;
+  height:437px;
+}
+.gallery__tile img {
+  max-width: 100%;
+}
+.gallery__tile blockquote {
+   margin:0;
+   padding:0 15px;
+   font-size:.8em;
+   border:none;
+   position:relative;
+   top:50%;
+   transform:translateY(-50%);   
+}
+@media (min-width: @screen-sm-min) {
+  .gallery__tile {
+    height:537px;
+  }  
+  .gallery__tile bockquote {
+    padding:0 15px 0 30px;
+    font-size:1em;
+  }
+}
+@media (min-width:970px) {
+  .gallery__tile {
+    height:737px;
+  }  
+  .gallery__tile img {
+    max-width: auto;
+  }
+  .gallery__tile blockquote {
+    padding:0 30px 0 60px;
+    font-size:1.5em;
+  } 
+}

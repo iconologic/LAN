@@ -1,0 +1,92 @@
+
+.homepage__list {
+    overflow: hidden;    
+    padding-top: (@navbar-height + 20) * 2;
+    
+
+    > [class^='col-'] {
+        padding-top: 123px;
+        overflow: hidden;
+    }
+
+    a {
+        color: inherit;
+    }
+
+    > [class^='col-'] > a:focus, > [class^='col-'] > a:hover {
+        cursor: pointer;
+    }
+
+    a .homepage__list--byline, a p, a:hover p {
+        display: inline-block;
+        text-underline: none !important;
+    }
+    a:hover p {
+        color: #222222;
+        line-height:1.75;
+    }
+
+    @media (max-width: @screen-xs-max){
+        padding-top:0;
+        padding-bottom: 30px;
+    }
+
+    @media (min-width: @screen-sm-min) {    
+        // TODO: apply this style on homepage only
+        padding-top: 30px;
+    }
+
+    @media (min-width: @screen-md-min) {    
+        // TODO: apply this style on homepage only
+        padding-top: 50px;
+    }
+
+ 
+
+    
+}
+
+.homepage__list--byline {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-right: 1.5em;
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+.homepage__list--title {
+    margin-top: 0;
+    padding-right: 1.5em;
+    font-size: 1.75em;
+}
+
+.homepage__list .cover {
+    top: 0;
+    height: 123px;
+    overflow: hidden;
+}
+
+.homepage__list .panel {
+    position: relative;
+    margin-bottom: 0;
+    border-radius: 0;
+    padding: 15px 15px;
+    background: transparent;
+    box-shadow: none;
+
+    h3{
+        margin-bottom: 5px;
+        color:#898989;
+        font-size: .8em;
+    }
+
+    p{
+        font-size: .9em;
+        line-height: 1.75;
+
+        @media (max-width: @screen-xs-max){
+            padding-bottom: 40px;
+        }
+    }
+}
+

@@ -1,0 +1,117 @@
+//
+// Variables
+// --------------------------------------------------
+
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+
+@gray-darker:            lighten(#000, 13.5%); // #222
+@gray-dark:              lighten(#000, 20%);   // #333
+@gray:                   lighten(#000, 33.5%); // #555
+@gray-light:             lighten(#000, 60%);   // #999
+@gray-lighter:           lighten(#000, 93.5%); // #eee
+@black:           			 lighten(#000, 0); // #fff
+
+// LAD Brand Colors
+
+@white:									#ffffff;
+@wildSand:              #f6f6f6;
+@cararra:               #e7e6e1;
+@quillGray:             #d2d1cf;
+@dustyGray:             #979797;
+@cerulean:              #00aeef;
+@poppy:                 #c23824;
+@trout:                 #4f5261;
+@mako:                  #404449;
+@shark:                 #23272c;
+
+@brick:					#9c3022;
+
+//== Scaffolding
+//
+// ## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+@body-bg:               #fff;
+//** Global text color on `<body>`.
+@text-color:            @trout;
+
+//** Global textual link color.
+@link-color:            @cerulean;
+//** Link hover color set via `darken()` function.
+@link-hover-color:      @poppy;
+
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+
+@exo:										'Exo 2', sans-serif;
+@roboto:                                    'Roboto', Helvetica, sans-serif;
+@roboto-light:                              'Roboto Light', Helvetica, sans-serif;
+
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Large screen / wide desktop
+//** Deprecated `@screen-lg` as of v3.0.1
+@screen-lg:                  1140px;
+@screen-lg-min:              @screen-lg;
+//** Deprecated `@screen-lg-desktop` as of v3.0.1
+@screen-lg-desktop:          @screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-md-max:              (@screen-lg-min - 1);
+
+//== Grid system
+//
+//## Define your custom responsive grid.
+
+//** Number of columns in the grid.
+@grid-columns:              12;
+//** Padding between columns. Gets divided in half for the left and right.
+@grid-gutter-width:         30px;
+// Navbar collapse
+//** Point at which the navbar becomes uncollapsed.
+@grid-float-breakpoint:     @screen-sm;
+//** Point at which the navbar begins collapsing.
+@grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
+
+// Large screen / wide desktop
+@container-large-desktop:      ((1110px + @grid-gutter-width));
+//** For `@screen-lg-min` and up.
+@container-lg:                 @container-large-desktop;
+
+
+// Basics of a navbar
+@navbar-height:                    59px;
+@fluid-navbar-height:							 percentage(@navbar-height / 212);
+@navbar-margin-bottom:             @line-height-computed;
+@navbar-border-radius:             @border-radius-base;
+@navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
+@navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
+@navbar-collapse-max-height:       340px;
+
+@navbar-default-color:             #777;
+@navbar-default-bg:                #f8f8f8;
+@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
+
+// Navbar links
+@navbar-default-link-color:                #777;
+@navbar-default-link-hover-color:          #e7e6e1;
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         #555;
+@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
+@navbar-default-link-disabled-color:       #ccc;
+@navbar-default-link-disabled-bg:          transparent;
+
+/*
+@container-lg-padding:								((1 / @grid-columns) * @screen-lg) - @grid-gutter-width / 2;
+@container-md-padding:								((1 / @grid-columns) * @screen-md) - @grid-gutter-width / 2;
+@container-sm-padding:								((1 / @grid-columns) * @screen-sm) - @grid-gutter-width / 2;
+@container-xs-padding:								0;
+*/
