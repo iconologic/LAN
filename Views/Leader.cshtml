@@ -1,0 +1,146 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var leader = new Leader(Model.Content);
+}
+@section headerScripts{
+
+}
+@section mainContent{
+    @Html.Partial("_MastHeadSub", leader)
+
+    <div class="main container-fluid">
+        <div class="">
+            <div class="section">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        @Html.Partial("_SideBarNav", leader.NavigationPage)
+                    </div>
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9" style="background: #ffffff; margin-top: -30px;">
+
+                        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-xs-push-0 col-sm-push-1 col-md-push-1 col-lg-push-1" style="padding: 30px 15px;font-family:Roboto, sans-serif;">
+
+                            @* <div class="row">
+                                    <p><a href="@leader.ParentPage.Url" style="color: #9c3022; font-size: .80em; font-family: Exo 2, sans-serif; font-weight: 600;" class="text-uppercase">Back to @Model.Content.Parent.Name</a></p>
+                                </div> *@
+
+                            <div class="row">
+                                <p class="text-center"><img src="@leader.PhotoForDetailPage" alt="@leader.Name" class="img-responsive profile__image" /></p>
+                                <div style="padding-bottom:1.5em;">
+                                    <h1 class="page__subheader" style="margin-bottom:10px;font-size:42px;">
+                                        @leader.Name@if (!string.IsNullOrWhiteSpace(leader.Credentials))
+                                        {
+                                            var charCount = @leader.Credentials.Length;
+                                            <span>,</span> <span class="small"><i>@leader.Credentials</i></span>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(leader.AdditionalCredentials))
+                                        { <span><i>, @leader.AdditionalCredentials</i></span>
+                                        }
+                                    </h1>
+                                    @if (!string.IsNullOrWhiteSpace(leader.Title))
+                                    {<span class="text-uppercase small" style="display: block;font-family: 'Exo 2', sans-serif;font-weight:400;font-size:18px;color:#4f5261;">@leader.Title</span>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(leader.AdditionalTitle))
+                                    {
+                                        <span class="small" style="display: block;font-family: 'Exo 2', sans-serif;font-size:16px;color:#898989;">@Html.Raw(leader.AdditionalTitle)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row no-gutters" style="margin-left:-15px;margin-right:-15px;padding-top: 1em; padding-bottom: 1em; border-bottom: 1px solid #c5c6cb; border-top: 1px solid #c5c6cb;">
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <p class="small" style="margin-bottom:0;font-weight:300;">
+                                        <span style="display:block;">@Html.Raw(Website.EmailLink(leader.Email))</span>
+                                        <span style="display:block;">@Html.Raw(leader.Phone)</span>
+                                    </p>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <p class="text-right small" style="margin-bottom:0;">
+                                        @if (leader.RelatedLocations.Any())
+                                        {
+                                            <span class="small text-uppercase" style="display:block;font-weight:500;">Office</span>
+                                            for (var i = 0; i < leader.RelatedLocations.Count(); i++)
+                                            {
+                                                var location = leader.RelatedLocations.ElementAt(i);
+                                                <a href="@location.Url">@location.Name</a>if (leader.RelatedLocations.Count() > 1 && i != leader.RelatedLocations.Count() - 1)
+                                                {<span>, </span>
+                                                }
+                                            }
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            @if (CurrentPage.HasValue("Profile"))
+                            {
+                                <div class="row row-block">
+                                    <h3 style="color:#4f5261;">Profile</h3>
+                                    @Html.Raw(leader.Profile)
+                                </div>
+                            }
+                            @if (CurrentPage.HasValue("Education"))
+                            {
+                                <div class="row row-block">
+                                    <h3 style="color:#4f5261;">Education</h3>
+                                    @Html.Raw(leader.Education)
+                                </div>
+                            }
+                            @if (CurrentPage.HasValue("Affiliations"))
+                            {
+                                <div class="row row-block">
+                                    <h3 style="color:#4f5261;">Affiliations</h3>
+                                    @Html.Raw(leader.Affiliations)
+                                </div>
+                            }
+                            @* TODO: waiting for perspective section to be built out
+                                <div class="row row-block">
+                                    <h3 style="color:#4f5261;">Related Content</h3>
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <a href="#">
+                                            <img src="images/people/people-project1.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <a href="#">
+                                            <img src="images/people/people-project2.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                </div>
+                            *@
+                            @if (leader.RelatedProjects.Any())
+                            {
+                                <div class="row row-block">
+                                    <h3 style="color:#4f5261;">Selected Projects</h3>
+                                    @foreach (var project in leader.RelatedProjects)
+                                    {
+                                        var img = project.SliderImages.First();
+                                        var i = leader.RelatedProjects.IndexOf(project);
+                                        <a href="@project.Url">
+                                            <img src="@Website.ImageUrl(img.Url, 380, 240)" class="project__related--image img-responsive" style="bottom:auto;" alt="@project.Title" />
+                                            <div class="img-caption">
+                                                @project.Title
+                                            </div>
+
+                                        </a>
+
+                                        if ((i + 1) % 2 == 0)
+                                        {
+                                            <div class="clearfix visble-xs hidden-sm hidden-md hidden-lg"></div>
+                                        }
+                                        if ((i + 1) % 3 == 0)
+                                        {
+                                            <div class="clearfix hidden-xs visible-sm visible-md visible-lg"></div>
+                                        }
+
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section footerScripts{
+
+}

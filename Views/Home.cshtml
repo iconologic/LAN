@@ -1,0 +1,171 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    dynamic projects = CurrentPage.Children.Where("Name == \"Markets\"").FirstOrDefault();
+    var homePage = new HomePage(Model.Content);
+}
+@section headerScripts{
+    <style>
+	
+		fieldset.row { display: block !important; }	
+		
+		
+		/*
+		.masthead .carousel-caption .carousel-caption__title a { line-height: 24px; }
+		.carousel-caption.container>.row  { max-width: 1110px; position: absolute; bottom: -33px;}  
+		@@media (min-width: 992px) {
+			.masthead__form {
+				left: 48.8%;
+				margin-bottom: 0 !important;
+			}
+			 
+		}
+	
+		@@media (max-width: 991px) {
+			.carousel-caption.container>.row  { bottom: 0px; } 
+			.carousel-caption__title a { line-height: auto !important;}
+		}*/
+	</style>
+}
+@section mainContent{
+
+    <div id="masthead" class="masthead">
+        @*		@{Html.RenderPartial("Generic_Carousel");}*@
+        @Html.Partial("_ProjectCarousel", homePage.FeaturedProjects)
+
+        <div class="container hidden-xs">
+            <div class="masthead__form">
+                <form action="" method="post" class="row">
+                    <fieldset class="row">
+                        <!-- <div class="col-xs-8 col-sm-8 col-md-9 col-lg-10"> -->
+                        <label class="select__custom">
+                            <select data-placeholder="View More Work" id="markets-select" class="form-control" size="1">
+                                <option>View More Work</option>
+                                <optgroup>
+                                    @foreach (dynamic child in projects.Children)
+                                    {
+                                        <option value="@child.Url">@Html.Raw(child.GetPropertyValue("pageTitle"))</option>
+                                    }
+                                </optgroup>
+                            </select>
+                        </label>
+                        <!-- </div> -->
+                        <!-- <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                 <input class="form-control" type="button" value="Go" onclick="NavigateProject();" />
+                             </div> -->
+                    </fieldset>
+                </form>
+            </div><!-- //.masthead__form -->
+        </div> <!-- //end container 
+        code from SEAN -->
+
+    </div><!-- //.masthead -->
+
+    <!-- Mobile captions display fix -->
+        <div class='col-md-12 mobile-captions-lad clear-fix visible-xs'>
+            
+             <h2 class="carousel-caption__title"><a href="#" class="mobile-caption">Captions</a></h2>
+        </div>
+
+    <div class="col-md-12 view_btn visible-xs">
+        <div class="wrapper-dropdown">
+            <a href="/portfolio" class="viewWork__btn">View More Work</a>
+        </div>
+    </div>
+    <div class="main container-fluid homepage-container">
+        <div class="container">
+            @for (var counter = 0; homePage.ContentBlocks.Count() > counter; counter += 3)
+            {
+                <!-- <hr class="space" style="height: 59px; margin: 0;" /> -->
+                <div class="row no-gutters homepage__list">
+                    @foreach (var story in homePage.ContentBlocks.Skip(counter).Take(3))
+                    {
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="padding-top: 0;">
+                            @if (story.HasLink)
+                            {
+                                var target = story.OpenLinkInNewWindow ? "_blank" : "_self";
+                                @:<a href="@story.LinkToUrl" target="@target">
+                            }
+                            <img src="@Website.ImageUrl(story.ImageUrl, 370, 234)" class="img-responsive" style="bottom: auto;" />
+                            <div class="panel" style="background: none;">
+                                <h3 class="homepage__list--byline">@story.Subheading</h3>
+                                <h2 class="homepage__list--title">@story.Heading</h2>
+                                @Html.Raw(story.Copy)
+                                </div>
+                                @if (story.HasLink)
+                                {
+                                    @: </a>
+                                }
+
+                            </div>
+                    }
+                </div>
+
+            }
+
+
+        </div><!-- //.container -->
+    </div><!-- //.main -->
+}
+@section footerScripts{
+	
+	<script>
+	
+	 $(function() {
+        $("a.caption__container--link").each(function() {
+			
+          if($(this).text().length <= 43) {
+            $(this).addClass('title_sm');
+          }
+          else if($(this).text().length > 43) {
+            $(this).addClass('title_lg');
+          }
+
+        });
+       
+    });
+		
+    </script>
+
+    <script src="/scripts/_libs/chosen_v1.3.0/chosen.jquery.min.js"></script>
+    <script>
+    /* custom select form controls [requires chosen.js] */
+    $("#markets-select").chosen({
+
+        'disable_search': true
+    });
+
+    // # fix for touch
+    $('.chosen-container').on('touchend', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        return;
+    });
+
+    </script>
+
+    <script>
+    
+        //Get & Set captions text and link for mobile
+        var active = $('.item.active');
+        var currentText = active.find('.caption__container--link').text();
+        var currentHref = active.find('.caption__container--link').attr('href');
+
+        $('.mobile-caption').text(currentText).attr('href', currentHref);
+
+        $('#carousel-generic').on('slid.bs.carousel', function () {
+
+            currentText = $('.item.active').find('.caption__container--link').text();
+            currentHref = $('.item.active').find('.caption__container--link').attr('href');
+
+            $('.mobile-caption').text(currentText).attr('href', currentHref);
+
+        });
+
+        //HIDE BACK TO TOP BTN ON HOMEPAGE
+        $('.back-to-top__container').hide();
+
+    </script>
+
+
+}

@@ -1,0 +1,14 @@
+.featured__story--container {
+  padding: 0;
+  max-width: 790px;
+}
+.has_overlay {
+  position: relative;
+  overflow: hidden;
+}
+.row-block {
+  margin-top: 1em;
+  padding-top: 1em;
+  padding-bottom: 3em;
+  border-bottom: 1px solid #c5c6cb;
+}

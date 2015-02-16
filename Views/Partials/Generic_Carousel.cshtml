@@ -1,0 +1,54 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	dynamic container = CurrentPage.Children.Where("DocumentTypeAlias == \"Slidercontainer\"").FirstOrDefault();	
+	int idx = 0;	
+}
+<div id="carousel-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+	<!-- Indicators -->
+	@* <ol class="carousel-indicators">
+		@foreach(dynamic child in container.Children)
+		{
+			string cls = string.Empty;
+			if(idx == 0 )
+			{
+				cls = "class=\"active\"";
+			}
+			<li data-target="#carousel-generic" data-slide-to="@idx.ToString()" @Html.Raw(cls)></li>
+			idx ++;
+		}
+	</ol> *@
+
+	<!-- Wrapper for slides -->
+	<div class="carousel-inner">
+		@{
+			idx = 0;
+			foreach(dynamic child in container.Children)			
+			{				
+				string img = Umbraco.TypedMedia(child.GetPropertyValue("image")).Url;
+				string cls = "item";
+				if( idx == 0 )
+				{
+					cls += " active";
+				}
+				<div class="@cls" style="background-image:url(@Html.Raw(img));">
+					<div class="container carousel-caption">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 masthead__content">
+								<span>@Html.Raw(child.GetPropertyValue("projectTYpe")):</span><h2 class="carousel-caption__title"><a href="@Html.Raw(child.Url)">@Html.Raw(child.GetPropertyValue("projectName"))</a></h2>
+							</div><!-- //.masthead__content -->
+						</div><!-- //.row -->
+					</div>
+				</div>
+				idx++;
+			}
+		}
+		</div>
+
+		<!-- Controls -->
+		<a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		</a>
+		<a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+</div><!-- //.carousel -->

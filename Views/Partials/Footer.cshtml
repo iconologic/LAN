@@ -1,0 +1,59 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	dynamic homeNode = CurrentPage.AncestorOrSelf(1);
+    dynamic settings = Umbraco.Content(1055);
+	string ladImg = Umbraco.TypedMedia(settings.GetPropertyValue("leoADalyFooterLogo")).Url;
+	string lanImg = Umbraco.TypedMedia(settings.GetPropertyValue("lanFooterLogo")).Url;
+}
+    <footer class="footer">
+        <div class="container">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <!-- <h5><img src="@ladImg" alt="Leo A Daly" /></h5> -->
+                <h5 class="lad-footer-logo"><a href="/"><img class="img-responsive" src="/images/LAD-logo-white@2x.png" alt="Leo A Daly"/></a></h5>
+                <p>@Html.Raw(settings.GetPropertyValue("leoADalyFooterText"))</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <!-- <h5><a href="http://www.lan-inc.com/" target="_blank"><img src="@lanImg" alt="LAN" /></a></h5> -->
+                <h5 class="lan-footer-logo" ><a href="http://www.lan-inc.com/" target="_blank"><img src="/images/LAN-logo-white@2x.png" alt="LAN" /></a></h5>
+                <p>@Html.Raw(settings.GetPropertyValue("lanFooterText"))</p>
+            </div>
+				
+				
+            <div id="footer__links--desktop" class="hidden-xs hidden-sm col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <ul>
+                    <li><a href="/contact-us/">Contact Us</a></li>
+                    <li><a href="/credits/">Credits</a></li>
+                    <li><a href="/Sitemap/">Sitemap</a></li>
+                    <li><a href="/terms-and-conditions/">Terms/Privacy</a></li>
+                    <!-- <li><a href="/privacy-policy/">Privacy Policy</a></li> -->
+                </ul>
+            </div>
+				
+            <div id="social-icons__container" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <ul class="list-inline social-icons">
+                    <li class="linkedin"><a href='@settings.GetPropertyValue("linkedInUrl")' target="_blank"><span class="sr-only">LinkedIn</a></span></li>
+                    <li class="twitter"><a href='@settings.GetPropertyValue("twitterUrl")' target="_blank"><span class="sr-only">Twitter</a></span></li>
+                    <li class="facebook"><a href='@settings.GetPropertyValue("facebookUrl")' target="_blank"><span class="sr-only">Facebook</a></span></li>
+                </ul>
+            </div>
+						
+			
+			<div id="footer__links--mobile" class="visible-xs visible-sm col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <ul class="list-inline">
+                    <li><a href="/contact-us/">Contact Us</a></li>
+                    <li><a href="/credits/">Credits</a></li>
+                    <li><a href="/Sitemap/">Sitemap</a></li>
+                    <li><a href="/terms-and-conditions/">Terms/Privacy</a></li>
+                    <!-- <li><a href="/privacy-policy/">Privacy Policy</a></li> -->
+                </ul>
+            </div>
+						
+
+        </div>
+		
+		<!-- Back To Top Button -->
+		<div class="back-to-top__container">
+			<a href="#top">Back to Top</a>
+		</div>
+			
+    </footer>

@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Xml.XPath
+@using System.Text;
+@using System.Collections;	
+@{
+	List<string> locs = new List<string>();
+	List<string> types = new List<string>();
+	List<string> markets = new List<string>();
+	XPathNodeIterator iterator = umbraco.library.GetPreValues(1399);
+	iterator.MoveNext(); //move to first
+	XPathNodeIterator preValues = iterator.Current.SelectChildren("preValue", "");
+	
+	while (preValues.MoveNext())
+	{
+		cats.Add(preValues.Current.Value);
+	}
+}

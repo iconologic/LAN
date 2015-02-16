@@ -1,0 +1,73 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	int idx = 0;
+		
+	if( CurrentPage.HasProperty("relatedProjects") && CurrentPage.HasValue("relatedProjects"))
+	{
+		string[] projectsList = CurrentPage.GetPropertyValue("relatedProjects").ToString().Split(',');
+
+	
+		<div class="main container-fluid" style="background: #ffffff;">			
+			<div class="section row">
+				<h1 class="section__title text-center">Featured Projects</h1>
+				<div id="carousel-locations-page" class="carousel slide" data-ride="carousel" data-interval="false">
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+						@foreach(string proj in projectsList)
+						{
+							dynamic p = Umbraco.Content(Int32.Parse(proj));
+							dynamic sliderMediaSelection = null;
+							if(p.HasProperty("sliderImage") && p.HasValue("sliderImage"))
+							{
+								sliderMediaSelection = Umbraco.Media(p.GetPropertyValue("sliderImage"));
+							}
+							string pimg = string.Empty;
+							if( sliderMediaSelection != null && sliderMediaSelection.ContentType.Alias == "Folder" )
+							{
+								pimg = sliderMediaSelection.Children.First().getProperty("umbracoFile").Value.ToString();
+							}
+							else
+							{
+								pimg = sliderMediaSelection.getProperty("umbracoFile").Value.ToString();
+							}							
+							idx ++;
+							string cls = "item";
+							if( idx == 1 )
+							{
+								cls += " active";
+							}
+						
+							<div class="@cls">
+								<div class="item-wrapper">
+									<div class="cover">
+										<img src="@Html.Raw(pimg)" alt="" style="max-width: 100%;" />
+									</div>
+								</div>
+								<div class="section project__testimonial row row-xs-height">
+									<div class="project__testimonial--quote col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-height">
+										<blockquote>@Html.Raw(p.GetPropertyValue("testimonialText")) &nbsp;</blockquote>
+								</div>
+								<div class="project__testimonial--byline col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xs-height">
+									<p><strong>@Html.Raw(p.GetPropertyValue("testimonialName"))&nbsp;</strong><br />@Html.Raw(p.GetPropertyValue("testimonialTitle"))&nbsp;</p>
+									<p>@Html.Raw(p.GetPropertyValue("testimonialLocation"))&nbsp;</p>
+								</div>
+							</div>
+						</div>
+						}
+					</div>
+
+					<!-- Controls -->
+					<a class="left carousel-control" href="#carousel-locations-page" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left" style=""></span>
+					</a>
+					<a class="right carousel-control" href="#carousel-locations-page" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right" style=""></span>
+					</a>
+				</div>
+				<!-- //.carousel -->
+			</div>
+			<!-- //.row -->
+		</div>
+		<!-- //.main -->
+	}
+}

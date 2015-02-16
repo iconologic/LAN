@@ -1,0 +1,56 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new CareersFaqPage(Model.Content);
+}
+@section headerScripts{
+
+}
+@section mainContent{
+
+@Html.Partial("_MastHeadSub", page)
+
+    <div class="main container-fluid" style="background:#e7e6e1;">
+        <div class="">
+            <div class="section">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        @Html.Partial("_SideBarNav", page.ParentPage)
+                    </div>
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 faq-group">
+                        @foreach (var topic in page.Topics)
+                        {
+                        <div class="faq-group-item" id="@topic.HtmlId" name="@topic.HtmlId">
+                            <h3 class="small">@topic.Name</h3>
+                            <div class="faq faq-accordion">
+                                @foreach (var faq in topic.Faqs)
+                                {
+                                    var expandedClass = faq.Equals(page.Topics.ElementAt(0).Faqs.ElementAt(0)) ? "in" : "";
+                                <div class="panel panel-faq">
+                                    <div class="panel-body">
+                                        <a href="#" class="accordion-toggle" data-toggle="collapse" data-parent="#@topic.HtmlId" data-target="#@faq.HtmlId" href="#" onclick="return false;">
+                                            <h2 class="faq__title">@faq.Question<span class="pull-right caret caret-down"></span></h2>
+                                        </a>
+                                        <div id="@faq.HtmlId" class="accordion-body collapse @expandedClass">
+                                            @Html.Raw(faq.Answer)
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="space" />
+                                }
+                                
+                            </div>
+                        </div>    
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+@section footerScripts{
+
+}

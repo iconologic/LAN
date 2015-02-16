@@ -1,0 +1,95 @@
+
+
+/* Masthead */
+
+	.masthead__form {	
+		width:100%;
+	}	
+	.masthead__form .row {
+		width:inherit;
+	}
+
+
+
+/* Portfolio Index */
+.portfolio__filter .form-control.filter {
+
+	background: transparent;
+}
+
+/* Markets */
+	.markets__graphs img {
+	   width: 100% !important;    
+	}
+	.markets__graphs .small img {    
+    width: inherit !important;    
+  }
+
+
+
+/* Aside */
+	.aside__navigation > ul.nav > li.is_active > ul.dropdown-menu {  
+	  position:relative;
+	}  	
+	.aside__navigation > ul.nav > li.is_active.open ul.dropdown-menu {display:block !important;visibility: visible !important;}
+
+
+
+
+/* Locations */
+	#carousel-locations-page .item-wrapper {  
+	  -ms-transform:translateY(0) !important;
+	  top:0 !important;  
+	}
+
+	/* slider bottom of page */
+	
+
+
+
+
+
+/* Carousel */
+#carousel-locations-page .carousel-control {
+	position: absolute;
+	width:15%;
+	top:0;
+	bottom:20%;
+}
+
+
+
+
+
+/* helpers.css */
+.cover {
+  top:0;
+  left:0;
+  width: 100%; 
+  height: 100%;
+}
+.cover img {
+  width: 100%;
+  height: 100%;  
+}
+
+
+/* PERSPECTIVES INDEX */
+.gradient__bottom{
+	position: absolute;
+	bottom:0;
+	background: url("../images/perspectives/gradient.png");
+	height:100%;
+	width: 100%;
+	opacity: 1;
+}
+
+
+.support__story--container .support__story .gradient__bottom {
+	position: absolute;
+	bottom:0;
+	background: url("../images/perspectives/gradient_support.png");
+	height:100%;
+	width: 100%;
+	opacity: 1;
+}

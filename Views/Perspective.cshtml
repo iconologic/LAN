@@ -1,0 +1,225 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new Perspective(Model.Content);
+}
+@section headerScripts{
+
+}
+@section mainContent{
+
+
+    <div class="has_overlay">
+        <div id="masthead" class="masthead">
+
+            <div id="body-bg" style="position:fixed;background-image: url(@page.BackgroundImage);background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-attachment:scroll;width:100%;height:100%;top:0;left:0;z-index:-1"></div>
+
+        </div><!-- //.masthead -->
+    </div>
+
+    <div class="">
+
+        <div class="container article-details" style="background:#ffffff;">
+
+            <!--Container for blog and sidebar-->
+            <div class="section row">
+
+
+
+                <!--blog content-->
+                <div class="col-xs-12 col-sm-12 col-md-9 col-md-push-3">
+
+                    <article>
+
+                        <h1 class="pg-title">@page.Title</h1>
+                        @Html.Raw(page.Copy)
+                    </article>
+                </div>
+                <!-- end blog content-->
+                <!--sidebar-->
+                <div class="col-xs-12 col-sm-12 col-md-3 col-md-pull-9">
+                    <div class="aside__navigation">
+                        <ul class="nav navbar-nav article__subnav">
+                            <li>
+                                <a href="#">
+                                    <span class="caret caret-previous"></span>
+                                    <small>All Stories</small>
+                                    <hr />
+                                    <h3 class="aside__nav_title">Article</h3>
+                                </a>
+                            </li>
+                            <li><a href="#">Sub Category 1</a></li>
+                            <li><a href="#">Sub Category 2</a></li>
+                            <li><a href="#">Sub Category 3</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!--end sidebar-->
+
+            </div>  <!--end blog container-->
+            <!--blog footer container-->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="article__meta text-uppercase clearfix">
+
+                        <!--Tags and social media container-->
+                        <div class="row article__tags">
+
+                            <div class="article__item col-sm-6">
+                                <ul class="list-inline word-tags">
+                                    <li><i class="fa fa-tags fa-lg cerulean"></i><span class="filter__label">TAGS:</span></li>
+                                    <li><a href="#">Design</a></li>
+                                    <li><a href="#">Interface</a></li>
+                                    <li><a href="#">Modern</a></li>
+                                </ul>
+                            </div>
+
+
+                            <div class="article__item col-sm-6">
+                                <ul class="list-inline social-tags">
+                                    <li><i class="fa fa-share-alt fa-lg cerulean"></i><span class="filter__label">SHARE:</span></li>
+                                    <li><a href="#"><i class="fa fa-facebook fa-lg facebook"></i><span class="text-hide">Facebook</span></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter fa-lg twitter"></i><span class="text-hide">Twitter</span></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest fa-lg pinterest"></i><span class="text-hide">Pinterest</span></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus fa-lg google-plus"></i><span class="text-hide">Pinterest</span></a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div><!--end tags and Social media-->
+                    @if (page.Quoter != null)
+                    {
+                    <!--start author container-->
+                        <div class="panel author-frame">
+                            <div class="panel-body clearfix author">
+                                <div class="row author-container">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="author-img" style="background-image: url('@page.Quoter.Photo'); background-repeat: no-repeat; background-position: center center; background-size: 387px 278px; width: 150px; height: 150px;">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 author-bio">
+                                        <h4>@page.Quoter.Name</h4>
+                                        <h5>@page.Quoter.Title</h5>
+                                        @Html.Raw(page.Quote)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--end author container-->
+                    }
+                    <!--recent posts section-->
+                    <div class="section row navbar-posts blog__links--container">
+                        <div class="col-xs-12 col-sm-6">
+                            <h4>Recent Articles Post</h4>
+                            <ul class="list-unstyled list-group list-columns">
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>Its a new blog post</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>hyperboterngserist8.com on Bibendum Porta Lorem Commodo</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>2 types of careers</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>It’s also for LAD</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>hyperboterngserist8.com on Bibendum Porta</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <h4>Categories</h4>
+                            <ul class="list-unstyled list-group list-columns">
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>Featured</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>Research</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>Careers</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>Cultural</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>Sustainability</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <h4>Archives</h4>
+                            <ul class="list-unstyled list-group list-columns">
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>November 2014</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>October 2014</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>September 2014</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>August 2014</a></li>
+                                <li class="list-group-item blog__link"><a href="#"><i class="fa fa-angle-right"></i>July 2014</a></li>
+                            </ul>
+                        </div>
+
+                    </div> <!--end blog footer container-->
+                </div><!-- end col 12-->
+            </div> <!--end blog footer container-->
+
+        </div><!--end article details main section container -->
+
+    </div>
+
+
+    <div class="main container-fluid">
+        <div class="section">
+            @if (page.RelatedContent.Any())
+            {
+                <div class="row">
+                    <div class="project__related row no-gutters">
+                        <a id="marketProjects" name="marketProjects"></a>
+                        <h2 class="section__title text-center">Related Content</h2>
+                      
+                        <div class="row no-gutters" style="">
+                            @foreach (var content in page.RelatedContent)
+                            {
+                            <div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                <div class="col-responsive" style="height: inherit;">
+                                    <a href="@content.Url">
+                                        <img src="@content.PreviewImage" class="project__related--image img-responsive" style="bottom: auto;">
+                                        <div class="img-caption">
+                                            @content.Title
+                                            <p></p>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            }
+
+                        </div><!-- //.project__related -->
+
+                    </div><!-- //.section -->
+                </div>
+                <!-- //.row -->
+            }
+            @if (page.RecentProjects.Any())
+            {
+                <div class="row">
+                    <div class="project__related row no-gutters">
+                        <a id="marketProjects" name="marketProjects"></a>
+                        <h2 class="section__title text-center">Recent Projects</h2>
+
+                        <div class="row no-gutters" style="">
+                            @foreach (var project in page.RecentProjects)
+                            {
+                                <div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="col-responsive" style="height: inherit;">
+                                        <a href="@project.Url">
+                                            <img src="@project.SliderImages.First().Url" class="project__related--image img-responsive" style="bottom: auto;">
+                                            <div class="img-caption">
+                                                @project.Title
+                                                <p></p>
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div><!-- //.project__related -->
+
+                    </div><!-- //.section -->
+                </div>
+                <!-- //.row -->
+            }
+        </div><!-- //.main -->
+    </div>
+}
+
+@section footerScripts{
+
+}

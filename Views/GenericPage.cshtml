@@ -1,0 +1,45 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new GenericPage(Model.Content);
+}
+@section headerScripts{
+
+}
+@section mainContent{
+
+
+    <div class="masthead__container masthead__subpage">
+        <div id="masthead" class="masthead">
+            <div class="item active" style='background-image: url(@page.HeroImage);'></div>
+        </div>
+    </div>
+
+
+    <div class="row page__header">
+        <div class="container" style="background: transparent; padding-left: 30px; padding-right: 30px; padding-bottom: 30px;">
+            <h1 class="page__header__title"></h1>
+        </div>
+    </div>
+
+    <div class="main container-fluid" id="search-results">
+        <div class="container">
+
+            <div class="section row post">
+                <header class="post-header">
+                    <h2 class="section__title post-title">@Html.Raw(page.Heading)</h2>
+                </header>
+                <article class="post-content">
+                    @Html.Raw(page.Copy)
+                </article>
+            </div>
+
+
+        </div>
+        <!-- //.container -->
+    </div>
+    <!-- //.main -->
+}
+@section footerScripts{
+ 
+}

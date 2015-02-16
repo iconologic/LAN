@@ -1,0 +1,54 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Web.Script;
+@using System.Web.Script.Serialization;
+@using System.Collections.Generic;
+@{
+	string projectType = ((Request.Form.AllKeys.Contains("projectType")) ? Request.Form["projectType"] : string.Empty);
+	string projectLocation = ((Request.Form.AllKeys.Contains("projectLocation")) ? Request.Form["projectLocation"] : string.Empty);
+	string projectMarket = ((Request.Form.AllKeys.Contains("projectMarket")) ? Request.Form["projectMarket"] : string.Empty);
+    Layout = null;
+	List<LAD.Object.ProjectLite> projects = new List<LAD.Object.ProjectLite>();
+	dynamic projectContainer = Umbraco.Content(1060);
+	foreach(dynamic child in projectContainer.Children)
+	{
+		bool attachRecord = true;
+		if( ! string.IsNullOrEmpty(projectType) && (child.GetPropertyValue("projectType") == null || ! child.GetPropertyValue("projectType").Contains(projectType)))
+		{
+			attachRecord = false;
+		}
+		if( ! string.IsNullOrEmpty(projectLocation) && (child.GetPropertyValue("projectLocation") == null || ! child.GetPropertyValue("projectLocation").Contains(projectLocation)))
+		{
+			attachRecord = false;
+		}
+		if( ! string.IsNullOrEmpty(projectMarket) && (child.GetPropertyValue("projectMarket") == null || ! child.GetPropertyValue("projectMarket").ToString().Contains(projectMarket)))
+		{
+			attachRecord = false;
+		}
+		if( attachRecord )
+		{
+			LAD.Object.ProjectLite p = new LAD.Object.ProjectLite();
+			dynamic sliderMediaSelection = null;
+			if(child.HasProperty("sliderImage") && child.HasValue("sliderImage"))
+			{
+				sliderMediaSelection = new umbraco.cms.businesslogic.media.Media(child.GetPropertyValue("sliderImage"));
+			}
+			string img = string.Empty;
+			if( sliderMediaSelection != null && sliderMediaSelection.ContentType.Alias == "Folder" )
+			{
+				img = sliderMediaSelection.Children.First().getProperty("umbracoFile").Value.ToString();
+			}
+			else
+			{
+				img = sliderMediaSelection.getProperty("umbracoFile").Value.ToString();
+			}
+			p.Image = img;
+			p.Name = child.GetPropertyValue("projectTitle");
+			p.Url = child.Url;
+			projects.Add(p);
+		}
+	}
+	JavaScriptSerializer js = new JavaScriptSerializer();
+	Response.ContentType = "application/json; charset=utf-8";
+	Response.Write(js.Serialize(projects));
+	
+}

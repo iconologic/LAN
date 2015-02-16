@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new PageNotFound(Model.Content);
+}
+@section headerScripts{
+	<style>
+		.container__not-found { margin-top:59px; text-align: center; background-color: #f6f6f6; }
+		.container__not-found__footer { padding: 5%; text-align:center; color:#999; }
+		.container__not-found__footer a { text-transform:uppercase; font-weight: bold;}
+		.not-found__text { padding: 5%;font-size:15em; color:#00aeef; }
+	</style>
+}
+@section mainContent{
+	
+<div class="container__not-found">
+  <!-- 404 text -->
+  <h1 class="not-found__text">@page.Heading</h1>
+</div>
+		
+<!-- Footer Text -->
+<div class="container__not-found__footer">
+  <h3>@Html.Raw(page.Copy)</h3>
+  <a href="/">please click here to return to the homepage</a>
+</div>
+
+}
+@section footerScripts{
+
+}

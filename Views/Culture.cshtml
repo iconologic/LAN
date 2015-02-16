@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var culture = new CulturePage(Model.Content);
+    var locations = culture.Locations.ToList();
+}
+@section headerScripts{
+
+}
+@section mainContent{
+
+@Html.Partial("_MastHeadSub", culture)
+
+<div class="main container-fluid" style="background:#f6f6f6;">
+    <div class="container">
+        <div class="section section__sidebar row">
+            <div class="">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+
+                    @Html.Partial("_SideBarNav", culture.ParentPage)
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                    <article>
+                        <blockquote>
+                            @Html.Raw(culture.BlockQuote)
+                        </blockquote>
+                        <h1>@culture.Heading</h1>
+                         @Html.Raw(culture.IntroCopy)
+                    </article>
+                    @Html.Partial("_StoryGrid", culture.Stories)
+
+                    <hr class="space" />
+                    <hr class="space" />
+                    <hr class="space" />
+
+                    <article>
+                        <h1 style="margin-bottom:10px;">Locations</h1>
+                        @Html.Raw(culture.LocationsCopy)
+                        <div class="row">
+                            @for (var counter = 0; locations.Count() > counter; counter += 4)
+                            {
+                                var locationGroup = locations.Skip(counter).Take(4);
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <ul class="list-unstyled list-group text-center list-columns">
+                                        @foreach (var location in locationGroup)
+                                        {
+                                            <li class="list-group-item"><a href="@location.Url">@location.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </article>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+@section footerScripts{
+
+}

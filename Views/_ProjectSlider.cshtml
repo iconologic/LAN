@@ -1,0 +1,110 @@
+﻿@model ProjectSlider
+@{
+
+
+    <div class="main container-fluid" style="background:#ffffff;">
+
+        <div class="section row featured-location">
+
+            <h2 class="section__title text-center">@Model.Heading</h2>
+
+            <div id="carousel-locations-page" class="carousel slide" data-ride="carousel" data-interval="false">
+                <!-- Indicators -->
+                <!-- <ol class="carousel-indicators">
+                  <li data-target="#carousel-locations-page" data-slide-to="0" class="active"></li>
+                  <li data-target="#carousel-locations-page" data-slide-to="1"></li>
+                  <li data-target="#carousel-locations-page" data-slide-to="2"></li>
+                </ol> -->
+                <!-- Wrapper for slides -->
+                <div class="ctrlWrapper">
+                    <div class="carousel-inner">
+                        @foreach (var project in Model.Projects)
+                        {
+                            var cls = Equals(project, Model.Projects.First()) ? "item active" : "item";
+                            var testimonial = project.HasTestimonial ? "testimonial" + project.Id : string.Empty;
+                            <div class="@cls" data-testimonial="@testimonial">
+                                <div class="item-wrapper" style="-ms-transform:translateY(0) !important;">
+                                    <div class="cover">
+                                        <a href="@project.Url">
+                                            <img src="@project.Thumbnail" alt="" class="img-responsive" />
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                                <div class="project__testimonial--credit inside col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xs-height">
+                                    <p class="project-title-text"><strong>@project.Title</strong></p>
+                                    <!-- @project.ClientName <br /> -->
+                                    <p class="project-location-text">@project.ProjectLocation</p>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                     <a class="left carousel-control" href="#carousel-locations-page" role="button" data-slide="prev">                    
+                        <span class="glyphicon glyphicon-chevron-left fa fa-angle-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-locations-page" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right fa fa-angle-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div> <!-- end ctrlWrapepr -->
+
+                <div class="outside">
+
+                    <p class="project-title-text"><strong>Project Title</strong></p>
+                    <!-- Fulton County, Georgia <br /> -->
+                    <p class="project-location-text">Project Location</p>
+
+                    <p class="view-project-text hidden-xs">VIEW PROJECT</p>
+
+                    <a href="#" class="view-project-btn text-hide" >VIEW PROJECT</a>
+                </div>
+
+                @foreach (var project in Model.Projects)
+                {
+
+                    if (project.HasTestimonial)
+                    {
+                        var id = "testimonial" + project.Id;
+                        <div id="@id" class="project__testimonial col-xs-12" style="float:left;display: none">
+
+                            <div class="project__testimonial--quote col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-height">
+                                <blockquote>@Html.Raw(project.Testimonial)</blockquote>
+                            </div>
+
+                            <div class="project__testimonial--byline col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xs-height">
+                                <p><strong>@project.TestimonialName </strong><br />@project.TestimonialTitle </p>
+                                <p>@project.TestimonialLocation </p>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+
+                <div class="view-project-mobile col-xs-12 visible-xs">
+                    <a href="" class="view-project-text">VIEW PROJECT</a>
+                </div>
+
+                <!-- Controls -->
+               <!--  <a class="left carousel-control" href="#carousel-locations-page" role="button" data-slide="prev">                    
+                    <span class="glyphicon glyphicon-chevron-left fa fa-angle-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-locations-page" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right fa fa-angle-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a> -->
+            </div><!-- //.carousel -->
+
+
+        </div><!-- //.row -->
+
+
+
+
+
+    </div><!-- //.main -->
+}

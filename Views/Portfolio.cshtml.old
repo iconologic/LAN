@@ -1,0 +1,253 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Xml.XPath
+@using System.Text;
+@using System.Collections;	
+@{
+    Layout = "Master.cshtml";
+	//List<string> locs = new List<string>();
+	List<string> types = new List<string>();
+	//List<string> markets = new List<string>();
+	Dictionary<string, string> markets = new Dictionary<string, string>();
+	Dictionary<string, string> locs = new Dictionary<string, string>();
+	XPathNodeIterator iterator = umbraco.library.GetPreValues(1101);
+	iterator.MoveNext(); //move to first
+	XPathNodeIterator preValues = iterator.Current.SelectChildren("preValue", "");
+	dynamic locContainer = Umbraco.Content(1112);
+	foreach(dynamic childContainer in locContainer.Children)
+	{
+		foreach(dynamic child in childContainer.Children)
+		{
+			locs.Add(child.Id.ToString(), child.Name);
+		}
+	}
+
+	dynamic marketContainer = Umbraco.Content(1109);
+	foreach(dynamic mkt in marketContainer.Children)
+	{
+		markets.Add(mkt.Id.ToString(), mkt.Name);
+	}
+
+	iterator = umbraco.library.GetPreValues(1100);
+	iterator.MoveNext(); //move to first
+	preValues = iterator.Current.SelectChildren("preValue", "");
+	while (preValues.MoveNext())
+	{
+		types.Add(preValues.Current.Value);
+	}
+}
+@section headerScripts{
+	
+}
+
+@section mainContent{
+<div class="main container-fluid">
+	<div class="container">
+		<div class="section">
+			@* <h1 class="section__title">Leo A. Daly Portfolio</h1>
+			<h3>Currently viewing: &nbsp; <em style="font-weight: normal;" id="viewing">All Projects</em></h3> *@
+			<form action="" method="post" class="" id="filterForm">
+				<fieldset class="">
+					<label>
+						Type
+						<select class="form-control" id="projectType" name="projectType">
+							<option value="">Project Types</option>
+							<optgroup>
+								@foreach(string s in types)
+								{
+									<option value="@s">@s</option>
+								}
+							</optgroup>
+						</select>
+					</label>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					@* <label>
+						Location
+						<select class="form-control" id="projectLocation" name="projectLocation">
+							<option value="">Project Locations</option>
+							<optgroup>
+								@foreach(var l in locs)
+								{
+									<option value="@l.Key">@l.Value</option>
+								}
+							</optgroup>
+						</select>
+					</label>
+					&nbsp;&nbsp;&nbsp;&nbsp; *@
+					<label>
+						Market
+						<select class="form-control" id="projectMarket" name="projectMarket">
+							<option value="">Project Markets</option>
+							<optgroup>
+								@foreach(var entry in markets)
+								{
+									<option value="@entry.Key">@entry.Value</option>
+								}
+							</optgroup>
+						</select>
+					</label>
+					@* &nbsp;&nbsp;&nbsp;&nbsp;
+					<label>
+						Sub-Market
+						<select class="form-control" id="projectSubMarket" name="projectSubMarket">
+							<option value="">Project Sub-Markets</option>
+							<optgroup>
+								@foreach(var entry in markets)
+								{
+									<option value="@entry.Key">@entry.Value</option>
+								}
+							</optgroup>
+						</select>
+					</label> *@
+					@* &nbsp;&nbsp;<input type="submit" value="Apply Filters" />&nbsp;&nbsp;<input type="button" value="Clear Filters" onclick="ClearFilters();" /> *@
+				</fieldset>
+			</form>
+		</div>
+		<!-- //.masthead__form -->
+
+		<div class="row">
+			<div class="project__related row no-gutters" id="dataContainer">
+			</div>
+		</div>
+	</div>
+</div>
+}
+
+@section footerScripts{
+<script>
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	$( document ).ready(function() {
+		var val = getParameterByName('type');
+		if( val != '' )
+			$('#projectType').val(val);
+		
+		$('#filterForm').submit();
+		$('#filterForm select').on('change', function() {
+			$('#filterForm').submit();
+		});		
+	});
+	function Project(name, image, url, type, market)
+	{
+		this.Name = name;
+		this.Url = url;
+		this.Thumbnail = image;
+		this.ProjectType = type;
+		this.ProjectMarket = market;
+	}
+	function CompleteViewingText()
+	{
+		var output = '';
+		if( $('#projectType').val() != '')
+		{
+			output = 'Project Type:  ' + $('#projectType').val();
+		}
+		// if( $('#projectLocation').val() != '')
+		// {
+		// 	if( output != '')
+		// 		output += '; ';
+		// 	output += 'Location:  ' + $('#projectLocation').val();
+		// }
+		if( $('#projectMarket').val() != '')
+		{
+			if( output != '')
+				output += '; ';
+			output += 'Market:  ' + $('#projectMarket option:selected').text();
+		}
+		if( output == '' )
+			output = 'All Projects';
+		$('#viewing').text(output);
+	}
+	function ClearFilters()
+	{
+		$('#projectMarket').val('');
+		$('#projectType').val('');
+		//$('#projectLocation').val('');
+		$('#filterForm').submit();
+	}
+	$("#filterForm").submit(function (event) {
+		CompleteViewingText();
+		var $form = $(this);
+		console.log($form.serialize());
+		var projects = new Array();
+		// Stop form from submitting normally
+		$('body').css('cursor', 'wait');
+		event.preventDefault();
+		//$('#processing').show();
+		var serializedData = $form.serialize();
+		$.ajax({
+			headers: {
+				Accept: 'application/json; charset=utf-8',
+				"Content-Type": 'application/json; charset=utf-8'
+			},
+			dataType: 'json',
+			//url: '/ProjectsFilter.cshtml',
+			url: '/umbraco/api/portfolio/Get',
+			//type: "get",
+			data: serializedData,
+			success: function(d) {
+				//console.log(d);
+				for (var i = 0; i < d.length; i++) {
+					var proj = new Project(d[i].Name,
+						d[i].Thumbnail,
+						d[i].Url,
+						d[i].ProjectType,
+						d[i].ProjectMarket);
+					projects[i] = proj;
+				}
+				var idx = 0;
+				$('#dataContainer').empty();
+				projects.forEach(function (itm) {					
+					if(idx >= 3 )
+					{
+						BuildSpacerRow();
+						idx = 0;
+					}
+					BuildRow(itm.Name, itm.Thumbnail, itm.Url, itm.ProjectType, itm.ProjectMarket);
+					if (itm.ProjectType == $('#projectType').val() || itm.ProjectMarket == $('#projectMarket').val()) {
+						idx++;
+					}	
+				});
+			},
+			error: function(d){
+				console.log("ERROR");
+				console.log(d);
+			}
+		});
+		$('body').css('cursor', 'auto');
+	});
+	function BuildRow(name, image, url, type, market) {
+
+		if ($('#projectType').val() == type || $('#projectMarket').val() == market) {			
+			if( image != '')
+			{
+				/*var $d = $('<div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">').append(
+					$('<a href="' + url + '">').append(
+					$('<div class="project__related--image" style="position:relative;height:300px;overflow:hidden !important;width:100%;"><div class="cover"><img src="' + image + '" alt="" class="img-responsive" /></div></div>'),
+					$('<div class="project__related--description">').append(
+					$('<h4 class="project__related--title text-uppercase">').text(name)))).appendTo('#dataContainer');*/
+				var $d = $('<div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">').append(
+					$('<a href="' + url + '" class="col-responsive">').append(
+					$('<img src="' + image + '" alt="" class="img-responsive" style="bottom:auto;" />'),
+					$('<div class="img-caption">').append(
+					$('<h4 class="project__related--title text-uppercase">').text(name)))).appendTo('#dataContainer');
+
+			}
+			else
+			{
+				var $d = $('<div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">').append(
+								$('<a href="' + url + '" class="col-responsive">').append(
+								$('<div class="img-caption">').append(
+								$('<h4 class="project__related--title text-uppercase">').text(name)))).appendTo('#dataContainer');
+			}
+		}	
+	}
+	function BuildSpacerRow()
+	{
+		var $d = $('<div class="clearfix"></div>').appendTo('#dataContainer');
+	}
+</script>
+}

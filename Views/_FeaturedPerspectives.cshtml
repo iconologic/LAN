@@ -1,0 +1,48 @@
+﻿@model PerspectivesCategory
+<!--FEATURED CONTENT-->
+<div class="row featured__wrapper">
+
+    <!--LEFT-->
+    <!--FEATURED BLOCK-->
+
+    <div class="col-xs-12 col-md-6 featured__story--wrapper has-img">
+        @if (Model.FeaturedPerspectives.Any())
+        {
+            var perspective = Model.FeaturedPerspectives.First();
+            <div class="featured__story">
+                <div class="gradient__bottom"></div>
+                <img src="@perspective.PreviewImage" alt="" class="img-responsive opacity" />
+            </div>
+            <div class="featured__story--title">
+                <h3>@perspective.Title</h3>
+                <p>@perspective.Excerpt</p>
+            </div>
+            <a class="text-hide" href="@perspective.Url">@perspective.Title</a>
+        }
+    </div>
+    <!--end FEATURED BLOCK-->
+    <!--END LEFT-->
+    <!--RIGHT-->
+    <div class="col-xs-12 col-md-6 support__story--container">
+
+        @foreach (var perspective in Model.FeaturedPerspectives.Skip(1))
+        {
+            <div class="col-xs-12 col-sm-6 support__story has-sup-img">
+
+                <div class="img__gradient--container">
+                    <div class="gradient__bottom"></div>
+                    <img src="@(perspective.PreviewImage)" alt="" class="img-responsive opacity" />
+                </div>
+
+                <div class="story__title--support">
+                    <p>@perspective.Title</p>
+                </div>
+                <a href="@perspective.Url">@perspective.Title</a>
+            </div>
+        }
+
+
+
+    </div> <!-- END RIGHT-->
+
+</div> <!--end ROW-->

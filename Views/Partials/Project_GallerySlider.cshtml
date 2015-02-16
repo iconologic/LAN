@@ -1,0 +1,11 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+	dynamic container = Umbraco.TypedMedia(CurrentPage.GetPropertyValue("gallery"));
+	<ul>
+		@foreach(dynamic child in container.Children)
+		{
+			<li><img src="@child.Url" alt="@child.Name" /></li>
+		}
+	</ul>
+}

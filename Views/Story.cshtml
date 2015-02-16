@@ -1,0 +1,90 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var story = new Story(Model.Content);
+}
+@section mainContent
+{
+    @Html.Partial("_MastHeadSub", story)
+
+    <div class="main container-fluid">
+
+        <div class="section" style="">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                    <div class="aside__navigation">
+                        @Html.Partial("_PressNav")
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9" style="background: #ffffff; margin-top: -30px;">
+
+                    <div class="" style="padding: 30px 30px 30px 30px;">
+
+                        <article class="row">
+                            <!-- <p class="text-center"><img src="images/about/people/people-2-fullsize.jpg" alt="Bill Baxley" class="img-responsive" /></p> -->
+                            <div class="pull-left">
+                                <h1 class="article__title">@story.Title</h1>
+                                <h4 class="article__byline">@story.DisplayDate.ToString("MMMM d, yyyy")</h4>
+
+                                @if (!string.IsNullOrEmpty(story.Subtitle))
+                                {
+                                    <h2>@story.Subtitle</h2>
+
+                                }
+                                @Html.Raw(story.Copy)
+                                @if (!string.IsNullOrEmpty(story.Image))
+                                {
+                                <p><img src="@story.Image" alt="" /></p>
+                                }
+                                @if (story.RelatedLeaders.Any() || story.RelatedMarkets.Any() || story.RelatedLocations.Any())
+                                {
+                                    <div class="article__meta text-uppercase">
+                                        <small>
+                                            <ul class="list-inline">
+                                                <li>
+                                                    <span class="pull-left" style="margin-right:10px;font-weight:bold;">Tags:</span>
+                                                    <ul class="list-inline pull-left">
+                                                        @Tags(story.RelatedLeaders)
+                                                        @Tags(story.RelatedLocations)
+                                                        @Tags(story.RelatedMarkets)
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </small>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </article>
+
+                        <div class="row article__navigation">
+                            <small class="small text-uppercase">
+                                @if (story.HasPrevious)
+                                {
+                                    <a href="@story.Previous().Url" class="pull-left btn btn-default btn-previous"><span class="caret caret-previous"></span> &nbsp; Previous</a>
+                                }
+                                @if (story.HasNext)
+                                {
+                                    <a href="@story.Next().Url" class="pull-right btn btn-default btn-next">Next &nbsp; <span class="caret caret-next"></span></a>
+                                }
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+@helper Tags(IEnumerable<PageItem> items)
+{
+    foreach (var item in items)
+    {
+        <li><a href="@item.Url">@item.NavigationTitle</a></li>
+
+    }
+}

@@ -1,0 +1,117 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new PortfolioPage(Model.Content);
+    var selectedType = Request.QueryString["type"];
+    var selectedMarket = Request.QueryString["market"];
+    var selectedSubMarket = Request.QueryString["submarket"];
+    if (!string.IsNullOrEmpty(selectedSubMarket))
+    {
+        selectedMarket = Umbraco.TypedContent(selectedSubMarket).Parent.Id.ToString();
+    }
+}
+@section headerScripts{
+
+}
+@section mainContent{
+	
+	<div class="portfolio__intro-text-container">
+		<h1 class="pg-title">@Html.Raw(@page.PortfolioIntro)</h1>
+	</div>
+
+    <!-- <div class="masthead__container" style="background:#ffffff;">
+        <div id="masthead" class="masthead" style="background:#ffffff;height:150px !important;margin-top:0;">
+            <div class="page__header vertical-center text-center" style="top:63%;">
+                <h1 class="pg-title" style="font-family:'Exo 2 Light', sans-serif;font-size:2em;line-height:1.4;margin:0;padding-right:20%;padding-left:20%;background:#ffffff;">@Html.Raw(@page.PortfolioIntro)</h1>
+            </div>
+        </div>
+    </div> -->
+					
+     <!-- delete div not used                    -->
+	<!-- <div class="main container-fluid">
+	</div> -->
+
+    <!-- Alternate styling of dropdowns -->
+    <!-- <div class="container-fluid portfolio__filter">
+            <div class="container">
+            </div>
+    </div> -->
+
+    <div class="container-fluid portfolio__filter">
+        <div class="">
+            <div class="container">
+
+                <form class="">
+                    <fieldset class="row no-gutters">
+                        <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height:inherit;margin-bottom:0;border-left:1px solid #ffffff;border-right:1px solid #ffffff;">
+                            @* Type *@
+                            <select class="form-control filter" id="projectType" name="projectType">
+                                <option value="">All Projects</option>
+                                @foreach (var type in page.ProjectTypes)
+                                {
+                                    var selected = (type == selectedType) ? "selected" : string.Empty;
+                                    <option value="@type" @selected>@type</option>
+                                }
+                            </select>
+                        </label>
+                        @* &nbsp;&nbsp;&nbsp;&nbsp; *@
+                        <label class="market col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height:inherit;margin-bottom:0;border-right:1px solid #ffffff;">
+                            @* Market *@
+                            <select class="form-control filter" id="projectMarket" name="projectMarket">
+                                <option value="">All Markets</option>
+                                @foreach (var market in page.Markets)
+                                {
+                                    <option value="@market.Id">@market.Name</option>
+                                }
+                            </select>
+                        </label>
+                        @* &nbsp;&nbsp;&nbsp;&nbsp; *@
+                        <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height:inherit;margin-bottom:0;border-right:1px solid #ffffff;">
+                            @* Sub Market *@
+                            <select class="form-control filter" id="projectSubMarket" name="projectSubMarket" disabled="disabled" data-placeholder="All Sub-Markets" data-bind="enable: marketSelected, options: subMarkets, optionsValue: 'id', optionsText: 'name', optionsCaption: 'All Sub-Markets', value: '@selectedSubMarket'"><option></option></select>
+                        </label>
+								
+						
+							
+                    </fieldset>
+                </form>
+            </div>
+            <!-- //.masthead__form -->
+        </div>
+    </div>
+
+    <div class="main container-fluid" style="padding-top:80px" name="form-filter" id="form-filter">
+        <div class="container" style="background:transparent;">
+            <div class="row no-gutters" data-bind="foreach: projects">
+                <div class="project__related--item col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-responsive" style="height:inherit;">
+                        <a href="" data-bind="attr: {href: url}">
+                            <img src="" class="project__related--image img-responsive" style="bottom:auto;" data-bind="attr: {src: image}" />
+                            <div class="img-caption" data-bind="text: title">
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- ko if: isSecond -->
+                <div class="clearfix visble-xs hidden-sm hidden-md hidden-lg"></div>
+                <!-- /ko -->
+                <!-- ko if: isThird -->
+                <div class="clearfix hidden-xs visible-sm visible-md visible-lg"></div>
+                <!-- /ko -->
+            </div>
+        </div>
+
+    </div>
+
+}
+@section footerScripts{
+    <script src="~/Scripts/knockout-3.2.0.js"></script>
+    <script type="text/javascript">
+        var selectedMarket = '@selectedMarket';
+        var selectedSubMarket = '@selectedSubMarket';
+    </script>
+    <script src="~/Scripts/portfolio.js">
+    </script>
+
+}

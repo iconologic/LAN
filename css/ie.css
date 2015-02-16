@@ -1,0 +1,27 @@
+
+
+
+/* allow logo to scale with viewport size */
+:root *> .header__logo img { width: 100%;  }
+				
+
+/* masthead caption with view projects form select */
+#masthead .carousel {zoom:1;}
+:root *> .caption__container {
+	width: 1140px;
+}	
+/*:root *> .masthead__form form.row {
+	background:#d2d1cf\9;
+}
+:root *> .masthead__form form.row .select__custom {
+	margin-left: 42.5px\9;
+}*/
+
+
+
+/* About */
+.profile__image { width:auto !important;height:auto;}
+
+
+. ie10 .profile__image { width:auto !important;height:auto;}
+

@@ -1,0 +1,42 @@
+﻿@model Quiz
+
+
+<div class="qa__container container">
+    <div class="">
+        @* <a href="#" class="qa__close"><span class="glyphicon glyphicon-remove"></span></a> *@
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="row qa__title text-right">
+                <span class="qa-q on">Q</span><span>&</span><span class="qa-a">A</span>
+            </div>    
+        </div>        
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+          <div class="qa_question">
+                <div class="row">
+                    @Html.Raw(Model.Question)
+                </div>
+                <div class="row">
+                    <form id="quiz">
+                        <input type="hidden" name="QuizId" value="@Model.Id" />
+                        @foreach (var answer in Model.Answers)
+                        {
+                            <input type="radio" value="@answer.Id" name="quiz" id="@answer.Id" /> <label for="@answer.Id" class="radio-inline">@answer.AnswerText</label>
+                        }
+                    </form>
+                </div>    
+            </div>
+
+            <div class="qa_answer" style="display:none;">
+                <div class="row">
+                    <h4><span id="quiz-result"></span></h4>
+                    @* <span class="dropcap">A</span> *@
+                    <div id="answer-copy"></div>
+                    <hr />
+                    <ul class="list-inline" id="answers-list">
+                        <li style="vertical-align:top;padding-right:15px;">Poll Results</li>
+                    </ul>
+                </div>
+            </div>    
+        </div>    
+    </div><!-- //.row -->
+</div>
+

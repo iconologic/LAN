@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Leader>
+           
+@if (!Model.Any())
+{
+    return;
+}
+<h1 class="section__title text-center">Meet Our Leaders</h1>
+
+<div class="panel-group accordion" id="accordion-fadeout">
+    @for (int i=0; i<Model.Count(); i++)
+    {
+        var leader = Model.ElementAt(i);
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title clearfix">
+                    <span>@leader.Name</span>
+                    <input type="radio" name="radioButton" id="afo-buttonOne">
+                    <label class="ani" for="afo-buttonOne" data-toggle="collapse" data-parent="#accordion-fadeout" href="#afo-collapse@(i)"><span>+</span></label>
+                </div>
+            </div>
+            <div id="afo-collapse@(i)" class='panel-collapse collapse @(i == 0 ? "in" : "")'>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-height align-bottom">
+                                <img src="@leader.Photo" alt="" />
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-height align-bottom">
+                                <p>@leader.Email</p>
+                                <h3>SPECIALIZATIONS</h3>
+                                @Html.Raw(leader.Specializations)
+                            </div>
+                            <div class="clearfix"><br /></div>
+                            @Html.Raw(leader.About)
+
+                        </div>
+                        <div class="markets__projects col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+                            <h3 class="markets__projects-header">Featured Projects</h3>
+                            @for (var projectCounter = 0; leader.FeaturedProjects.Count() > projectCounter; projectCounter += 2)
+                            {
+                                <div class="row no-gutters row-xs-height">
+                                    @foreach (var project in leader.FeaturedProjects.Skip(projectCounter).Take(2))
+                                    {
+                                        <div class="markets__projects-container col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-height">
+                                            <a href="@project.Url">
+                                                <img src="@Website.ImageUrl(project.Thumbnail, 223, 185)" alt="" />
+                                                <div class="markets__projects-caption caption">@project.Title</div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                           
+                        </div>
+                    </div>
+
+                </div><!-- //.panel-body -->
+            </div><!-- //.panel-collapse -->
+        </div>
+    }
+
+
+</div>

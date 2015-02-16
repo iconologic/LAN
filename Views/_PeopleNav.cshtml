@@ -1,0 +1,34 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+    @{
+        var people = new PageItem(Umbraco.TypedContent(1132));
+    }
+
+    <div class="aside__navigation">
+        <ul class="nav navbar-nav article__subnav">
+            <li>
+                <a href="@people.Url" class="aside__nav_title">
+                    <h3>@people.NavigationTitle</h3>
+                </a>
+            </li>
+            @foreach (var category in people.Children<ContentItem>("LeaderCategory"))
+            {
+                var catClass = category.Children<PageItem>().Any(x => x.IsCurrentPage) ? "open" : string.Empty;
+                <li class="dropdown @catClass">
+                    <a href="#@category.HtmlId" class="dropdown-toggle scrollTo" data-toggle="dropdown" role="button" aria-expanded="false">@category.Name <span class="pull-right caret caret-next text-right vertical-center"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="go-back">
+                          <span class="caret caret-previous"></span> <small><strong>People</strong></small> 
+                          <hr />
+                          <h3 class="aside__nav_title">@category.Name</h3>
+                        </a></li>                
+                        @foreach (var leader in category.Children<PageItem>("Leader"))
+                        {
+                            var leaderClass = leader.IsCurrentPage ? "active" : string.Empty;
+                            <li class="@leaderClass"><a href="@leader.Url">@leader.NavigationTitle</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+
+        </ul>
+    </div>    

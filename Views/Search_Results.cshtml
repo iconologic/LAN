@@ -1,0 +1,323 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Examine
+@using Examine.SearchCriteria
+@using UmbracoExamine
+@using umbraco.MacroEngines
+@using Examine.LuceneEngine.SearchCriteria	
+@{
+    Layout = "Master.cshtml";
+	bool canDisplay = true;
+	var Searcher = ExamineManager.Instance.SearchProviderCollection["WebsiteSearcher"];
+	var searchCriteria = Searcher.CreateSearchCriteria(BooleanOperation.Or);
+	bool blnnodata=true;
+	string strsearch=string.Empty;
+	int idx = 0;
+	dynamic sliderMediaSelection = null;
+	if(CurrentPage.HasProperty("sliderImage") && CurrentPage.HasValue("sliderImage"))
+	{
+		sliderMediaSelection = new umbraco.cms.businesslogic.media.Media(CurrentPage.GetPropertyValue("sliderImage"));
+	}
+}
+@section headerScripts{
+	<style>
+		
+	</style>
+}
+
+@section mainContent{
+	@if( sliderMediaSelection != null)
+	{
+	<div class="masthead__container masthead__subpage">
+		<div id="masthead" class="masthead">
+			@if( sliderMediaSelection != null && sliderMediaSelection.ContentType.Alias == "Folder" )
+			{
+				<div id="carousel-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						@foreach(dynamic child in sliderMediaSelection.Children)
+						{
+							string cls = string.Empty;
+							if(idx == 0 )
+							{
+								cls = "class=\"active\"";
+							}
+							<li data-target="#carousel-generic" data-slide-to="@idx.ToString()" @Html.Raw(cls)></li>
+							idx ++;
+						}
+					</ol>
+			
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+						@{
+							idx = 0;
+							foreach(dynamic child in sliderMediaSelection.Children)
+							{
+								string img = child.getProperty("umbracoFile").Value.ToString();
+								string cls = "item";
+								if( idx == 0 )
+								{
+									cls += " active";
+								}
+								<div class="@cls" style="background-image:url(@Html.Raw(img));">
+									@* <div class="container carousel-caption">
+									<div class="row">
+										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 masthead__content">
+										<span>@Html.Raw(child.GetPropertyValue("projectTYpe")):</span><h2 class="carousel-caption__title">@Html.Raw(child.GetPropertyValue("projectName"))</h2>
+										</div><!-- //.masthead__content -->
+									</div><!-- //.row -->
+									</div> *@
+								</div>
+								idx++;
+							}
+						}
+					</div>
+			
+					<!-- Controls -->
+					<a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a>
+					<a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div><!-- //.carousel -->
+			}
+			else
+			{
+				<div class="item active" style='background-image: url(@sliderMediaSelection.getProperty("umbracoFile").Value.ToString());'></div>
+			}
+		</div>  
+	</div>	
+	}
+
+
+	<div class="row page__header">
+		<div class="container" style="background: transparent; padding-left: 30px; padding-right: 30px; padding-bottom: 30px;">
+			<h1 class="page__header__title">@CurrentPage.GetPropertyValue("navigationDisplayName")</h1>
+		</div>
+	</div>
+
+	<div class="main container-fluid" id="search-results">
+		<div class="container">
+
+			<div class="section row post">
+
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">	
+					&nbsp;
+				</div>
+
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+					<header class="post-header">
+						<h2 class="section__title post-title">@Html.Raw(CurrentPage.GetPropertyValue("contentTitle"))</h2>
+					</header>
+					<article class="post-content">
+						@RenderPage("~/MacroScripts/obfuscate_email.cshtml", CurrentPage.GetPropertyValue("content").ToString())
+
+						@if(!string.IsNullOrEmpty(Request["s"]))
+						{
+							strsearch = Request["s"].Trim();
+							var SearchArray = strsearch.Split(' ');
+							Examine.SearchCriteria.IBooleanOperation filter = null;
+							var criteria = ExamineManager.Instance.SearchProviderCollection["WebsiteSearcher"].CreateSearchCriteria(IndexTypes.Content);
+						
+							int i = 0;
+							for (i = 0; i < SearchArray.Length; i++)
+							{
+								if (filter == null)
+								{
+									filter = criteria.GroupedOr(new string[] {"content", "contentTitle", "title", "name", "navigationName", "metaTitle", "metaDescription", "metaKeywords", "titleLeft", "titleMiddle", "titleRight", "introductionLeft", "introductionMiddle", "introductionRight", "projectTitle", "projectName", "summary", "projectDescription", "testimonialText", "statsPercent", "statsFact", "statsNumber"}, SearchArray[i].MultipleCharacterWildcard());
+								}
+								else
+								{
+									filter = filter.And().GroupedOr(new string[] {"content", "contentTitle", "title", "name", "navigationName", "metaTitle", "metaDescription", "metaKeywords", "titleLeft", "titleMiddle", "titleRight", "introductionLeft", "introductionMiddle", "introductionRight", "projectTitle", "projectName", "summary", "projectDescription", "testimonialText", "statsPercent", "statsFact", "statsNumber"}, SearchArray[i].MultipleCharacterWildcard());
+								}
+							}
+							var searchResults = ExamineManager.Instance.SearchProviderCollection["WebsiteSearcher"].Search(filter.Compile());
+					
+							if(searchResults!=null && searchResults.Count()>0)
+							{
+								blnnodata=false;
+								<p>Search for @Html.Raw("\"" + Request["s"] + "\"") found the following results:<br />&nbsp;</p>
+					
+								foreach (var c in searchResults)
+								{
+									canDisplay = true;
+									var chNode = Umbraco.Content(c.Id);
+									if( chNode.Url != "#")
+									{
+										<div class="search-item">
+											@if(chNode.DocumentTypeAlias == "Sliderwithnolink")
+											{
+												if( chNode.Parent != null )
+												{
+													var parentnode = Umbraco.Content(chNode.Parent.Id);
+													parentnode = Umbraco.Content(parentnode.Parent.Id);
+													<a href="@parentnode.Url">@parentnode.GetPropertyValue("navigationDisplayName")</a>		
+												}
+												else
+												{
+													canDisplay = false;
+												}
+											}
+											else
+											{
+												if(chNode.HasProperty("navigationName") && ! string.IsNullOrEmpty(chNode.GetPropertyValue("navigationName").ToString()))
+												{
+													<a href="@chNode.Url">@chNode.GetPropertyValue("navigationName")</a>
+												}
+												else
+												{
+													if( chNode.Id == 1053 )
+													{
+														<a href="@chNode.Url">Home</a>
+													}
+													else
+													{
+														<a href="@chNode.Url">@chNode.Name</a>
+													}
+												}
+											}
+											@if(c.Fields.Keys.Contains("content") && canDisplay)
+											{
+												var bodyText = c.Fields["content"];
+												if (bodyText.Length>100)
+												{
+													string test = bodyText.Substring(0,100);
+													if( ! test.EndsWith("."))
+													{
+														for(int x = 100; x < bodyText.Length; x++)
+														{
+															test += bodyText.Substring(x, 1);
+															if( test.EndsWith("."))
+															{
+																break;
+															}
+														}
+													}
+													bodyText = test;
+												}
+												<p>@Html.Raw(bodyText)</p>
+											}
+											else if(c.Fields.Keys.Contains("introductionLeft") && canDisplay)
+											{
+												var bodyText = c.Fields["introductionLeft"];
+												if (bodyText.Length>100)
+												{
+													string test = bodyText.Substring(0,100);
+													if( ! test.EndsWith("."))
+													{
+														for(int x = 100; x < bodyText.Length; x++)
+														{
+															test += bodyText.Substring(x, 1);
+															if( test.EndsWith("."))
+															{
+																break;
+															}
+														}
+													}
+													bodyText = test;
+												}
+												<p>@Html.Raw(bodyText)</p>
+											}
+											else if(c.Fields.Keys.Contains("introductionMiddle") && canDisplay)
+											{
+												var bodyText = c.Fields["introductionMiddle"];
+												if (bodyText.Length>100)
+												{
+													string test = bodyText.Substring(0,100);
+													if( ! test.EndsWith("."))
+													{
+														for(int x = 100; x < bodyText.Length; x++)
+														{
+															test += bodyText.Substring(x, 1);
+															if( test.EndsWith("."))
+															{
+																break;
+															}
+														}
+													}
+													bodyText = test;
+												}
+												<p>@Html.Raw(bodyText)</p>
+											}
+											else if(c.Fields.Keys.Contains("introductionRight") && canDisplay)
+											{
+												var bodyText = c.Fields["introductionRight"];
+												if (bodyText.Length>100)
+												{
+													string test = bodyText.Substring(0,100);
+													if( ! test.EndsWith("."))
+													{
+														for(int x = 100; x < bodyText.Length; x++)
+														{
+															test += bodyText.Substring(x, 1);
+															if( test.EndsWith("."))
+															{
+																break;
+															}
+														}
+													}
+													bodyText = test;
+												}
+												<p>@Html.Raw(bodyText)</p>
+											}
+											else if(c.Fields.Keys.Contains("summary") && canDisplay)
+											{
+												var bodyText = c.Fields["summary"];
+												if (bodyText.Length>100)
+												{
+													string test = bodyText.Substring(0,100);
+													if( ! test.EndsWith("."))
+													{
+														for(int x = 100; x < bodyText.Length; x++)
+														{
+															test += bodyText.Substring(x, 1);
+															if( test.EndsWith("."))
+															{
+																break;
+															}
+														}
+													}
+													bodyText = test;
+												}
+												<p>@Html.Raw(bodyText)</p>
+											}
+											else if(c.Fields.Keys.Contains("projectDescription") && canDisplay)
+											{
+												var bodyText = c.Fields["projectDescription"];
+												if (bodyText.Length>100)
+												{
+													string test = bodyText.Substring(0,100);
+													if( ! test.EndsWith("."))
+													{
+														for(int x = 100; x < bodyText.Length; x++)
+														{
+															test += bodyText.Substring(x, 1);
+															if( test.EndsWith("."))
+															{
+																break;
+															}
+														}
+													}
+													bodyText = test;
+												}
+												<p>@Html.Raw(bodyText)</p>
+											}
+										</div>			
+									}
+								}
+							}
+						}
+						@if(blnnodata)
+						{
+							<p>Your search @Html.Raw("\"" + Request["s"] + "\"") found no results</p>
+						}
+					</article>
+				</div>	
+			</div>
+
+		</div>
+		<!-- //.container -->
+	</div>
+	<!-- //.main -->
+}
+	 

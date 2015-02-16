@@ -1,0 +1,236 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    dynamic sliderMediaSelection = null;
+    int idx = 0;
+    if (CurrentPage.HasProperty("sliderImage") && CurrentPage.HasValue("sliderImage"))
+    {
+        sliderMediaSelection = new umbraco.cms.businesslogic.media.Media(CurrentPage.GetPropertyValue("sliderImage"));
+    }
+
+    var market = new Market(Model.Content);
+}
+@section headerScripts{
+    <style>
+        #quiz-result {
+            font-size: 28px;
+        }
+
+        #answer-copy {
+            font-size: 16px;
+            font-weight: 100;
+        }
+    </style>
+}
+@section mainContent{
+    <div class="masthead__container">
+        <div id="masthead" class="masthead">
+            @* <div class="item active" style='background-image: url(@market.HeroImage)'></div> *@
+
+            <div id="body-bg" class="masthead__fixed" style="background-image: url(@market.HeroImage);background-repeat: no-repeat;"></div>
+
+        </div>
+        <div class="vertical-center page__header text-center">
+            <div class="container">
+
+                <h1 class="page__header__title">@Html.Raw(CurrentPage.GetPropertyValue("pageTitle"))</h1>
+                <nav class="page__header__nav">
+                    <ul class="list-inline market-btns">
+                        <li><a href="#marketContact" class="btn btn-default">Contact</a></li>
+                        <li><a href="#marketProjects" class="btn btn-default">View Work</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+        @* <div class="row page__header">
+                <div class="container" style="background: transparent; padding-left: 30px; padding-right: 30px; padding-bottom: 30px;">
+                    <h1 class="page__header__title">@Html.Raw(CurrentPage.GetPropertyValue("pageTitle"))</h1>
+                    <nav class="page__header__nav">
+                        <a href="#marketContact" class="scrollTo">Contact</a>
+                        <a href="#marketProjects" class="scrollTo">View Projects</a>
+                    </nav>
+                </div>
+            </div> *@
+        @* <div class="qa__container container hidden-xs-block visible-sm-block visible-md-block visible-lg-block">
+                <a href="#" class="qa__close"><span class="glyphicon glyphicon-remove"></span></a>
+                <div class="qa_question row col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="margin-bottom:0 !important;padding-top:1.5em;padding-bottom:1.5em;height:auto;">
+                  <p><span class="dropcap">Q</span><br />Where would you like to go?</p>
+                        <form action="#" method="post">
+                            <label class="radio-inline"><input type="radio" value="Tokyo" />Tokyo</label>
+                            <label class="radio-inline"><input type="radio" value="Los Angeles" />Los Angeles</label>
+                            <label class="radio-inline"><input type="radio" value="Rio" />Rio</label>
+                            <label class="radio-inline"><input type="radio" value="Prague" />Prague</label>
+                        </form>
+                </div><!-- //.row -->
+                <div class="qa_answer row col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="margin-bottom:0 !important;padding-top:1.5em;padding-bottom:1.5em;height:auto;display:none;">
+
+                  <p><span class="dropcap">A</span><br />"No matter where you’ve arrived, the airport should begin your experience of that place. Design that makes airports destinations themselves can reduce travel stress for passengers and improve navigation and efficiency."</p>
+
+                </div><!-- //.row -->
+
+            </div> *@
+    </div>
+    <!-- Q&A -->
+    @if (market.Quiz != null)
+    {
+        @Html.Partial("_Quiz", market.Quiz)
+    }
+
+    @* <div class="main container-fluid bg-image" style="background-image:url('@market.BackgroundImage');"> *@
+    <div class="main container-fluid bg-image" style="background-image:none">
+
+        <!-- Page Overview -->
+        <div class="container">
+            <div class="row market-title">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                    <h2 class="section__title text-center">@Html.Raw(market.Heading)</h2>
+                    @RenderPage("~/MacroScripts/obfuscate_email.cshtml", CurrentPage.GetPropertyValue("content").ToString())
+                </div>
+            </div>
+        </div>
+
+        @* <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-8 col-md-push-4">
+                        <h2 class="section__title">Overview</h2>
+                        <div class="hr">
+                            <p>@RenderPage("~/MacroScripts/obfuscate_email.cshtml", CurrentPage.GetPropertyValue("overview").ToString())</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4 col-md-pull-8 ">
+                        <a id="marketContact" name="marketContact"></a>
+                        <h2 class="section__title border-bottom border-bottom-arrow">Contact</h2>
+                        <div class="hr hr-arrow">
+                            <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                <p>
+                                    <strong>@Html.Raw(CurrentPage.GetPropertyValue("contactName"))</strong><br />
+                                    @Html.Raw(CurrentPage.GetPropertyValue("contactTitle"))
+                                </p>
+                                <p>@RenderPage("~/MacroScripts/obfuscate_email.cshtml", CurrentPage.GetPropertyValue("contactEmail").ToString())</p>
+                            </div>
+                            <address class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                @Umbraco.Field("contactAddress", convertLineBreaks: true)
+                                <div>P @Html.Raw(CurrentPage.GetPropertyValue("contactPhone"))</div>
+                                <div>F @Html.Raw(CurrentPage.GetPropertyValue("contactFax"))</div>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div> *@
+        <!-- stats/media -->
+        <div class="container container-sm-height">
+            <div class="markets__graphs section row no-gutters row-sm-height">
+                <div class="markets__stats col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-top:25px;">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center small">
+                        @if (CurrentPage.HasValue("stat1Image"))
+                        {
+                            string img2 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("stat1Image")).ToString().Replace("\n", string.Empty);
+                            <p><img src="@Html.Raw(img2)" style="width:146px;height:148px;" alt="" /></p>
+                        }
+                        <p class="markets__graphs-caption caption text-center">@Umbraco.Field("stat1Text", removeParagraphTags: true)</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center small">
+                        @if (CurrentPage.HasValue("stat2Image"))
+                        {
+                            string img3 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("stat2Image")).ToString().Replace("\n", string.Empty);
+                            <p><img src="@img3" style="width:146px;height:148px;" alt="" /></p>
+                        }
+                        <p class="markets__graphs-caption caption text-center">@Umbraco.Field("stat2Text", removeParagraphTags: true)</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="videoWrapper">
+                        @if (CurrentPage.HasValue("youTubeLink"))
+                        {
+                            @Html.Raw(CurrentPage.GetPropertyValue("youTubeLink"))
+                        }
+                        else
+                        {
+                            if (CurrentPage.HasValue("mediaImage"))
+                            {
+                                string img4 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("mediaImage")).ToString().Replace("\n", string.Empty);
+                                <img src="@Html.Raw(img4)" alt="" class="img-responsive" style="width:100%;" />
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container leadership" style="padding-bottom:0;">
+            <div class="section row" style="padding-bottom:0;">
+                @if (market.Leaders.Any())
+                {
+                    <a name="marketContact" id="marketContact"></a>
+                    <h1 class="section__title market__title text-center">@market.Name Leadership</h1>
+                    @Html.Partial("_Leaders", market.Leaders)
+                }
+
+            </div>
+        </div>
+        @if (market.Outlook.Any())
+        {
+            <div class="container" style="background: #e7e6e1;">
+                <div class="section row outlook-container">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="section__title text-center">@market.Name Outlook</h2>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-sm-push-1 col-md-push-1 col-lg-push-1">
+                        <div class="container-md-height">
+                            <div class="panel list-table col-md-height market-outlook">
+
+                                @foreach (var cta in market.Outlook)
+                                {
+                                    <div class="market-outlook-container">
+                                        @if (!string.IsNullOrWhiteSpace(cta.LinkToUrl))
+                                        {
+                                            var target = cta.OpenLinkInNewWindow ? "_blank" : "_self";
+                                            @:<a href="@cta.LinkToUrl" target="@target" >
+                                        }
+                                        <div class="list-table__media col-md-height col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            @if (!string.IsNullOrWhiteSpace(cta.YouTubeId))
+                                            {
+                                            <div style="width: 100%;" class="videoWrapper">
+                                                <iframe src="//www.youtube.com/embed/@cta.YouTubeId?wmode=transparent" frameborder="0" allowfullscreen></iframe>
+                                            </div>
+                                            }
+                                            else
+                                            {
+                                            <div class="text-center">
+                                                   <img src="@cta.ImageUrl" alt="" class="img-responsive" />
+
+                                            </div>
+                                            }
+
+                                        </div>
+                                        <div class="col-md-height col-xs-12 col-sm-12 col-md-6 col-lg-6 align-bottom">
+                                            <div class="list-table__content small">
+                                             <h3 class="list-table__title pg-title">@cta.Heading</h3>
+                                                @Html.Raw(cta.Copy)
+                                            </div>
+                                        </div>
+                                        @if (!string.IsNullOrWhiteSpace(cta.LinkToUrl))
+                                        {
+                                            @:</a>
+                                        }
+                                    </div>
+                                }
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- //.main -->
+    <a id="marketProjects" name="marketProjects"></a>
+    @Html.Partial("_SubMarkets", market)
+}
+@section footerScripts{
+    <script src="~/Scripts/quiz.js"></script>
+}

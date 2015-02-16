@@ -1,0 +1,143 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new PeoplePage(Model.Content);
+}
+@section headerScripts{
+    <style>
+        .location-container {
+            font-size: 14px;
+        }
+	
+		.people__leader {
+			margin-bottom: -12px;
+		}
+	
+		.people__leader--name { 
+			padding-top: 5px; 
+			margin: -10px;
+			margin-top: -3px;
+		}
+	
+		.people__leader--title {
+			padding-top: 10px;
+			margin-bottom:0; 
+			line-height: 15px; 
+			font-size:14px;
+			text-transform: uppercase;
+		}
+	
+		.people__leader--title-2, .people__leader--location {
+			font-family: roboto light;
+			color: #878787;
+			padding-top: 5px;
+			margin-bottom: 0;
+			line-height: 15px;
+			font-size: 14px;
+		}
+	
+	.people__leader--credentials {
+		margin-bottom: 0;
+	}
+	
+	@@media (max-width: 992px ) {
+		.people__leader--container {
+			/*min-height: 400px;*/
+			float: left;
+		}
+	}
+    </style>
+}
+@section mainContent{
+    <div class="masthead__container masthead__subpage">
+        @Html.Partial("_MastHead", page.HeroImage)
+        @Html.Partial("_BreadCrumb")
+    </div>
+    <div class="main container-fluid">
+        <div class="people__leader--container col-xs-12">
+            <div class="section">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                        @Html.Partial("_SideBarNav", page)
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+
+                        <div class="">
+                            @CurrentPage.intro
+                        </div>
+
+                        @foreach (var category in page.Children<ContentItem>("LeaderCategory"))
+                        {
+                            <div class="" name="@category.HtmlId" id="@category.HtmlId">
+                                <a name="@category.HtmlId" style="display: block; position: relative; top: -59px; visibility: hidden;"></a>
+                                @* <a id="@category.HtmlId"></a> *@
+                                <h2 class="page__subheader">@category.Name</h2>
+                                <ul class="list-inline list-people text-center clearfix">
+
+                                    <!--
+                                        JASON: every third iteration add the following code to clear each row:
+                                    </ul>
+                                        <ul class="list-inline list-people text-center clearfix">
+
+                                        -->
+                                    @{ var catIndex = 0;}
+                                    @foreach (var leader in category.Children<Leader>("Leader"))
+                                    {
+                                        catIndex++;
+                                        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-4 people__leader--container">
+                                            <a href="@leader.Url" class="text-center">
+                                                <img src="@leader.Photo" alt="@leader.Name" class="img-responsive img-circle" />
+                                                <div class="people__leader">
+                                                    <p class="people__leader--name">@leader.Name</p>@if (!string.IsNullOrWhiteSpace(leader.Credentials))
+                                                    {<p class="people__leader--credentials"> @leader.Credentials</p>
+                                                    }
+                                                    @if (!string.IsNullOrWhiteSpace(leader.AdditionalCredentials))
+                                                    { <p class="people__leader--credentials"><br> @leader.AdditionalCredentials</p>
+                                                    }
+                                                </div>
+                                            </a>
+                                            <p class="people__leader--title">@leader.Title</p>
+                                            @if (!string.IsNullOrWhiteSpace(leader.AdditionalTitle))
+                                            {
+                                                <p class="people__leader--title-2">@Html.Raw(leader.AdditionalTitle)</p>
+                                            }
+                                            <div class="location-container">
+												<p class="people__leader--location">
+                                                @if (leader.RelatedLocations.Any())
+                                                {
+
+                                                    for (var i = 0; i < leader.RelatedLocations.Count(); i++)
+                                                    {
+                                                        var location = leader.RelatedLocations.ElementAt(i);
+                                                        var locationName = location.Name;
+                                                        if (leader.RelatedLocations.Count() > 1 && i != leader.RelatedLocations.Count() - 1)
+                                                        {
+                                                            locationName += ", ";
+                                                        }
+                                                        @locationName
+                                                    }
+                                                }
+												</p>
+                                            </div>
+                                        </li>
+                                        if (catIndex % 2 == 0)
+                                        {
+                                            <li class="clearfix visble-xs visible-sm hidden-md hidden-lg"></li>
+                                        }
+                                        if (catIndex % 3 == 0)
+                                        {
+                                            <li class="clearfix hidden-xs hidden-sm visible-md visible-lg"></li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section footerScripts{
+}

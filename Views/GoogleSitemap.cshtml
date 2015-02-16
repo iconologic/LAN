@@ -1,0 +1,36 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+	dynamic home = Umbraco.Content(1053);
+	Response.ContentType = "text/xml";
+}
+@helper traverse(dynamic node){
+	var maxLevelForSitemap = 10; 
+	var values = new Dictionary<string,object>();
+	values.Add("maxLevelForSitemap", maxLevelForSitemap) ;
+	dynamic items = null;
+	if( node.TemplateId > 0 && node.DocumentTypeAlias != "GoogleSitemap" )
+	{
+		items = node.Children.Where("Level <= maxLevelForSitemap", values).Where("TemplateId > 0 && DocumentTypeAlias != \"GoogleSitemap\" && TemplateId > 0");
+
+		if (items != null && items.Count() > 0) 
+		{ 
+			foreach (var item in items) 
+			{
+				if(! item.hideFromNavigation || item.showInSitemap)
+				{
+					<url>
+						<loc>@Html.Raw(Request.Url.Scheme + "://" + Request.Url.Host + item.Url)</loc>
+					</url>
+					@traverse(item)
+				}
+			}
+		}
+	}
+}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>@(Request.Url.Scheme + "://" + Request.Url.Host + home.Url)</loc>
+	</url>
+    @traverse(home)
+</urlset>

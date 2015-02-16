@@ -1,0 +1,47 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@if (CurrentPage.HasValue("relatedProjects"))
+{
+	<div class="row">
+		<div class="project__related row no-gutters">          
+			<h2 class="section__title text-center">Related Projects</h2>
+			@{
+				string[] projectsList = CurrentPage.GetPropertyValue("relatedProjects").ToString().Split(',');
+				int idx = 0;
+				foreach(string proj in projectsList)
+				{
+					dynamic project = Umbraco.Content(Int32.Parse(proj));
+					dynamic sliderMediaSelection = null;
+					if(project.HasProperty("sliderImage") && project.HasValue("sliderImage"))
+					{
+						sliderMediaSelection = new umbraco.cms.businesslogic.media.Media(project.GetPropertyValue("sliderImage"));
+					}
+					string pimg = string.Empty;
+					if( sliderMediaSelection != null && sliderMediaSelection.ContentType.Alias == "Folder" )
+					{
+						pimg = sliderMediaSelection.Children.First().getProperty("umbracoFile").Value.ToString();
+					}
+					else
+					{
+						pimg = sliderMediaSelection.getProperty("umbracoFile").Value.ToString();
+					}
+					
+					idx ++;
+	
+					<div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					  <a href="@project.Url">
+						<img src="@pimg" alt='@project.projectTitle' class="img-responsive" />
+						<div class="project__related--description">
+						  <h4 class="project__related--title text-uppercase">@project.GetPropertyValue("projectTitle")</h4>
+						  <p>@Html.Raw(project.GetPropertyValue("summary"))</p>
+						</div>  
+					  </a>    
+					</div>
+					if( idx == 3 )
+					{
+						break;
+					}
+				}
+			}
+		</div><!-- //.project__related -->
+	</div>
+}

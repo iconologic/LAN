@@ -1,0 +1,134 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var category = new PerspectivesCategory(Model.Content);
+    var currentPage = 1;
+    var pageParam = Request.QueryString["page"];
+    if (!string.IsNullOrEmpty(pageParam))
+    {
+        int.TryParse(pageParam, out currentPage);
+    }
+    var perspectives = category.PerspectivesByPage(currentPage);
+}
+@section headerScripts{
+
+}
+@section mainContent{
+
+
+
+    <div class="container-fluid">
+
+        <!--DESIGN SECTION-->
+        <section>
+
+            <div class="row section__wrapper">
+
+                <!--TITLE DIVIDER-->
+                <div class="container-fluid  featured articles-index">
+
+
+                    <!--TITLE-->
+                    <div class="perspectives__title col-xs-12">
+                        <h2>@category.Name</h2>
+                        <!--<a href="#"> See all design stories <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> </a>-->
+                    </div>
+
+                </div> <!--end TITLE DIVIDER-->
+                @Html.Partial("_FeaturedPerspectives", category)
+
+            </div> <!--end row-->
+
+        </section> <!-- END DESIGN SECTION -->
+
+    </div> <!-- END HEADER FEATURED CONTENT -->
+
+    <div class="main container-fluid">
+        <div class="">
+            <div class="section">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <div class="aside__navigation">
+                            <ul class="nav navbar-nav article__subnav">
+                                <li>
+                                    <a href="#">
+                                        <span class="caret caret-previous"></span>
+                                        <small>All Stories</small>
+                                        <hr />
+                                        <h3 class="aside__nav_title">Article</h3>
+                                    </a>
+                                </li>
+                                <li><a href="#">Sub Category 1</a></li>
+                                <li><a href="#">Sub Category 2</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+
+                        <div class="posts">
+                            @foreach (var perspective in perspectives)
+                            {
+                                <div class="row post">
+                                    <!-- <div class="press__date"><small class="small month">September</small> <span class="day">30</span></div> -->
+                                    <div class="">
+                                        <a href="@perspective.Url"><img src="@perspective.PreviewImage" alt="" class="img-responsive pull-left" /></a>
+                                    </div>
+                                    <div class="panel-body col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                                        <a href="articles-details.html">
+                                            <h2 class="pg-title">@perspective.Title</h2>
+                                            <img src="" alt="" />
+                                        </a>
+                                        <p>@perspective.Excerpt</p>
+                                        <p><a href="@perspective.Url" class="btn btn-default">Read More...</a></p>
+                                    </div>
+                                </div>
+
+                                <hr /><br />
+                            }
+
+
+
+                        </div>
+                        @if (category.Perspectives.Count > category.PerspectivesPerPage)
+                        {
+                            <div class="row posts-pagination">
+                                <ul class="list-inline">
+                                    @*                                @{ var prevDisabled = (currentPage > 1) ? "disabled" : "";}*@
+                                    @*                                <li><a href="@(category.Url)?page=@(currentPage-1)" class="@prevDisabled"><span class="glyphicon glyphicon-chevron-left"></span></a></li>*@
+                                    @if (currentPage > 1)
+                                    {
+                                        <li><a href="@(category.Url)?page=@(currentPage-1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                                    }
+                                    @for (int p = 1; p <= category.PerspectivePages; p++)
+                                    {
+                                        var active = (p == currentPage) ? "active" : "";
+                                        <li><a href="@(category.Url)?page=@p" class="@active">@p</a></li>
+                                    }
+                                    @*                                @{ var nextDisabled = (currentPage < category.PerspectivePages) ? "" : "disabled";}*@
+                                    @*                                <li><a href="@(category.Url)?page=@(currentPage+1)" class="@nextDisabled"><span class="glyphicon glyphicon-chevron-right"></span></a></li>*@
+                                    @if (currentPage < category.PerspectivePages)
+                                    {
+                                        <li><a href="@(category.Url)?page=@(currentPage+1)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main container-fluid bg-image">
+
+    </div>
+
+
+
+}
+
+@section footerScripts{
+
+}

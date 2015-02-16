@@ -1,0 +1,49 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new SearchPage(Model.Content);
+}
+@section headerScripts{
+
+}
+@section mainContent{
+
+
+    <div class="masthead__container masthead__subpage">
+        <div id="masthead" class="masthead">
+            <div class="item active" style='background-image: url(/media/1108/03_000_00202_mk1_n124_medium.jpg);'></div>
+        </div>
+    </div>
+
+
+    <div class="row page__header">
+        <div class="container" style="background: transparent; padding-left: 30px; padding-right: 30px; padding-bottom: 30px;">
+            <h1 class="page__header__title"></h1>
+        </div>
+    </div>
+
+    <div class="main container-fluid" id="search-results">
+        <div class="container">
+
+            <gcse:searchresults-only></gcse:searchresults-only>
+
+
+        </div>
+        <!-- //.container -->
+    </div>
+    <!-- //.main -->
+}
+@section footerScripts{
+    <script>
+        (function () {
+            var cx = '005960544865955762366:wd6uejydovc';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//www.google.com/cse/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();
+    </script>
+}

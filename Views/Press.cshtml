@@ -1,0 +1,236 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new PressPage(Model.Content);
+    var currentPageNumber = 1;
+    if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+    {
+        int.TryParse(Request.QueryString["page"], out currentPageNumber);
+    }
+}
+
+@section headerScripts {
+	<style>
+		a.featured__link {
+			display: block; 
+			width: 100%; 
+			height: 100%; 
+			position: absolute;
+			z-index:1000;
+		}
+	
+		.post:hover > .press__image {
+			opacity: 0.7;
+		}
+	
+		em {
+			color: #00aeef;
+		}
+	</style>
+}
+
+@section mainContent
+{
+    @Html.Partial("_MastHeadSub", page)
+
+    <div class="main container-fluid" style="background:#e7e6e1;">
+        <div class="">
+            <div class="section">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="overflow:visible !important;">
+                        <div class="aside__navigation">
+@*                            @Html.Partial("_PressNav")*@
+                            @Html.Partial("_SideBarNav", page)
+                            <!-- <div class="aside__filter">
+                                <h3 class="text-uppercase">Filter</h3>
+                                <form id="filter-form" action="#" method="post">
+                                    <select id="market-select" class="form-control">
+                                        <option value="0">Select Market</option>
+                                        @foreach (var market in page.MarketFilter)
+                                        {
+                                            <option value="@market.Id">@market.Name</option>
+                                        }
+                                    </select>
+                                    <select id="location-select" class="form-control">
+                                        <option value="0">Select Location</option>
+                                        @foreach (var location in page.LocationFilter)
+                                        {
+                                            <option value="@location.Id">@location.Name</option>
+                                        }
+                                    </select>
+                                    <select id="leader-select" class="form-control">
+                                        <option value="0">Select Person</option>
+                                        @foreach (var leader in page.LeaderFilter)
+                                        {
+                                            <option value="@leader.Id">@leader.Name</option>
+                                        }
+
+
+                                    </select>
+                                </form>
+                            </div> -->
+
+                        </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 press-container">
+
+                        <div class="press" data-bind="visible: filteredVisible() == false">
+                            <h2>Featured Stories</h2>
+                            @foreach (var story in page.FeaturedStories)
+                            {	
+								
+                                <div class="row panel post featured-press">
+									<a href="@story.Url" class="featured__link">
+                                    
+                                    <div class="press__image col-xs-12 col-sm-5 col-md-5 col-lg-5">
+
+                                        <div class="press__date">
+                                            <small class="small month">@story.DisplayDate.ToString("MMMMM")</small>
+                                            <span class="day">@story.DisplayDate.ToString("dd")</span>
+                                            <small class="year">@story.DisplayDate.ToString("yyyy")</small>
+                                        </div>
+
+                                        <a href="@story.Url"><img src="@story.CtaImage" alt="" class="img-responsive pull-left" /></a>
+                                    </div>
+                                    <div class="panel-body press__body col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                                        <a href="@story.Url">
+                                            <div class="press__title">@story.Title</div>
+                                        </a>
+                                        <p>@Html.Raw(story.CtaCopy)</p>
+                                    </div>
+									</a>
+                                </div>
+								
+                            }
+
+                            <hr />
+
+                            <h2 id="bydate">Stories by Date</h2>
+                            @foreach (var story in page.StoriesByPage(currentPageNumber))
+                            {
+                                <div class="row panel post">
+									<a href="@story.Url" class="featured__link">
+                                    
+                                    <div class="press__image col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                        <div class="press__date">
+                                            <small class="small month">@story.DisplayDate.ToString("MMMMM")</small>
+                                            <span class="day">@story.DisplayDate.ToString("dd")</span>
+                                            <small class="year">@story.DisplayDate.ToString("yyyy")</small>
+                                        </div>
+                                        <a href="@story.Url"><img src="@story.CtaImage" alt="" class="img-responsive pull-left" /></a>
+                                    </div>
+                                    <div class="panel-body press__body col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                                        <a href="@story.Url">
+                                            <div class="press__title">@story.Title</div>
+                                        </a>
+                                        <p> @Html.Raw(story.CtaCopy)</p>
+                                    </div>
+									</a>
+                                </div>
+                            }
+
+
+                            @if (page.StoryPages > 1)
+                            {
+                                var prevDisabled = (currentPageNumber == 1) ? "disabled" : string.Empty;
+                                var nextDisabled = (currentPageNumber == page.StoryPages) ? "disabled" : string.Empty;
+                                <div class="row posts-pagination">
+                                    <ul class="list-inline">
+                                        <li><a href="@(page.Url)?page=@(currentPageNumber-1)#bydate" class="@prevDisabled">&lt;</a></li>
+                                        @for (var i = 1; i <= page.StoryPages; i++)
+                                        {
+                                            var activeClass = (i == currentPageNumber) ? "active" : "";
+                                            <li><a href="@(page.Url)?page=@(i)#bydate" class="@activeClass">@i</a></li>
+                                        }
+                                        <li><a href="@(page.Url)?page=@(currentPageNumber+1)#bydate" class="@nextDisabled">&gt;</a></li>
+                                    </ul>
+                                </div>
+                            }
+
+
+                        </div>
+
+                        <div class="press" data-bind="visible: filteredVisible">
+
+                            
+                            <h2 id="filtered-title">Filtered Stories</h2>
+                            <h2 data-bind="visible: featuredStories().length > 0">Featured Stories</h2>
+                            <div data-bind="foreach: featuredStories">
+                                <div class="row panel post featured-press">
+                                   
+                                    <div class="press__image col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                         <div class="press__date">
+                                            <small class="small month" data-bind="text: Month"></small>
+                                            <span class="day" data-bind="text: Day"></span>
+                                            <small class="year" data-bind="text: Year"></small>
+                                        </div>
+                                        <a href="#" data-bind="attr: {href: Url}"><img src="" data-bind="attr: {src: ImageUrl}" alt="" class="img-responsive pull-left" /></a>
+                                    </div>
+                                    <div class="panel-body press__body col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                                        <a href="#" data-bind="attr: {href: Url}">
+                                            <div class="press__title" data-bind="text: Title"></div>
+                                        </a>
+                                        <p data-bind="html: Copy"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 id="bydate" data-bind="visible: storiesByDate().length > 0">
+                                Stories by Date
+                            </h2>
+                            <div data-bind="foreach: storiesByDate">
+                                <div class="row panel post">
+                                    
+                                    <div class="press__image col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                        <div class="press__date">
+                                            <small class="small month" data-bind="text: Month"></small>
+                                            <span class="day" data-bind="text: Day"></span>
+                                            <small class="year" data-bind="text: Year"></small>
+                                        </div>
+                                        <a href="#" data-bind="attr: {href: Url}"><img src="" data-bind="attr: {src: ImageUrl}" alt="" class="img-responsive pull-left" /></a>
+                                    </div>
+                                    <div class="panel-body press__body col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                                        <a href="#" data-bind="attr: {href: Url}">
+                                            <div class="press__title" data-bind="text: Title"></div>
+                                        </a>
+                                        <p data-bind="html: Copy"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-bind="visible: emptyResults">
+                                <p>No Results</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section footerScripts
+{
+
+    <script src="~/Scripts/knockout-3.2.0.js"></script>
+    <script src="~/Scripts/press.js"></script>
+    <script src="~/Scripts/jQuery.succinct.min.js"></script>
+
+    <script src="~/Scripts/_libs/chosen_v1.3.0/chosen.jquery.min.js"></script>
+    <script>
+    /* custom select form controls [requires chosen.js] */
+    $("#market-select, #location-select, #leader-select").chosen({
+        'disable_search': true
+    });
+
+    //Reduce text size with trancate plugin
+
+    $('.panel-body').children('p').succinct({
+            size: 150
+    });
+
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<CommunityStory>
+@for (var storyCounter = 0; Model.Count() > storyCounter; storyCounter += 3)
+{
+
+    <div class="row no-gutters" style="">
+        @foreach (var story in Model.Skip(storyCounter).Take(3))
+        {
+            <div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-responsive" style="height:inherit;">
+                    <a href="@story.Url">
+                        <img src="@Website.ImageUrl(story.CtaImage, 380, 240)" class="project__related--image img-responsive" style="bottom:auto;" />
+                        <div class="img-caption">
+                            @story.Title
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+}

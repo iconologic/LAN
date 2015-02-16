@@ -1,0 +1,25 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+	dynamic homeNode = CurrentPage.AncestorOrSelf(1);
+    dynamic settings = Umbraco.Content(1055);
+	string ttl = (! string.IsNullOrEmpty(Umbraco.Field("metaOGTitle").ToString())) ? Umbraco.Field("metaOGTitle").ToString() : settings.GetPropertyValue("siteName") + " - " + Umbraco.Field("metaTitle").ToString();
+	string des = (! string.IsNullOrEmpty(Umbraco.Field("metaOGDescription").ToString())) ? Umbraco.Field("metaOGDescription").ToString() : Umbraco.Field("metaDescription").ToString();
+	string favico = Umbraco.TypedMedia(settings.GetPropertyValue("favicon")).Url;
+	
+	<title>@Html.Raw(settings.GetPropertyValue("siteName") + " - " + Umbraco.Field("metaTitle"))</title>
+	<meta name="description" content='@Html.Raw(Umbraco.Field("metaDescription").ToString())' />
+	<meta name="keywords" content='@Html.Raw(Umbraco.Field("metaKeywords").ToString())' />
+	<meta name="author" content='@settings.GetPropertyValue("author")' />
+	<meta name="og:title" content='@Html.Raw(ttl)' />
+	<meta name="og:description" content='@Html.Raw(des)' />
+	<meta name="og:url" content='@(Request.Url.Scheme + "://" + Request.Url.Host + CurrentPage.Url)' />
+	if(CurrentPage.HasValue("imageUrl") && ! string.IsNullOrEmpty(CurrentPage.GetPropertyValue("imageUrl").ToString()))
+	{
+		string img = Umbraco.TypedMedia(CurrentPage.GetPropertyValue("imageUrl")).Url;
+		<meta name="og:image" content='@(Request.Url.Scheme + "://" + Request.Url.Host + img)' />
+	}
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="@favico">
+}

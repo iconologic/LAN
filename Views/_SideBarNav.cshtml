@@ -1,0 +1,43 @@
+﻿@model PageItem
+<div style="width:100%;overflow-y:visible;">
+    <div class="aside__navigation">
+        <ul class="nav navbar-nav article__subnav">
+            <li>
+                <a href="@Model.Url" class="aside__nav_title">
+                    <h3>@Model.NavigationTitle</h3>
+                </a>
+            </li>
+            @foreach (var child in Model.ChildPagesForNavigation)
+            {
+                var activeClass = child.IsCurrentPage ? "active" : string.Empty;
+                if (child.ShowChildrenInNavigation && child.Children<PageItem>().Any())
+                {
+                    var catClass = child.ChildPagesForNavigation.Any(x => x.IsCurrentPage) ? "open" : string.Empty;
+                    <li class="dropdown @catClass @activeClass">
+                        <a href="#@child.HtmlId" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@child.Name @* <span class="pull-right caret caret-next text-right vertical-center"></span> *@<i class="pull-right text-right icon fa fa-angle-right" style="font-size:1.25em;line-height:1;color:#898989;"></i></a>
+                        <ul class="dropdown-menu">                        
+                            <li>
+                                <a class="go-back"><span class="caret caret-previous"></span> <small><strong>@Model.NavigationTitle</strong></small></a>
+                                <a href="@child.Url" class="aside__nav_title">
+                                    <h3>@child.NavigationTitle</h3>
+                                </a>
+                            </li>
+                            @foreach (var child2 in child.ChildPages)
+                            {
+                                var leaderClass = child2.IsCurrentPage ? "active" : string.Empty;
+                                <li class="@leaderClass"><a href="@child2.Url">@child2.NavigationTitle</a></li>
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                  
+                    <li class="@activeClass"><a href="@child.Url">@child.NavigationTitle</a></li>
+                }
+
+            }
+
+        </ul>
+    </div>
+</div>

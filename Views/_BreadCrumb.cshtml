@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+
+<div class="container-fluid">
+        <div class="vertical-center page__header">
+            <div class="section">
+                <div class="row">
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-sm-push-3 col-md-push-3 col-lg-push-3">
+                        <h1 class="page__header__title">@CurrentPage.navigationName</h1>
+                        <nav class="page__breadcrumb__nav small">
+                            @foreach (var crumb in Website.BreadCrumb(Model.Content))
+                            {
+                                if (crumb.IsCurrentPage)
+                                {
+                                    <span>@crumb.NavigationTitle</span>
+                                }
+                                else
+                                {
+                                    <a href="@crumb.Url">@crumb.NavigationTitle</a> <text>/</text>
+                                }
+                            }
+                            
+                        </nav>
+                    </div>
+                </div>
+            </div>                    
+        </div>
+</div>

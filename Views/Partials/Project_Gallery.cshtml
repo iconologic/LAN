@@ -1,0 +1,48 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<div class="row">
+	<div class="project__gallery_thumbnails row row-xs-height no-gutters" style="max-height:245px;overflow:hidden;">
+		@for(int i = 1; i < 5; i++)
+		{
+			dynamic galImage = null;
+			string url = string.Empty;
+			string ttl = string.Empty;
+			if( i == 1 && CurrentPage.HasValue("galleryImage1") )
+			{
+				galImage = Umbraco.Media(CurrentPage.GetPropertyValue("galleryImage1"));
+				url = galImage.umbracoFile;
+				ttl = galImage.title;
+			}
+			else if( i == 2 && CurrentPage.HasValue("galleryImage2"))
+			{
+				galImage = Umbraco.Media(CurrentPage.GetPropertyValue("galleryImage2"));
+				url = galImage.umbracoFile;
+				ttl = galImage.title;
+			}
+			else if( i == 3 && CurrentPage.HasValue("galleryImage3") )
+			{
+				galImage = Umbraco.Media(CurrentPage.GetPropertyValue("galleryImage3"));
+				url = galImage.umbracoFile;
+				ttl = galImage.title;
+			}
+			else if( i == 4 && CurrentPage.HasValue("galleryImage4") )
+			{
+				galImage = Umbraco.Media(CurrentPage.GetPropertyValue("galleryImage4"));
+				url = galImage.umbracoFile;
+				ttl = galImage.title;
+			}
+			if( ! string.IsNullOrEmpty(url))
+			{
+				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 col-sm-height">
+					<a href="@url"><img src="@url" alt='@ttl' class="img-responsive" style="position: relative;top: 0;left: 0;min-width: auto;min-height: auto;" /></a>
+				</div>
+			}
+		}
+	</div> 
+	<div class="project__gallery_slider">
+		<div class="project__gallery_overlay"></div>
+		<div class="project__gallery">
+			<a href="#" class="project__gallery_close"><span class="glyphicon glyphicon-remove"><span class="sr-only">Close</span></span></a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,5 @@
+    .col-offset-right {margin-right: 0;}
+    @media (min-width: 768px) {
+      .col-offset-right {margin-right: 30px;}
+    }  
+/* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

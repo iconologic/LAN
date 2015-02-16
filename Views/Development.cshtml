@@ -1,0 +1,40 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new DevelopmentPage(Model.Content);
+}
+@section headerScripts{
+
+}
+@section mainContent{
+
+   @Html.Partial("_MastHeadSub", page)
+
+
+    <div class="main container-fluid">
+        <div class="container">
+            <div class="section section__sidebar row">
+                <div class="">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+
+                        @Html.Partial("_SideBarNav", page.ParentPage)
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                        <article class="">
+                            @Html.Partial("_ImageSlider", page.Images) 
+                            <h1 class="article__title">@page.Heading</h1>
+                            @Html.Raw(page.Copy)
+
+                        </article>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section footerScripts{
+
+}

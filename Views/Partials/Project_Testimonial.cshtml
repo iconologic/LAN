@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	if( CurrentPage.HasValue("testimonialText"))
+	{
+		<div class="container container-xs-height">
+			<div class="section project__testimonial row row-xs-height">
+				<div class="project__testimonial--quote col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-height">
+					<blockquote>@Html.Raw(CurrentPage.GetPropertyValue("testimonialText"))</blockquote>
+				</div>
+				<div class="project__testimonial--byline col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xs-height">
+					<p><strong>@Html.Raw(CurrentPage.GetPropertyValue("testimonialName"))</strong><br />@Html.Raw(CurrentPage.GetPropertyValue("testimonialTitle"))</p>
+					<p>@Html.Raw(CurrentPage.GetPropertyValue("testimonialLocation"))</p>
+				</div>        
+			</div><!-- //.project__testimonial -->
+		</div>
+	}
+}

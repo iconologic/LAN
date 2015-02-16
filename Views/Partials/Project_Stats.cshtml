@@ -1,0 +1,43 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	if( CurrentPage.HasValue("statsPercentTitle") || CurrentPage.HasValue("statsFactTitle") || CurrentPage.HasValue("statsNumberTitle"))
+	{
+		<div class="row">
+			<div class="project__stats row-xs-height no-gutters">
+				@if( CurrentPage.HasValue("statsPercentTitle"))
+				{
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-sm-height">
+						<div class="col-xs-12 col-sm-12 col-lg-12">  
+							<h3 class="project__stats--title lead">@Html.Raw(CurrentPage.GetPropertyValue("statsPercentTitle"))</h3>
+							<div class="small">
+								<p>@Html.Raw(CurrentPage.GetPropertyValue("statsPercent"))</p>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix visible-xs-block hidden-sm"></div>
+				}
+				@if( CurrentPage.HasValue("statsFactTitle"))
+				{
+					<div class="project__factoid col-xs-12 col-sm-4 col-md-4 col-lg-4 col-sm-height">
+						<div class="col-xs-12 col-sm-12 col-lg-12">  
+							<h3 class="project__stats--title--fact">@Html.Raw(CurrentPage.GetPropertyValue("statsFactTitle"))</h3>
+							<p>@Html.Raw(CurrentPage.GetPropertyValue("statsFact"))</p>
+						</div>
+					</div>
+					<div class="clearfix visible-xs-block hidden-sm"></div>
+				}
+				@if( CurrentPage.HasValue("statsNumberTitle"))
+				{
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-sm-height">
+						<div class="col-xs-12 col-sm-12 col-lg-12">
+							<h3 class="project__stats--title lead">@Html.Raw(CurrentPage.GetPropertyValue("statsNumberTitle"))</h3>
+							<div class="small">
+								<p>@Html.Raw(CurrentPage.GetPropertyValue("statsNumber"))</p>
+							</div>		
+						</div>  
+					</div>
+				}
+			</div>
+		</div>
+	}
+}

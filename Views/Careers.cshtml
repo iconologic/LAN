@@ -1,0 +1,165 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    var page = new CareersPage(Model.Content);
+}
+@section headerScripts{
+	<style>
+		.call-to-action__container {
+			max-width: 515px !important; 
+		}
+		.call-to-action__title {
+			line-height: 33px;
+			color:#777;
+			display:inline;
+			font-weight:300;
+			font-family:Roboto Light, sans-serif;
+			font-size:16px;
+			font-weight: bold;
+		}
+		
+		.btn-red {
+			color: #fff;
+			background-color: #9c3022;
+			border-color: #9c3022;
+		}
+	</style>
+}
+@section mainContent{
+    <div class="masthead__container masthead__careers">
+        @Html.Partial("_MastHead", page.HeroImage)
+
+
+        <div class="page__header vertical-center text-center">
+            <div class="">
+                <h1 class="page__header__title">@page.Heading</h1>
+                <div class="masthead__tagline hidden-xs hidden-sm">
+                    @page.Intro
+                </div>
+                <!-- <nav class="page__header__nav">
+                  <a href="#contact1" class="scrollTo">Contact</a>
+                  <a href="#marketProjects" class="scrollTo">View Projects</a>
+                </nav> -->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid">
+            
+        <div class="section row">
+          <div class="text-center call-to-action__container"> 
+			  	<div class="col-sm-6">
+                	<h3 class="call-to-action__title">@page.CallToAction</h3>
+				</div>
+				<div class="col-sm-6">
+					<a href="@page.CallToActionUrl" style="float:left;">
+						<button class="btn btn-default btn-red">@page.OpportunitiesButtonText</button>
+					</a>
+				</div>
+                @*  | <a href="@page.FaqUrl" class="btn btn-default">@page.FaqButtonText</a> *@
+          </div>
+        </div>  
+
+        <div class="row page__section-img inverted text">
+            <div class="container">
+                <!-- <div class="page__section-img pull-right col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                         <img src="images/about/bg-about-overview.jpg" alt="" class="img-responsive" />
+                     </div> -->
+                <div class="page__header vertical-center text-center">
+                    <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1" style="">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="videoWrapper"><iframe src="//www.youtube.com/embed/@page.YouTubeId?rel=0&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
+                            <h1 class="pg-title">@page.CultureHeading</h1>
+                            @Html.Raw(page.CultureCopy)
+                            <nav class="page__header__nav">
+                                <a href="@page.CultureUrl" class="btn btn-default btn-cerulean">@page.SeeAllVideosButtonText</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row page__section-img">
+          <div class="container-fluid" style="">
+            <img src="@page.DevelopmentBackgroundImage" alt="" class="cover" />
+          
+            <div class="page__header vertical-center text-center">
+              <div class="">
+                <h1 class="page__header__title">@page.DevelopmentHeading</h1>
+                @Html.Raw(page.DevelopmentCopy)
+                <nav class="page__header__nav">
+                    <a href="@page.DevAndEduUrl" class="btn btn-default">@page.DevelopmentReadMoreText</a>
+                </nav>
+              </div>  
+            </div>
+          </div>  
+        </div>
+
+
+        <div class="row page__section-img inverted">  
+          <div class="container">
+
+            <div class="page__header vertical-center text-center">
+                    <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1" style="">
+                        
+
+
+                        <div class="">
+                          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
+                            <h1 class="pg-title">@page.CommunityHeading</h1>
+                            @Html.Raw(page.CommunityCopy)
+                            <nav class="page__header__nav">
+                                <a href="@page.CommunityUrl" class="btn btn-default btn-cerulean">@page.CommunityCta</a>
+                            </nav>
+                          </div>
+                          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
+                            <div class="row" style="margin-top: 5em;">
+                              @foreach (var story in page.CommunityStories)
+                                {
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="col-responsive" style="height:inherit;">
+                                            <a href="@story.Url">
+                                                <img src="@Website.ImageUrl(story.CtaImage, 167, 106)" class="img-responsive" style="bottom: auto;">
+                                                <span style="position: relative; top: auto; bottom: 0; left: 0; right: 0; color: #000000; vertical-align: bottom; padding: 10px 7px 15px; font-family: 'Roboto', sans-serif; font-weight: 500;">@story.Title</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                          </div>
+                        </div>  
+                     
+
+                    </div>
+            </div>            
+
+          </div>
+        </div>
+
+        
+        <div class="row page__section-img" style="background-color:#00aef0;">
+            <div class="container-fluid">
+                <div class="page__header vertical-center text-center">
+                    <h1 class="page__header__title">@page.ApplyHeading</h1>
+                    @page.ApplyCopy
+                    <nav class="page__header__nav">
+                        <a href="@page.CallToActionUrl" class="btn btn-default">@page.CareersButtonText</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="main container-fluid bg-image">
+
+    </div>
+}
+@section footerScripts{
+
+}

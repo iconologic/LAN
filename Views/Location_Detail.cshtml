@@ -1,0 +1,314 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+    dynamic sliderMediaSelection = null;
+    int idx = 0;
+    if (CurrentPage.HasProperty("sliderImage") && CurrentPage.HasValue("sliderImage"))
+    {
+        sliderMediaSelection = new umbraco.cms.businesslogic.media.Media(CurrentPage.GetPropertyValue("sliderImage"));
+    }
+
+    var location = new Location(Model.Content);
+}
+
+@section headerScripts{
+
+}
+
+@section mainContent{
+    <div class="masthead__container">
+        @if (sliderMediaSelection != null)
+        {
+            <div id="masthead" class="masthead">
+                @if (sliderMediaSelection != null && sliderMediaSelection.ContentType.Alias == "Folder")
+                {
+                    <div id="carousel-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            @foreach (dynamic child in sliderMediaSelection.Children)
+                            {
+                                string cls = string.Empty;
+                                if (idx == 0)
+                                {
+                                    cls = "class=\"active\"";
+                                }
+                                <li data-target="#carousel-generic" data-slide-to="@idx.ToString()" @Html.Raw(cls)></li>
+                                idx++;
+                            }
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            @{
+                            idx = 0;
+                            foreach (dynamic child in sliderMediaSelection.Children)
+                            {
+                                string img = child.getProperty("umbracoFile").Value.ToString();
+                                string cls = "item";
+                                if (idx == 0)
+                                {
+                                    cls += " active";
+                                }
+                                <div class="@cls" style="background-image:url(@Html.Raw(img));">
+                                    @* <div class="container carousel-caption">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 masthead__content">
+                                            <span>@Html.Raw(child.GetPropertyValue("projectTYpe")):</span><h2 class="carousel-caption__title">@Html.Raw(child.GetPropertyValue("projectName"))</h2>
+                                            </div><!-- //.masthead__content -->
+                                        </div><!-- //.row -->
+                                        </div> *@
+                                </div>
+                                idx++;
+                            }
+                            }
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div><!-- //.carousel -->
+                }
+                else
+                {
+                    <div class="item active" style='background-image: url(@sliderMediaSelection.getProperty("umbracoFile").Value.ToString());'></div>
+                }
+            </div>
+        }
+
+        <div class="page__header vertical-center text-center locations__header">
+            <div class="container">
+                <h1 class="page__header__title">@location.HeadingOverlay</h1>
+                <p class="locations__meta">
+                    @location.CurrentTime<br />
+                    @if (location.IsWeatherAvailable)
+                    {
+                        <span>Currently @(location.CurrentTemperature)&deg;</span>
+                    }
+
+                </p>
+                @if (!string.IsNullOrEmpty(@location.StatementLine2))
+                {
+                <div class="locations__tagline">
+                    <h2>Today, we are working on:</h2>
+                    <p>@Html.Raw(location.StatementLine2)</p>                    
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="main container-fluid">
+        <div class="container location-overview">
+            <div class="section row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-md-push-4 col-lg-push-4">
+                    <h2 class="section__title">Overview</h2>
+                    <div class="hr">
+                        @Html.Raw(location.Overview)
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-md-pull-8 col-lg-pull-8">
+                    <h2 class="section__title border-bottom border-bottom-arrow">Contact</h2>
+                    <div class="hr hr-arrow">
+                        <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            <p>
+                                <strong>@location.ContactName</strong><br />
+                                @location.ContactTitle
+                            </p>
+                            <p>
+                            <p>@Html.Raw(Website.EmailLink(location.ContactEmail))</p>
+                            </p>
+                        </div>
+                        <address class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            @Html.Raw(location.ContactAddress)
+                            <div>@if (!string.IsNullOrEmpty(@location.ContactPhone))
+                                {
+                                <span>P @location.ContactPhone</span>
+                                }
+                            </div>
+                            <div>@if (!string.IsNullOrEmpty(@location.ContactFax))
+                                {
+                                <span>F @location.ContactFax</span>
+                                }
+                            </div>
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="section row">
+                @if (location.Leaders.Any())
+                {
+                    <a name="marketContact" id="marketContact"></a>
+                    <h1 class="section__title text-center">@location.Name Leadership</h1>
+                    @Html.Partial("_Leaders", location.Leaders)
+                }
+            </div>
+            @*
+                <div class="section">
+                  <h2 class="section__title text-center">Inside the LOCATION NAME</h2>
+                  <div class="container container-xs-height gallery__tile">
+                    <div class="row no-gutters row-xs-height" style="height:inherit;">
+                      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-height align-top" style="overflow:hidden;">
+                        <div class="row" style="height:32.38095%;">
+                          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 align-top" style="overflow:hidden;height:100%;">
+                            <a href="#" class="cover"><img src="images/gallery-tile-1.jpg" alt="" style="" /></a>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 align-top" style="overflow:hidden;height:100%;">
+                            <a href="#" class="cover"><img src="images/gallery-tile-2.jpg" alt="" /></a>
+                          </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 align-top" style="overflow:hidden;height:47.3469%;">
+                          <a href="#" class="cover"><img src="images/gallery-tile-5.jpg" alt="" /></a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 align-middle" style="height:20.2721%;">
+                          <blockquote>We’ve done 16 projects over the last 23 years with just one of our many clients</blockquote>
+                        </div>
+                      </div>
+                      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-height align-top" style="overflow:hidden;height:inherit;">
+                        <div class="" style="overflow:hidden;height:61.4966%;position:relative;">
+                          <a href="#" class="cover"><img src="images/gallery-tile-3.jpg" alt="" /></a>
+                        </div>
+                        <div class="" style="overflow:hidden;height:38.6395%;position:relative;">
+                          <a href="#" class="cover"><img src="images/gallery-tile-4.jpg" alt="" /></a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+            *@
+            <!--
+            <div class="container container-xs-height gallery__tile">
+              <div class="row no-gutters row-xs-height" style="height:inherit;">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-height align-top" style="overflow:hidden;">
+                  <div class="row" style="height:32.38095%;">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 align-top" style="overflow:hidden;height:100%;">
+                      <a href="#" class="cover"><img src="images/gallery-tile-3.jpg" alt="" /></a>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 align-top" style="overflow:hidden;height:100%;">
+                      <a href="#" class="cover"><img src="images/home_template_7_3_08.jpg" alt="" /></a>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 align-top" style="overflow:hidden;height:47.3469%;">
+                    <a href="#" class="cover"><img src="images/img-graph1.png" alt="" /></a>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 align-middle" style="height:20.2721%;">
+                    <blockquote>We’ve done 16 projects over the last 23 years with just one of our many clients</blockquote>
+                  </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-height align-top" style="overflow:hidden;height:inherit;">
+                  <div class="" style="overflow:hidden;height:61.4966%;position:relative;">
+                    <a href="#" class="cover"><img src="images/041_01602_000_N30_medium_01_cropped.jpg" alt="" /></a>
+                  </div>
+                  <div class="" style="overflow:hidden;height:38.6395%;position:relative;">
+                    <a href="#" class="cover"><img src="images/image-380x215.jpg" alt="" /></a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+             -->
+
+        </div>
+
+    </div><!-- //.container -->
+    @* <div class="container">
+
+            <div class="section row post">
+
+                <header class="post-header">
+                    <h2 class="section__title post-title">@Html.Raw(CurrentPage.GetPropertyValue("contentTitle"))</h2>
+                </header>
+
+                <article class="post-content">
+                    @RenderPage("~/MacroScripts/obfuscate_email.cshtml", CurrentPage.GetPropertyValue("content").ToString())
+                </article>
+
+            </div>
+
+        </div> *@
+    <!-- //.container -->
+    <!-- //.main -->
+    @Html.Partial("_ProjectSlider", new ProjectSlider(){ Projects = location.RelatedProjects, Heading = location.RelatedProjectsHeading})
+}
+
+@section footerScripts{
+    @if (CurrentPage.HasProperty("relatedProjects") && CurrentPage.HasValue("relatedProjects"))
+    {
+        <script>
+          //            $('#carousel-locations-page .item').each(function (e) {
+//                //$(this).css({'position':   'absolute', 'visibility': 'hidden', 'display':    'block'});
+//                $(this).show();
+//                //alert($(this).children('.project__testimonial').height());
+//                $(this).find('.project__testimonial').css('margin-top', -($(this).find('.project__testimonial').height()));
+//                $(this).hide().removeAttr('style');
+//                //$(this).css('display','none');
+//                //$(this+'.active').css('display','block');
+//            });
+
+            var carouselContainer = $('#carousel-locations-page');
+
+            //hide old project div
+            carouselContainer.find('.inside').hide();
+
+            //Get & Set captions text and link for mobile
+            var outside = '.outside';
+            var active = $('.item.active');
+            var projectTitle = '.project-title-text';
+            var projectLocation = '.project-location-text';
+
+            //Get
+            var currentTitle = active.find(projectTitle).html();
+            var currentLocation = active.find(projectLocation).text();
+            var currentLink = active.find('.cover').find('a').attr('href');
+
+            //Replace
+            carouselContainer.find(outside).find(projectTitle).html(currentTitle).closest('div').find(projectLocation).text(currentLocation);
+            carouselContainer.find(outside).find('a').attr('href', currentLink);
+            carouselContainer.find('.view-project-mobile').find('a').attr('href', currentLink);
+
+
+            carouselContainer.on('slid.bs.carousel', function () {
+
+                var activeItem = $(this).find('.item.active');
+                var testimonial = activeItem.attr('data-testimonial');
+                if (testimonial) {
+                    $('#' + testimonial).slideDown(500);
+                }
+
+                //reset varaible cache to what is active
+                active = $('.item.active');
+                projectTitle = '.project-title-text';
+                projectLocation = '.project-location-text';
+
+
+                //get new item
+                currentTitle = active.find(projectTitle).html();
+                currentLocation = active.find(projectLocation).text();
+                currentLink = active.find('.cover').find('a').attr('href');
+
+                //replace old with new
+                $(outside).find(projectTitle).html(currentTitle);
+                $(outside).find(projectLocation).text(currentLocation);
+                $(outside).find('a').attr('href', currentLink);
+                carouselContainer.find('.view-project-mobile').find('a').attr('href', currentLink);
+
+
+            });
+
+            carouselContainer.on('slide.bs.carousel', function () {
+                var activeItem = $(this).find('.item.active');
+                var testimonial = activeItem.attr('data-testimonial');
+                if (testimonial) {
+                    $('#' + testimonial).slideUp(300);
+                }
+            });
+        </script>
+    }
+}
