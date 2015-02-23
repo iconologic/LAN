@@ -13,7 +13,16 @@
 	color: @cararra;
 	font-size:.8em;
 	-webkit-font-smoothing: antialiased;
-  
+
+  //LAN LOGO & TEXT
+  h5{
+    text-align: center;
+  }
+
+  p{
+    text-align: center;
+  }
+ 
   // Container Color
   .container { background-color: transparent; }
   
@@ -78,12 +87,22 @@
   }
   
   // Responsive Styles
-  /* Mobile */
-  @media (max-width:@screen-sm-min) { }
+
   /* Tablet */
-  @media (min-width:@screen-sm-min) { }
+  @media (min-width:@screen-sm-min) { 
+
+  }
+
   /* Desktop--Small */
-  @media (min-width:@screen-md-min) { }
+  @media (min-width:@screen-md-min) {
+    h5{
+      text-align: left;
+    }
+
+    p{
+      text-align: left;
+    }
+   }
   /* Desktop--Large */
   @media (min-width:@screen-lg-min) { }
 

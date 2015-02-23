@@ -5,24 +5,7 @@
 }
 @section headerScripts{
 	<style>
-		.call-to-action__container {
-			max-width: 515px !important; 
-		}
-		.call-to-action__title {
-			line-height: 33px;
-			color:#777;
-			display:inline;
-			font-weight:300;
-			font-family:Roboto Light, sans-serif;
-			font-size:16px;
-			font-weight: bold;
-		}
-		
-		.btn-red {
-			color: #fff;
-			background-color: #9c3022;
-			border-color: #9c3022;
-		}
+
 	</style>
 }
 @section mainContent{
@@ -47,14 +30,14 @@
 
     <div class="container-fluid">
             
-        <div class="section row">
+        <div class="section row section__careers">
           <div class="text-center call-to-action__container"> 
-			  	<div class="col-sm-6">
-                	<h3 class="call-to-action__title">@page.CallToAction</h3>
+			  	<div class="col-sm-6 call-to-action__title">
+                	<h3>@page.CallToAction</h3>
 				</div>
-				<div class="col-sm-6">
-					<a href="@page.CallToActionUrl" style="float:left;">
-						<button class="btn btn-default btn-red">@page.OpportunitiesButtonText</button>
+				<div class="col-sm-6 call-to-action__btn">
+					<a href="@page.CallToActionUrl">
+						<button class="btn btn-lg btn-lan">@page.OpportunitiesButtonText</button>
 					</a>
 				</div>
                 @*  | <a href="@page.FaqUrl" class="btn btn-default">@page.FaqButtonText</a> *@
@@ -142,7 +125,7 @@
         </div>
 
         
-        <div class="row page__section-img" style="background-color:#00aef0;">
+        <div class="row page__section-img" style="background-color:#0061aa;">
             <div class="container-fluid">
                 <div class="page__header vertical-center text-center">
                     <h1 class="page__header__title">@page.ApplyHeading</h1>

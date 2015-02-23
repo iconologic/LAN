@@ -287,15 +287,8 @@ article {
 	> a {position:absolute;top:0;left:0;color:#ffffff;background:@cerulean;width:100%;height:100%;}
 }
 
-/*.header__description {background:@quillGray;font-size:.8em;display:none;
-	@media (min-width:@screen-sm-min) {
-		display:block;
-		font-size:.9em;
-	}
-}*/
-
 .desktopNav{
-  @media (min-width: 769px) and (max-width: @screen-sm-max) {
+  @media (min-width: 769px) and (max-width: @screen-md-max) {
     .navbar-header{
       width:35% !important;
     }
@@ -306,52 +299,48 @@ article {
   height: inherit;
   display: table-cell;  
   vertical-align: middle;  
-  // padding-right: 4em;
-  /*padding:.6666em 0;*/
-  
-  /*@media (min-width:@screen-sm-min) {		
-		float:left;
-	}*/
 
-  background: url(../images/logo-leoadaly.png) no-repeat center transparent;
 
-  @media (min-width: @screen-sm-min) {
+  background: url(../images/logos/LAN-logo-blue.png) no-repeat center transparent;
+
+  @media (min-width: @screen-xs-max) {
      background-size: 156px 31px;
      margin-left: 40px;
   }
 
-  @media (min-width: 769px) and (max-width: @screen-sm-max) {
-     background-size: 141px 28px;
+  @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+     background-size: 160px 30px;
   }
 
   @media (min-width: @screen-md-min) {
-     background-size: 156px 31px;
+      background-size: 200px 40px;
+      margin-left: 0;
   }
 
-  @media (min-width: @screen-lg-min) {
-     background-size: 200px 40px;
-     margin-left: 0;
-  }
+  // @media (min-width: @screen-lg-min) {
+  //    background-size: 200px 40px;
+  //    margin-left: 0;
+  // }
 
 
    /* CSS for high-resolution devices */
-    @media only screen and (min-width: @screen-sm-min) and (-Webkit-min-device-pixel-ratio: 1.5),
-    only screen and (min-width: @screen-sm-min) and (-moz-min-device-pixel-ratio: 1.5),
-    only screen and (min-width: @screen-sm-min) and (-o-min-device-pixel-ratio: 3/2),
-    only screen and (min-width: @screen-sm-min) and (min-device-pixel-ratio: 1.5) {
+    // @media only screen and (min-width: @screen-sm-min) and (-Webkit-min-device-pixel-ratio: 1.5),
+    // only screen and (min-width: @screen-sm-min) and (-moz-min-device-pixel-ratio: 1.5),
+    // only screen and (min-width: @screen-sm-min) and (-o-min-device-pixel-ratio: 3/2),
+    // only screen and (min-width: @screen-sm-min) and (min-device-pixel-ratio: 1.5) {
         
-            background: url(../images/LAD-logo-black2x.png) no-repeat center transparent;
-            background-size: 156px 31px;
+    //         background: url(../images/logos/LAN-logo-blue2x.png) no-repeat center transparent;
+    //         background-size: 156px 31px;
         
-    }
+    // }
  
     @media only screen and (min-width: @screen-lg-min) and (-Webkit-min-device-pixel-ratio: 1.5),
     only screen and (min-width: @screen-lg-min) and (-moz-min-device-pixel-ratio: 1.5),
     only screen and (min-width: @screen-lg-min) and (-o-min-device-pixel-ratio: 3/2),
     only screen and (min-width: @screen-lg-min) and (min-device-pixel-ratio: 1.5) {
         
-            background: url(../images/LAD-logo-black2x.png) no-repeat center transparent;
-            background-size: 200px 40px;
+            background: url(../images/logos/LAN-logo-blue2x.png) no-repeat center transparent;
+             background-size: 200px 40px;
         
     }
 
@@ -388,19 +377,23 @@ a.header__logo:hover img {
 
   width:200px;
 
-  @media (max-width: @screen-sm-min) {
+  @media (max-width: @screen-xs-max) {
     margin-left: 10px;
   }
 
-  background: url(../images/logo-leoadaly.png) no-repeat center transparent;
+  @media (min-width: @screen-sm-min) {
+    margin-left: 0px;
+  }
+
+  background: url(../images/logos/LAN-logo-blue.png) no-repeat center transparent;
 
   @media only screen and (-Webkit-min-device-pixel-ratio: 1.5),
     only screen and (-moz-min-device-pixel-ratio: 1.5),
     only screen and (-o-min-device-pixel-ratio: 3/2),
     only screen and (min-device-pixel-ratio: 1.5) {
         
-            background: url(../images/LAD-logo-black2x.png) no-repeat center transparent;
-            background-size: 200px 40px;
+            background: url(../images/logos/LAN-logo-blue2x.png) no-repeat center transparent;
+             background-size: 200px 40px;
         
     }
 }
@@ -624,7 +617,7 @@ body {
 .section__title {
 	font-family: 'Exo 2 Light', 'Exo2-Light', 'Helvetica', arial, sans-serif;
 	font-weight:300;
-	color:#00aeef;	
+	color:@cerulean;	
   // padding-top:@grid-gutter-width;	
   font-size: 24px;
   // -webkit-font-smoothing: antialiased;
