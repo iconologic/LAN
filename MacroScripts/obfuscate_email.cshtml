@@ -1,0 +1,46 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.IO;
+@using System.Text.RegularExpressions;
+@using System.Text;
+@{
+	string mailTo = "mailto:";
+  	mailTo = String.Concat(mailTo.Select(c => "&#" + ((int)c).ToString("000") + ";").ToArray());
+
+    string rawData = PageData[0];
+	rawData = rawData.Replace("mailto:", mailTo);
+	
+    @*instantiate with this pattern *@
+    Regex emailRegex = new Regex(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.IgnoreCase);
+	@*find items that matches with our pattern *@
+	MatchCollection emailMatches = emailRegex.Matches(rawData);
+	StringBuilder sb = new StringBuilder();
+
+	foreach (Match emailMatch in emailMatches)
+	{
+		rawData = rawData.Replace(emailMatch.Value, String.Concat(emailMatch.Value.Select(c => "&#" + ((int)c).ToString("000") + ";").ToArray()));
+	}
+}
+@Html.Raw(GetReg(rawData))
+
+@functions{
+	public static string GetReg(string val)
+	{
+		if( val.IndexOf("&reg;") > 0 )
+		{
+			if( val.IndexOf("<sup>&reg;</sup>") < 1 )
+			{
+				return val.Replace("&reg;", "<sup>&reg;</sup>");
+			}
+			else
+			{
+				return val;	
+			}
+		}
+		else
+		{
+			return val;
+		}
+	}
+
+}
+		

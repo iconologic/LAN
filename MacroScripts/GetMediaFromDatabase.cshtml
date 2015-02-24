@@ -1,0 +1,36 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using umbraco.BusinessLogic;
+@using umbraco.cms.businesslogic.web;
+@using umbraco.cms.businesslogic.media;
+@using umbraco;
+
+@using Umbraco.Core.Models;
+@using Umbraco.Core.Services;
+@using Umbraco.Web.Mvc;
+@using Umbraco.Core;
+@using System.Text.RegularExpressions;
+@using System.Text;
+
+@{
+	int mediaID = 0;
+	if( PageData.Count() > 0 && Int32.TryParse(PageData[0].ToString(), out mediaID) )
+	{
+		var media = new umbraco.cms.businesslogic.media.Media(mediaID);
+		if( media != null && media.ContentType.Alias != "Folder" )
+		{
+			@ConvertWhitespaceToSpacesString(media.getProperty("umbracoFile").Value.ToString())
+		}
+	}
+}
+@functions{
+	public static string ConvertWhitespaceToSpacesString(string v){
+		Regex rgx = new Regex("[^a-zA-Z0-9\\/._ -]");
+		Regex rgx2 = new Regex("[\n\r\t]");
+		
+		v = v.Replace("\r", string.Empty);
+    	v = v.Replace("\n", string.Empty);
+		v = rgx.Replace(v, string.Empty);
+		v = rgx2.Replace(v, string.Empty);
+    	return v;
+	}
+}
