@@ -33,15 +33,8 @@ public class Market : PageItem, IPreviewBlock
         }
     }
 
-    public IEnumerable<Project> AllRelatedProjects
-    {
-        get { return RelatedProjects.Concat(SubMarkets.SelectMany(x => x.RelatedProjects)).Distinct(); }
-    } 
 
-    public IEnumerable<SubMarket> SubMarkets
-    {
-        get { return Children<SubMarket>("Submarket"); }
-    }
+
 
     public string BackgroundImage
     {
@@ -106,7 +99,7 @@ public class Market : PageItem, IPreviewBlock
     {
         get
         {
-            var projects = FeaturedProjects.ToList();
+            var projects = RelatedProjects.ToList();
             if (!projects.Any())
                 return null;
             var randomIndex = new Random().Next(projects.Count() - 1);
