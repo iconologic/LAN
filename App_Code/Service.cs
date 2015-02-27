@@ -7,80 +7,128 @@ using Umbraco.Core.Models;
 /// <summary>
 /// Summary description for Service
 /// </summary>
-public class Service : PageItem
+public class Service : PageItem, IPreviewBlock
 {
     public Service(IPublishedContent content) : base(content)
     {
     }
 
-    public string HeroImage
-    {
-        get { return ImageUrlProperty("heroImage"); }
-    }
-
-    public override string MastHeadImage
-    {
-        get { return HeroImage; }
-    }
-
-    public string CtaImage
+    public IEnumerable<Project> FeaturedProjects
     {
         get
         {
-            return ImageUrlProperty("ctaImage"); 
+            return WrapList<Project>(Property("featuredProjects"))
+                .Where(x => x.IsPublished);
         }
-    }
-
-    public string Heading
-    {
-        get { return Property("heading"); }
-    }
-
-    public IHtmlString Copy
-    {
-        get { return Property<IHtmlString>("copy"); }
-    }
-
-
-    public IEnumerable<string> Capabilities
-    {
-        get
-        {
-            var val = Property("capabilities");
-            if (val == null)
-                return new string[0];
-
-            return val.Split('\n')
-                .Select(x => x.Trim())
-                .Where(x => x != string.Empty); 
-        }
-    }
-
-    public IEnumerable<string> GetCapabilities(int col, int totalCols)
-    {
-        var take = Capabilities.Count()/totalCols;
-        if (col != totalCols - 1 && Capabilities.Count()%totalCols > 0)
-            take++;
-        var skip = col*take;
-        return Capabilities.Skip(skip).Take(take);
     }
 
     public IEnumerable<Project> RelatedProjects
     {
         get
         {
-            return WrapList<Project>(Property("projects"))
+            return WrapList<Project>(Property("relatedProjects"))
                 .Where(x => x.IsPublished);
         }
     }
 
-    public override string MastHeadTitle
+    public IEnumerable<Project> AllRelatedProjects
     {
-        get { return "Services"; }
+        get { return RelatedProjects.Concat(SubMarkets.SelectMany(x => x.RelatedProjects)).Distinct(); }
     }
 
-    public static IList<Market> GetAll()
+    public IEnumerable<SubMarket> SubMarkets
     {
-        return Helper.TypedContent(4380).Children.Select(x => new Market(x)).ToList();
+        get { return Children<SubMarket>("Submarket"); }
+    }
+
+    public string BackgroundImage
+    {
+        get
+        {
+            var image = ImageUrlProperty("backgroundImage");
+            if (string.IsNullOrEmpty(image))
+                return "/images/image-mainbg.jpg";
+            return image;
+        }
+    }
+
+    public string HeroImage
+    {
+        get { return ImageUrlProperty("sliderImage"); }
+    }
+
+    public IEnumerable<Leader> Leaders
+    {
+        get
+        {
+            return WrapList<Leader>(Property("leaders"))
+               .Where(x => x.IsPublished);
+        }
+    }
+
+    public IEnumerable<CallToAction> Outlook
+    {
+        get
+        {
+            return WrapList<CallToAction>(Property("outlook"))
+               .Where(x => x.IsPublished);
+        }
+    }
+    public string Heading
+    {
+        get { return Helper.ReplaceLineBreaksForHtml(Property("contentTitle")); }
+    }
+
+    public Quiz Quiz
+    {
+        get { return PropertyOfType<Quiz>("quiz"); }
+    }
+
+    public string PreviewTitle
+    {
+        get { return Name; }
+    }
+
+    public string PreviewImage
+    {
+        get
+        {
+            var project = RandomProject;
+            if (project == null)
+                return string.Empty;
+            return project.Thumbnail;
+        }
+    }
+
+    private Project RandomProject
+    {
+        get
+        {
+            var projects = FeaturedProjects.ToList();
+            if (!projects.Any())
+                return null;
+            var randomIndex = new Random().Next(projects.Count() - 1);
+            return projects.ElementAt(randomIndex);
+        }
+    }
+
+    public string PreviewUrl
+    {
+        get { return "/portfolio?service=" + this.Id; }
+    }
+
+    public string RelatedProjectsHeading
+    {
+        get { return Parent.Property("relatedProjectsHeading"); }
+    }
+
+
+    public static IEnumerable<Service> GetAll()
+    {
+        var parent = Helper.TypedContent(4380);
+        return parent.Children
+            .Where(x => x.DocumentTypeAlias == "Service")
+            .Select(x => new Service(x))
+            .Where(x => x.IsPublished);
     } 
 }

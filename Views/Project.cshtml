@@ -91,9 +91,9 @@
             <div class="row">
                 <div class="project__related row no-gutters">
                     <h2 class="section__title text-center">@project.RelatedWorkHeading</h2>
-                    @foreach (var market in project.RelatedMarkets)
+                    @foreach (var market in project.RelatedWork)
                     {
-                        var i = project.RelatedMarkets.IndexOf(market);
+                        var i = project.RelatedWork.IndexOf(market);
                         <div class="project__related--item col-xs-12 col-sm-4 col-md-4 col-lg-4">
                             <a href="@market.PreviewUrl">
                                 <img src="@Website.ImageUrl(market.PreviewImage, 380, 240)" alt="" class="img-responsive" style="bottom:auto;">

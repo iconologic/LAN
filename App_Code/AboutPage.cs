@@ -127,9 +127,9 @@ public class AboutPage : PageItem
 
     public IEnumerable<Service> Services
     {
-        get { return Content.Descendants("Service")
-            .Select(x => new Service(x))
-            .Where(x => x.IsPublished); }
+        get { return Service.GetAll();
+            
+        }
     }
 
     

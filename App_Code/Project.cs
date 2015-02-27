@@ -57,21 +57,21 @@ public class Project : PageItem
         }
     }
 
-    public IEnumerable<SubMarket> SubMarkets
+    public IEnumerable<Service> Services
     {
         get
         {
-            return WrapList<SubMarket>(Property("projectSubMarket"))
+            return WrapList<Service>(Property("relatedServices"))
              .Where(x => x.IsPublished);
         }
     }
 
-    public IList<IPreviewBlock> RelatedMarkets
+    public IList<IPreviewBlock> RelatedWork
     {
         get
         {
             var markets = Markets.Cast<IPreviewBlock>().OrderBy(x => x.PreviewTitle).ToList();
-            markets.AddRange(SubMarkets.OrderBy(x => x.PreviewTitle));
+            markets.AddRange(Services.OrderBy(x => x.PreviewTitle));
             return markets;
         }
     }

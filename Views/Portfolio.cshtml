@@ -5,6 +5,7 @@
     var selectedType = Request.QueryString["type"];
     var selectedMarket = Request.QueryString["market"];
     var selectedSubMarket = Request.QueryString["submarket"];
+    var selectedService = Request.QueryString["service"];
     if (!string.IsNullOrEmpty(selectedSubMarket))
     {
         selectedMarket = Umbraco.TypedContent(selectedSubMarket).Parent.Id.ToString();
@@ -43,36 +44,27 @@
 
                 <form class="">
                     <fieldset class="row no-gutters">
-                        <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height:inherit;margin-bottom:0;border-left:1px solid #ffffff;border-right:1px solid #ffffff;">
-                            @* Type *@
-                            <select class="form-control filter" id="projectType" name="projectType">
-                                <option value="">All Projects</option>
-                                @foreach (var type in page.ProjectTypes)
-                                {
-                                    var selected = (type == selectedType) ? "selected" : string.Empty;
-                                    <option value="@type" @selected>@type</option>
-                                }
-                            </select>
-                        </label>
-                        @* &nbsp;&nbsp;&nbsp;&nbsp; *@
-                        <label class="market col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height:inherit;margin-bottom:0;border-right:1px solid #ffffff;">
-                            @* Market *@
-                            <select class="form-control filter" id="projectMarket" name="projectMarket">
-                                <option value="">All Markets</option>
-                                @foreach (var market in page.Markets)
-                                {
-                                    <option value="@market.Id">@market.Name</option>
-                                }
-                            </select>
-                        </label>
-                        @* &nbsp;&nbsp;&nbsp;&nbsp; *@
-                        <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height:inherit;margin-bottom:0;border-right:1px solid #ffffff;">
-                            @* Sub Market *@
-                            <select class="form-control filter" id="projectSubMarket" name="projectSubMarket" disabled="disabled" data-placeholder="All Sub-Markets" data-bind="enable: marketSelected, options: subMarkets, optionsValue: 'id', optionsText: 'name', optionsCaption: 'All Sub-Markets', value: '@selectedSubMarket'"><option></option></select>
-                        </label>
-								
-						
-							
+                            @* &nbsp;&nbsp;&nbsp;&nbsp; *@
+                            <label class="market col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height: inherit; margin-bottom: 0; border-right: 1px solid #ffffff;">
+                                @* Market *@
+                                <select class="form-control filter" id="projectMarket" name="projectMarket">
+                                    <option value="">All Markets</option>
+                                    @foreach (var market in page.Markets)
+                                    {
+                                        <option value="@market.Id">@market.Name</option>
+                                    }
+                                </select>
+                            </label>
+                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height: inherit; margin-bottom: 0; border-left: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                                @* Type *@
+                                <select class="form-control filter" id="relatedServices" name="relatedServices">
+                                    <option value="">All Services</option>
+                                    @foreach (var service in Service.GetAll())
+                                    {
+                                        <option value="@service.Id">@service.Name</option>
+                                    }
+                                </select>
+                            </label>
                     </fieldset>
                 </form>
             </div>
@@ -110,6 +102,7 @@
     <script type="text/javascript">
         var selectedMarket = '@selectedMarket';
         var selectedSubMarket = '@selectedSubMarket';
+        var selectedService = '@selectedService';
     </script>
     <script src="~/Scripts/portfolio.js">
     </script>
