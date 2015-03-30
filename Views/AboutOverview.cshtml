@@ -25,28 +25,32 @@
                         <h1 class="article__title">@page.Heading</h1>
                        
                         @Html.Raw(page.Copy)
-                        <br />
                         
-                        <hr />
+                        @if (!string.IsNullOrEmpty(page.PhilosophyHeading))
+                        {
+                            <br />
+                            <hr />
 
-                        <h2>@page.PhilosophyHeading</h2>    
-                        <div class="row small article-columns">                            
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                <p class="text-center"><img src="@page.Philosophy1Icon" alt="" /></p>
-                                <h4>@page.Philosophy1</h4>                                
-                                @Html.Raw(page.Philosophy1Copy)
+                            <h2>@page.PhilosophyHeading</h2>
+                            <div class="row small article-columns">
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <p class="text-center"><img src="@page.Philosophy1Icon" alt="" /></p>
+                                    <h4>@page.Philosophy1</h4>
+                                    @Html.Raw(page.Philosophy1Copy)
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <p class="text-center"><img src="@page.Philosophy2Icon" alt="" /></p>
+                                    <h4>@page.Philosophy2</h4>
+                                    @Html.Raw(page.Philosophy2Copy)
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <p class="text-center"><img src="@page.Philosophy3Icon" alt="" /></p>
+                                    <h4>@page.Philosophy3</h4>
+                                    @Html.Raw(page.Philosophy3Copy)
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                <p class="text-center"><img src="@page.Philosophy2Icon" alt="" /></p>
-                                <h4>@page.Philosophy2</h4>                                
-                                @Html.Raw(page.Philosophy2Copy)
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                <p class="text-center"><img src="@page.Philosophy3Icon" alt="" /></p>
-                                <h4>@page.Philosophy3</h4>                                
-                                @Html.Raw(page.Philosophy3Copy)
-                            </div>
-                        </div>
+                        }
+
 
                         <br /><hr />
 
