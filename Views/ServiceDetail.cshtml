@@ -36,7 +36,7 @@
                 <h1 class="page__header__title">@Html.Raw(CurrentPage.GetPropertyValue("pageTitle"))</h1>
                 <nav class="page__header__nav">
                     <ul class="list-inline market-btns">
-                        <li><a href="#marketContact" class="btn btn-default">Contact</a></li>
+                        @* <li><a href="#marketContact" class="btn btn-default">Contact</a></li> *@
                         <li><a href="#marketProjects" class="btn btn-default">View Work</a></li>
                     </ul>
                 </nav>
@@ -119,44 +119,49 @@
                 </div>
             </div> *@
         <!-- stats/media -->
-        <div class="container container-sm-height">
-            <div class="markets__graphs section row no-gutters row-sm-height">
-                <div class="markets__stats col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-top:25px;">
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center small">
-                        @if (CurrentPage.HasValue("stat1Image"))
-                        {
-                            string img2 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("stat1Image")).ToString().Replace("\n", string.Empty);
-                            <p><img src="@Html.Raw(img2)" style="width:146px;height:148px;" alt="" /></p>
-                        }
-                        <p class="markets__graphs-caption caption text-center">@Umbraco.Field("stat1Text", removeParagraphTags: true)</p>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center small">
-                        @if (CurrentPage.HasValue("stat2Image"))
-                        {
-                            string img3 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("stat2Image")).ToString().Replace("\n", string.Empty);
-                            <p><img src="@img3" style="width:146px;height:148px;" alt="" /></p>
-                        }
-                        <p class="markets__graphs-caption caption text-center">@Umbraco.Field("stat2Text", removeParagraphTags: true)</p>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="videoWrapper">
-                        @if (CurrentPage.HasValue("youTubeLink"))
-                        {
-                            @Html.Raw(CurrentPage.GetPropertyValue("youTubeLink"))
-                        }
-                        else
-                        {
-                            if (CurrentPage.HasValue("mediaImage"))
+        @Html.Partial("Project_Testimonial")
+        @if (service.ShowStats)
+        {
+            <div class="container container-sm-height">
+                <div class="markets__graphs section row no-gutters row-sm-height">
+                    <div class="markets__stats col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-top:25px;">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center small">
+                            @if (CurrentPage.HasValue("stat1Image"))
                             {
-                                string img4 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("mediaImage")).ToString().Replace("\n", string.Empty);
-                                <img src="@Html.Raw(img4)" alt="" class="img-responsive" style="width:100%;" />
+                                string img2 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("stat1Image")).ToString().Replace("\n", string.Empty);
+                                <p><img src="@Html.Raw(img2)" style="width:146px;height:148px;" alt="" /></p>
                             }
-                        }
+                            <p class="markets__graphs-caption caption text-center">@Umbraco.Field("stat1Text", removeParagraphTags: true)</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center small">
+                            @if (CurrentPage.HasValue("stat2Image"))
+                            {
+                                string img3 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("stat2Image")).ToString().Replace("\n", string.Empty);
+                                <p><img src="@img3" style="width:146px;height:148px;" alt="" /></p>
+                            }
+                            <p class="markets__graphs-caption caption text-center">@Umbraco.Field("stat2Text", removeParagraphTags: true)</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="videoWrapper">
+                            @if (CurrentPage.HasValue("youTubeLink"))
+                            {
+                                @Html.Raw(CurrentPage.GetPropertyValue("youTubeLink"))
+                            }
+                            else
+                            {
+                                if (CurrentPage.HasValue("mediaImage"))
+                                {
+                                    string img4 = RenderPage("~/MacroScripts/GetMediaFromDatabase.cshtml", CurrentPage.GetPropertyValue("mediaImage")).ToString().Replace("\n", string.Empty);
+                                    <img src="@Html.Raw(img4)" alt="" class="img-responsive" style="width:100%;" />
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+      
         <div class="container leadership" style="padding-bottom:0;">
             <div class="section row" style="padding-bottom:0;">
                 @if (service.Leaders.Any())

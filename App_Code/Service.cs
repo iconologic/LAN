@@ -84,6 +84,21 @@ public class Service : PageItem, IPreviewBlock
         get { return PropertyOfType<Quiz>("quiz"); }
     }
 
+    public string Stats1
+    {
+        get { return Property("stat1Text"); }
+    }
+
+    public string Stats2
+    {
+        get { return Property("stat2Text"); }
+    }
+
+    public bool ShowStats
+    {
+        get { return !string.IsNullOrWhiteSpace(Stats1) || !string.IsNullOrWhiteSpace(Stats2); }
+    }
+
     public string PreviewTitle
     {
         get { return Name; }
