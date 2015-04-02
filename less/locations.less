@@ -224,3 +224,54 @@
 			}
 		}
 }
+
+//LAN LOCATIONS PAGE
+
+.lan__location{
+	padding: 10px 0;
+	font-size: 14px;
+	padding-right: 20px;
+	word-break:break-word;
+
+
+	&--header{
+		padding-top: 20px;	
+	}
+
+}
+
+@media (max-width: @screen-xs-max) {
+
+}
+
+@media (min-width: @screen-sm-min) {
+	.lan__location{
+		
+		padding: 20px 0;
+		padding-right: 20px;
+		
+		&:nth-child(2n+1){
+			clear:both;
+		}
+
+	}
+
+}
+
+@media (min-width: @screen-md-min) {
+	.lan__location{
+
+		&:nth-child(3n+1){
+			clear:both;
+		}
+		&:nth-child(2n+1){
+			clear:none;
+		}
+
+	}
+
+}
+	
+@media (min-width: @screen-lg-min) {
+
+}
