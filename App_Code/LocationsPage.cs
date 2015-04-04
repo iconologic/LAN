@@ -24,10 +24,25 @@ public class LocationsPage : PageItem
         get { return Property("heading"); }
     }
 
+    public string Logo
+    {
+        get { return ImageUrlProperty("logo"); }
+    }
+
+    public IHtmlString Copy
+    {
+        get { return Property<IHtmlString>("copy"); }
+    }
+
     public string Intro
     {
         get { return Property("intro"); }
     }
+
+    public IEnumerable<Location> Locations
+    {
+        get { return Children<Location>(); }
+    } 
 
     public string LadDescription
     {
@@ -42,6 +57,11 @@ public class LocationsPage : PageItem
     public IEnumerable<RelatedLink> GetLadMiddleEast(int col, int totalCols)
     {
         return GetLocations(3872, col, totalCols).Select(x => new RelatedLink(){Caption = x.Name, Url = x.Url});
+    }
+
+    public override bool ShowChildrenInNavigation
+    {
+        get { return false; }
     }
 
     private IEnumerable<Location> GetLocations(int parentId, int col, int totalCols)

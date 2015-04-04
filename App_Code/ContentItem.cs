@@ -281,6 +281,8 @@ public class ContentItem
                 return new PeopleFolder(content);
             case "FaqTopic":
                 return new FaqTopic(content);
+            case "Locations":
+                return new LocationsPage(content);
             default:
                 return new PageItem(content);
         }

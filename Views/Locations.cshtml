@@ -4,297 +4,56 @@
     var page = new LocationsPage(Model.Content);
 }
 @section headerScripts{
-
 }
 @section mainContent{
     <div class="masthead__container masthead__subpage">
         @Html.Partial("_MastHead", page.HeroImage)
         @Html.Partial("_BreadCrumb")
-
     </div>
+    <div class="main container-fluid">
+        <div class="">
+            <div class="section">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="overflow: hidden;">
+                        @Html.Partial("_SideBarNav", page.ParentPage)
+                    </div> <!-- end sidebar container -->
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 about__overview--container">
+                        <h2 class="pull-left"><img src="@page.Logo" alt="LAN"></h2>
+                        <div class="pull-left lan__location--header">
+                            @Html.Raw(page.Copy)
+                        </div>
+                        <div class="">
+                            @foreach (var location in page.Locations)
+                            {
+                                <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
+                                    <h3>@location.Name</h3>
+                                    <p class="lan__location--address">
+                                        @location.Address1
+                                        @if (!string.IsNullOrEmpty(location.Address2))
+                                        {
+                                            @location.Address2
+                                        }
 
-<div class="main container-fluid">
-    <div class="">
-        <div class="section">
-            <div class="row">
-               <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="overflow: hidden;">
-                  <div style="width:100%;overflow-y:visible;">
-                    <div class="aside__navigation">
-                       <ul class="nav navbar-nav article__subnav" style="height: 233px;">
-                           <li>
-                               <a href="/about/" class="aside__nav_title">
-                                   <h3>Locations</h3>
-                               </a>
-                           </li>
-                                   <li class="active"><a href="#">About</a></li>
-                                   <li class="dropdown  ">
-                                       <a href="#people" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">People <i class="pull-right text-right icon fa fa-angle-right" style="font-size:1.25em;line-height:1;color:#898989;"></i></a>
-                                       <ul class="dropdown-menu">                        
-                                           <li>
-                                               <a class="go-back"><span class="caret caret-previous"></span> <small><strong>About</strong></small></a>
-                                               <a href="/about/people/" class="aside__nav_title">
-                                                   <h3>People</h3>
-                                               </a>
-                                           </li>
-                                               <li class=""><a href="/about/people/#leadership">Leadership</a></li>
-                                               <li class=""><a href="/about/people/#subject-matter-experts">Subject Matter Experts</a></li>
-                                       </ul>
-                                   </li>
-                                   <li class=""><a href="/about/news/">News</a></li>
+                                        @location.City, @location.State @location.Zip
+                                    </p>
+                                    <a class="lan__location--phone" href="tel:6304954123">
+                                        P 512.338.4212
+                                    </a>
+                                    <br>
+                                    <p>
+                                        F 512.338.4942
+                                    </p>
+                                </div>
+                            }
 
-                       </ul>
-                    </div> <!-- end aside navigation -->
-                  </div> <!-- end sidebar -->
-                </div> <!-- end sidebar container -->
+                        </div>
+                    </div> <!-- end overview container -->
 
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 about__overview--container">
+                </div> <!-- end row -->
 
-                    <h2 class="pull-left"><img src="http://lan.iconologic.com/images/logos/LAN-logo-blue.png" alt="LAN"></h2>
-
-                    <p class="pull-left lan__location--header">LAN is a subsidiary of LEO A DALY, with a long history and successful track record working closely with clients to produce high-quality work in a timely and cost-effective manner.  They offer planning, engineering, and program management services for a wide variety of markets such as Energy Services, Facilities Engineering, Navigation, Ports &amp; Coastal, Pipelines, Public Works Engineering, Rail and Transit, Transportation, Wastewater and Reuse, and Water Systems.</p>
-
-                    <div class="">
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>AUSTIN</h3>
-                          <p class="lan__location--address">8911 N. Capital of Texas Hwy.
-                          Bldg. 2, Suite 2300
-                          Austin, TX 78759</p>
-                          <a class="lan__location--phone" href="tel:6304954123">
-                          P 512.338.4212
-                          </a>
-                          <br>
-                          <p>
-                          F 512.338.4942
-                          </p>
-                      </div>
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>CHICAGO</h3>
-                          <p class="lan__location--address">
-                          One Oakbrook Terrace
-                          22nd Street &amp; Butterfield Road
-                          Suite 207
-                          Oakbrook, IL 60181
-                          </p>
-                          <a class="lan__location--phone" href="tel:6304954123">
-                          P 630.495.4123
-                          </a>
-                          <br>
-                          <p>
-                          F 630.495.4288
-                          </p>     
-                      </div>
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>COLLEGE STATION</h3>
-                          <p class="lan__location--address">
-                          217 Rock Prairie Road
-                          College Station, TX 77845
-                          </p>
-                          <a class="lan__location--phone" href="tel:9797761000">
-                          P 979.776.1000
-                          </a>
-                          <br>
-                          <p>
-                          F 979.776.1004
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>CORPUS CHRISTI</h3>
-                          <p class="lan__location--address">
-                          500 N. Shoreline Blvd
-                          Suite 905
-                          Corpus Christi, TX 78401
-                          </p>
-                          <a class="lan__location--phone" href="tel:3618822257">
-                          P 361.882.2257
-                          </a>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>DALLAS</h3>
-                          <p class="lan__location--address">
-                          8350 North Central Expressway
-                          Suite 1400
-                          Dallas, TX 75206-1631
-                          </p>
-                          <a class="lan__location--phone" href="tel:2145228778">
-                          P 214.522.8778
-                          </a>
-                          <br>
-                          <p>
-                          F 214.526.4433
-                          </p>
-                      </div>
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>FLINT</h3>
-                          <p class="lan__location--address">
-                          1311 S. Linden Road, Suite B
-                          Flint, Michigan 48532
-                          </p>
-                          <a class="lan__location--phone" href="tel:8108202682">
-                          P 810.820.2682
-                          </a>
-                          <br>
-                          <p>
-                          F 810.820.2703
-                          </p>     
-                      </div>
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>FORT WORTH</h3>
-                          <p class="lan__location--address">
-                          1320 South University Drive
-                          University Centre II, Suite 450
-                          Fort Worth, TX 76107-5765
-                          </p>
-                          <a class="lan__location--phone" href="tel:8178200420">
-                          P 817.820.0420
-                          </a>
-                          <br>
-                          <p>
-                          F 817.820.0441
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>HOUSTON</h3>
-                          <p class="lan__location--address">
-                          2925 Briarpark Drive, Suite 400
-                          Houston, TX 77042-3720
-                          </p>
-                          <a class="lan__location--phone" href="tel:7132666900">
-                          P 713.266.6900
-                          </a>
-                          <br>
-                          <p>
-                          F 713.266.2089
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>LANSING</h3>
-                          <p class="lan__location--address">
-                          2121 University Park Drive, Suite 100
-                          Okemos, MI 48864-6901
-                          </p>
-                          <a class="lan__location--phone" href="tel:5172035437">
-                          P 517.203.5437
-                          </a>
-                          <br>
-                          <p>
-                          F 517.203.5439
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>MIAMI</h3>
-                          <p class="lan__location--address">
-                          5200 Blue Lagoon Drive, Suite 700
-                          Miami FL 33126-7003
-                          </p>
-                          <a class="lan__location--phone" href="tel:3054446454">
-                          P 305.444.6454
-                          </a>
-                          <br>
-                          <p>
-                          F 305.461.3686
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>MILPITAS</h3>
-                          <p class="lan__location--address">
-                          1436 California Circle
-                          Milpitas, CA 95035
-                          </p>
-                          <a class="lan__location--phone" href="tel:9164694875">
-                          P 916.469.4875
-                          </a>
-                          <br>
-                          <p>
-                          F 916.441.2612
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>ORANGE</h3>
-                          <p class="lan__location--address">
-                          770 The City Drive South, Suite 8425
-                          Orange, CA 92868
-                          </p>
-                          <a class="lan__location--phone" href="tel:7144681986">
-                          P 714.468.1986
-                          </a>
-                          <br>
-                          <p>
-                          F 714.468.1989
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>SACRAMENTO</h3>
-                          <p class="lan__location--address">
-                          2150 River Plaza Drive, Suite 415
-                          Sacramento, CA 95833
-                          </p>
-                          <a class="lan__location--phone" href="tel:9165643259">
-                          P 916.564.3259
-                          </a>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>SAN ANTONIO</h3>
-                          <p class="lan__location--address">
-                          10101 Reunion Place, Suite 200
-                          San Antonio, TX 78216-4165
-                          </p>
-                          <a class="lan__location--phone" href="tel:2104995082">
-                          P 210.499.5082
-                          </a>
-                          <br>
-                          <p>
-                          F 210.499.5157
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>SAN MARCOS</h3>
-                          <p class="lan__location--address">
-                          102 Wonder World Drive, Suite 303
-                          San Marcos, TX 78666
-                          </p>
-                          <a class="lan__location--phone" href="tel:5123964040">
-                          P 512.396.4040
-                          </a>
-                          <br>
-                          <p>
-                          F 512.396.4064
-                          </p>
-                      </div>
-
-                      <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                          <h3>WACO</h3>
-                          <p class="lan__location--address">
-                          215 Mary Avenue, Suite 305
-                          Waco, TX 76701-2253
-                          </p>
-                          <a class="lan__location--phone" href="tel:2547539585">P 254.753.9585</a>
-                          <br>
-                          <p>F 254.753.9593</p>
-                      </div>
-                    </div>
-
-                </div> <!-- end overview container -->
-
-                  
-
-            </div> <!-- end row -->
-
-
-        </div> <!-- end section -->
+            </div> <!-- end section -->
+        </div>
     </div>
-</div>
 }
 @section footerScripts{
-
 }
-

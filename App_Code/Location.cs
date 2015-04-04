@@ -14,108 +14,42 @@ public class Location : PageItem
     {
     }
 
-    public string HeadingOverlay
+    public string Address1
     {
-        get { return Property("pageTitle"); }
+        get { return Property("address1"); }
     }
 
-    public string CurrentTime
+    public string Address2
     {
-        get
-        {
-            //var prop = _content.GetProperty("timezone");
-            var timezone = TimeZoneInfo.FindSystemTimeZoneById(Property("timezone"));
-            var localTime = TimeZoneInfo.ConvertTime(DateTime.Now, timezone);
-            return localTime.ToShortTimeString();
-        }
+        get { return Property("address2"); }
     }
 
-    public bool IsWeatherAvailable
+    public string City
     {
-        get { return CurrentTemperature != null; }
+        get { return Property("city"); }
     }
 
-    public string CurrentTemperature
+    public string State
     {
-        get
-        {
-            try
-            {
-                var city = string.IsNullOrEmpty(Property("cityForTemperature")) ? HeadingOverlay : Property("cityForTemperature");
-
-                var weather = WeatherService.GetWeather(city);
-                return ((int)Math.Round(weather.Temperature)).ToString();
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
+        get { return Property("state"); }
     }
 
-    public string StatementLine1
+    public string Zip
     {
-        get { return string.IsNullOrEmpty(Property("statementLine1")) ? "Today, we are working on:" : Property("statementLine1"); }
+        get { return Property("zip"); }
     }
 
-    public string StatementLine2
+    public string Phone
     {
-        get { return Property("statementLine2"); }
+        get { return Property("phone"); }
+
     }
 
-    public IHtmlString Overview
+    public string Fax
     {
-        get { return Property<IHtmlString>("overview"); }
+        get { return Property("fax"); }
     }
 
-    public string ContactName
-    {
-        get { return Property("contactName"); }
-    }
-
-    public string ContactTitle
-    {
-        get { return Property("contactTitle"); }
-    }
-
-    public string ContactEmail
-    {
-        get { return Property("contactEmail"); }
-    }
-
-    public IHtmlString ContactAddress
-    {
-        get { return Property<IHtmlString>("contactAddress"); }
-    }
-
-    public string ContactPhone
-    {
-        get { return Property("contactPhone"); }
-    }
-
-    public string ContactFax
-    {
-        get { return Property("contactFax"); }
-    }
-
-    public IEnumerable<Leader> Leaders
-    {
-        get { return WrapList<Leader>(Property("leaders")); }
-    }
-
-    public string RelatedProjectsHeading
-    {
-        get { return Parent.Parent.Property("relatedProjectsHeading"); }
-    }
-
-    public IEnumerable<Project> RelatedProjects
-    {
-        get
-        {
-            return WrapList<Project>(Property("relatedProjects"))
-                .Where(x => x.IsPublished);
-        }
-    }
 
     public static IEnumerable<Location> GetAll(int parentId)
     {
