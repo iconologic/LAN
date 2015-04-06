@@ -39,7 +39,7 @@
 
   // Social Icons
   #social-icons__container { 
-    padding-top: 35px;
+    padding-top: 20px;
 
     .social-icons a { 
       background:url(../images/sprite-social-icons-white.png) no-repeat;
@@ -83,7 +83,23 @@
   
   /* Hidden with CSS */
   #footer__links--mobile {
-    padding-top: 25px;
+    padding-top: 20px;
+  }
+
+  // LAN offSite links
+  .footer__links {
+    ul {
+      margin:10px 0;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom:0;
+      padding: 0 7px;
+      list-style: none;
+      text-align: center;
+      display: inline-block;
+    }
   }
   
   // Responsive Styles
@@ -95,6 +111,24 @@
 
   /* Desktop--Small */
   @media (min-width:@screen-md-min) {
+
+    #social-icons__container { 
+      padding-top: 35px;
+    }
+
+    .footer__links {
+      ul {
+        margin:0 auto 10px;
+      }
+
+      li {
+        margin-bottom: 1em;
+        padding: 0;
+        list-style: none;
+        text-align: left;
+        display: block;
+      }
+    }
     h5{
       text-align: left;
     }

@@ -4,56 +4,69 @@
     var page = new LocationsPage(Model.Content);
 }
 @section headerScripts{
+
 }
 @section mainContent{
     <div class="masthead__container masthead__subpage">
         @Html.Partial("_MastHead", page.HeroImage)
         @Html.Partial("_BreadCrumb")
+
     </div>
-    <div class="main container-fluid">
-        <div class="">
-            <div class="section">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="overflow: hidden;">
-                        @Html.Partial("_SideBarNav", page.ParentPage)
-                    </div> <!-- end sidebar container -->
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 about__overview--container">
-                        <h2 class="pull-left"><img src="@page.Logo" alt="LAN"></h2>
-                        <div class="pull-left lan__location--header">
-                            @Html.Raw(page.Copy)
-                        </div>
-                        <div class="">
-                            @foreach (var location in page.Locations)
-                            {
-                                <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
-                                    <h3>@location.Name</h3>
-                                    <p class="lan__location--address">
-                                        @location.Address1
-                                        @if (!string.IsNullOrEmpty(location.Address2))
-                                        {
-                                            @location.Address2
-                                        }
 
-                                        @location.City, @location.State @location.Zip
-                                    </p>
-                                    <a class="lan__location--phone" href="tel:6304954123">
-                                        P 512.338.4212
-                                    </a>
-                                    <br>
-                                    <p>
-                                        F 512.338.4942
-                                    </p>
-                                </div>
-                            }
+<div class="main container-fluid">
+    <div class="">
+        <div class="section">
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="overflow: hidden;">
+                   @Html.Partial("_SideBarNav", page.ParentPage)
+                </div> <!-- end sidebar container -->
 
-                        </div>
-                    </div> <!-- end overview container -->
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 about__overview--container">
 
-                </div> <!-- end row -->
+                    <h2 class="pull-left"><img src="@page.Logo" alt="LAN"></h2>
 
-            </div> <!-- end section -->
-        </div>
+                    <div class="pull-left lan__location--header">
+                        @Html.Raw(page.Copy)
+                    </div>
+
+                    <div class="">
+                        @foreach (var location in page.Locations)
+                        {
+                            <div class="col-xs-12 col-sm-6 col-md-4 lan__location">
+                                <h3>@location.Name</h3>
+                                <p class="lan__location--address">
+                                    @location.Address1 
+                                </p>
+                                 @if (!string.IsNullOrEmpty(location.Address2))
+                                    {
+                                        <p class="lan__location--address2">@location.Address2</p>
+                                    }
+
+                                <p class="lan__location--state">@location.City, @location.State @location.Zip</p>
+                                <a class="lan__location--phone" href="tel:6304954123">
+                                    P 512.338.4212
+                                </a>
+                                <br>
+                                <p>
+                                    F 512.338.4942
+                                </p>
+                            </div>
+                        }
+   
+                    </div>
+
+                </div> <!-- end overview container -->
+
+                  
+
+            </div> <!-- end row -->
+
+
+        </div> <!-- end section -->
     </div>
+</div>
 }
 @section footerScripts{
+
 }
+
