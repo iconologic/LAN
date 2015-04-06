@@ -54,6 +54,13 @@ public static class Website
 
     }
 
+    public static string If(bool condition, string output)
+    {
+        if (condition)
+            return output;
+        return string.Empty;
+    }
+
     public static bool IsLan
     {
         get { return HttpContext.Current.Request.Url.Host.ToLower().Contains("lan"); }

@@ -119,7 +119,7 @@ public class Service : PageItem, IPreviewBlock
     {
         get
         {
-            var projects = FeaturedProjects.ToList();
+            var projects = RelatedProjects.ToList();
             if (!projects.Any())
                 return null;
             var randomIndex = new Random().Next(projects.Count() - 1);
