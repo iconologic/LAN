@@ -9,6 +9,8 @@
     }
 
     var market = new Market(Model.Content);
+    var hasNoQuiz = market.Quiz == null;
+    var hasNoLeaders = market.Leaders == null || !market.Leaders.Any();
 }
 @section headerScripts{
     <style>
@@ -23,14 +25,14 @@
     </style>
 }
 @section mainContent{
-    <div class="masthead__container">
-        <div id="masthead" class="masthead">
+    <div class="masthead__container @Website.If(hasNoQuiz, "masthead__container--blank")">
+        <div id="masthead" class="masthead  @Website.If(hasNoQuiz, "masthead--blank")">
             @* <div class="item active" style='background-image: url(@market.HeroImage)'></div> *@
 
             <div id="body-bg" class="masthead__fixed" style="background-image: url(@market.HeroImage);background-repeat: no-repeat;"></div>
 
         </div>
-        <div class="vertical-center page__header text-center">
+        <div class="vertical-center page__header text-center  @Website.If(hasNoQuiz, "page__header--blank")">
             <div class="container">
 
                 <h1 class="page__header__title">@Html.Raw(CurrentPage.GetPropertyValue("pageTitle"))</h1>
@@ -157,7 +159,7 @@
                 </div>
             </div>
         </div>
-        <div class="container leadership" style="padding-bottom:0;">
+        <div class="container leadership @Website.If(hasNoLeaders, "leaders-hidden")" style="padding-bottom:0;">
             <div class="section row" style="padding-bottom:0;">
                 @if (market.Leaders.Any())
                 {
