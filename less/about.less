@@ -664,6 +664,14 @@
 	}
 
 	@media (max-width: @screen-xs-min) {
+		.page__header{
+			top:60%;
+			-webkit-transform: translateY(-50%) !important;
+			-moz-transform: translateY(-50%) !important;
+			-ms-transform: translateY(-50%) !important;
+			-o-transform: translateY(-50%) !important;
+			transform: translateY(-50%) !important;  
+		}
 		.page__header__title{
 			margin-top: 0 !important;
 			font-size: 30px !important;
@@ -679,6 +687,15 @@
 
 
 	@media (min-width: @screen-xs-min) {
+		.page__header{
+			top:50%;
+			-webkit-transform: translateY(-50%) !important;
+			-moz-transform: translateY(-50%) !important;
+			-ms-transform: translateY(-50%) !important;
+			-o-transform: translateY(-50%) !important;
+			transform: translateY(-50%) !important;  
+		}
+		
 		.page__header--blank{
 			top:60%;
 			-webkit-transform: translateY(-60%) !important;
@@ -693,6 +710,10 @@
 
 
 	@media screen and (min-width: 768px){
+		
+		.masthead{
+			height: 519px !important;
+		}
 		.masthead--blank{
 			max-height: 390px;
 		}
@@ -707,6 +728,10 @@
 	}
 
 	@media screen and (min-width: 992px){
+		.masthead{
+			max-height: 610px;
+			height: 720px !important
+		}
 		.masthead--blank{
 			max-height: 480px;
 		}
@@ -722,6 +747,11 @@
 
 
 	@media screen and (min-width: 1140px){
+
+		.masthead{
+			max-height: 650px;
+		}
+
 		.masthead--blank{
 			max-height: 563px;
 		}
@@ -737,6 +767,9 @@
 	}
 
 	@media screen and (min-width: 1666px){
+		.masthead{
+			max-height: 715px;
+		}
 		.masthead--blank{
 			max-height: 545px;
 		}
