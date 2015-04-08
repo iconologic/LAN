@@ -9,6 +9,8 @@
     }
 
     var service = new Service(Model.Content);
+    var hasNoQuiz = service.Quiz == null;
+    var hasNoLeaders = service.Leaders.Any() == false;
 }
 @section headerScripts{
     <style>
@@ -23,54 +25,54 @@
     </style>
 }
 @section mainContent{
-    <div class="masthead__container">
-        <div id="masthead" class="masthead">
-            @* <div class="item active" style='background-image: url(@market.HeroImage)'></div> *@
+    <div class="masthead__container @Website.If(hasNoQuiz, "masthead__container--blank")">
+    <div id="masthead" class="masthead @Website.If(hasNoQuiz, " masthead--blank")">
+        @* <div class="item active" style='background-image: url(@market.HeroImage)'></div> *@
 
-            <div id="body-bg" class="masthead__fixed" style="background-image: url(@service.HeroImage);background-repeat: no-repeat;"></div>
+        <div id="body-bg" class="masthead__fixed" style="background-image: url(@service.HeroImage);background-repeat: no-repeat;"></div>
+
+    </div>
+    <div class="vertical-center page__header text-center @Website.If(hasNoQuiz, "page__header--blank")">
+        <div class="container">
+
+            <h1 class="page__header__title">@Html.Raw(CurrentPage.GetPropertyValue("pageTitle"))</h1>
+            <nav class="page__header__nav">
+                <ul class="list-inline market-btns">
+                    @* <li><a href="#marketContact" class="btn btn-default">Contact</a></li> *@
+                    <li><a href="#marketProjects" class="btn btn-default">View Work</a></li>
+                </ul>
+            </nav>
 
         </div>
-        <div class="vertical-center page__header text-center">
-            <div class="container">
-
+    </div>
+    @* <div class="row page__header">
+            <div class="container" style="background: transparent; padding-left: 30px; padding-right: 30px; padding-bottom: 30px;">
                 <h1 class="page__header__title">@Html.Raw(CurrentPage.GetPropertyValue("pageTitle"))</h1>
                 <nav class="page__header__nav">
-                    <ul class="list-inline market-btns">
-                        @* <li><a href="#marketContact" class="btn btn-default">Contact</a></li> *@
-                        <li><a href="#marketProjects" class="btn btn-default">View Work</a></li>
-                    </ul>
+                    <a href="#marketContact" class="scrollTo">Contact</a>
+                    <a href="#marketProjects" class="scrollTo">View Projects</a>
                 </nav>
-
             </div>
-        </div>
-        @* <div class="row page__header">
-                <div class="container" style="background: transparent; padding-left: 30px; padding-right: 30px; padding-bottom: 30px;">
-                    <h1 class="page__header__title">@Html.Raw(CurrentPage.GetPropertyValue("pageTitle"))</h1>
-                    <nav class="page__header__nav">
-                        <a href="#marketContact" class="scrollTo">Contact</a>
-                        <a href="#marketProjects" class="scrollTo">View Projects</a>
-                    </nav>
-                </div>
-            </div> *@
-        @* <div class="qa__container container hidden-xs-block visible-sm-block visible-md-block visible-lg-block">
-                <a href="#" class="qa__close"><span class="glyphicon glyphicon-remove"></span></a>
-                <div class="qa_question row col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="margin-bottom:0 !important;padding-top:1.5em;padding-bottom:1.5em;height:auto;">
-                  <p><span class="dropcap">Q</span><br />Where would you like to go?</p>
-                        <form action="#" method="post">
-                            <label class="radio-inline"><input type="radio" value="Tokyo" />Tokyo</label>
-                            <label class="radio-inline"><input type="radio" value="Los Angeles" />Los Angeles</label>
-                            <label class="radio-inline"><input type="radio" value="Rio" />Rio</label>
-                            <label class="radio-inline"><input type="radio" value="Prague" />Prague</label>
-                        </form>
-                </div><!-- //.row -->
-                <div class="qa_answer row col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="margin-bottom:0 !important;padding-top:1.5em;padding-bottom:1.5em;height:auto;display:none;">
+        </div> *@
+    @* <div class="qa__container container hidden-xs-block visible-sm-block visible-md-block visible-lg-block">
+            <a href="#" class="qa__close"><span class="glyphicon glyphicon-remove"></span></a>
+            <div class="qa_question row col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="margin-bottom:0 !important;padding-top:1.5em;padding-bottom:1.5em;height:auto;">
+              <p><span class="dropcap">Q</span><br />Where would you like to go?</p>
+                    <form action="#" method="post">
+                        <label class="radio-inline"><input type="radio" value="Tokyo" />Tokyo</label>
+                        <label class="radio-inline"><input type="radio" value="Los Angeles" />Los Angeles</label>
+                        <label class="radio-inline"><input type="radio" value="Rio" />Rio</label>
+                        <label class="radio-inline"><input type="radio" value="Prague" />Prague</label>
+                    </form>
+            </div><!-- //.row -->
+            <div class="qa_answer row col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="margin-bottom:0 !important;padding-top:1.5em;padding-bottom:1.5em;height:auto;display:none;">
 
-                  <p><span class="dropcap">A</span><br />"No matter where you’ve arrived, the airport should begin your experience of that place. Design that makes airports destinations themselves can reduce travel stress for passengers and improve navigation and efficiency."</p>
+              <p><span class="dropcap">A</span><br />"No matter where you’ve arrived, the airport should begin your experience of that place. Design that makes airports destinations themselves can reduce travel stress for passengers and improve navigation and efficiency."</p>
 
-                </div><!-- //.row -->
+            </div><!-- //.row -->
 
-            </div> *@
-    </div>
+        </div> *@
+</div>
     <!-- Q&A -->
     @if (service.Quiz != null)
     {
@@ -162,7 +164,7 @@
             </div>
         }
       
-        <div class="container leadership" style="padding-bottom:0;">
+        <div class="container leadership @Website.If(hasNoLeaders, "leaders-hidden")" style="padding-bottom:0;">
             <div class="section row" style="padding-bottom:0;">
                 @if (service.Leaders.Any())
                 {
