@@ -9458,8 +9458,8 @@ article .list-columns > li.list-group-item a:hover {
   }
 }
 @media (min-width: 992px) {
-  .lan__location:nth-child(3n+1) {
-    clear: both;
+  .lan__location:nth-child(3n+4) {
+    clear: both !important;
   }
   .lan__location:nth-child(2n+1) {
     clear: none;
