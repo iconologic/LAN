@@ -649,7 +649,7 @@
 	}
 
 
-	//MARKET PAGE HEADER BLANK
+	//MastHEAD SETTINGS
 	.page__header--blank{
 		top:70%;
 		-webkit-transform: translateY(-60%) !important;
@@ -713,6 +713,11 @@
 		
 		.masthead{
 			height: 519px !important;
+
+			&.home{
+				max-height: inherit;
+				height: 485px !important;
+			}
 		}
 		.masthead--blank{
 			max-height: 390px;
@@ -728,9 +733,15 @@
 	}
 
 	@media screen and (min-width: 992px){
+
 		.masthead{
 			max-height: 610px;
-			height: 720px !important
+			height: 720px !important;
+
+			&.home{
+				max-height: 627px !important;
+				height: 627px !important;
+			}
 		}
 		.masthead--blank{
 			max-height: 480px;
@@ -750,6 +761,11 @@
 
 		.masthead{
 			max-height: 650px;
+
+			&.home{
+				max-height: 720px !important;
+				height:720px !important;
+			}
 		}
 
 		.masthead--blank{

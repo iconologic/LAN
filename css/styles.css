@@ -9914,6 +9914,10 @@ article .list-columns > li.list-group-item a:hover {
   .masthead {
     height: 519px !important;
   }
+  .masthead.home {
+    max-height: inherit;
+    height: 485px !important;
+  }
   .masthead--blank {
     max-height: 390px;
   }
@@ -9931,6 +9935,10 @@ article .list-columns > li.list-group-item a:hover {
     max-height: 610px;
     height: 720px !important;
   }
+  .masthead.home {
+    max-height: 627px !important;
+    height: 627px !important;
+  }
   .masthead--blank {
     max-height: 480px;
   }
@@ -9946,6 +9954,10 @@ article .list-columns > li.list-group-item a:hover {
 @media screen and (min-width: 1140px) {
   .masthead {
     max-height: 650px;
+  }
+  .masthead.home {
+    max-height: 720px !important;
+    height: 720px !important;
   }
   .masthead--blank {
     max-height: 563px;
