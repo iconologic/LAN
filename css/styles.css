@@ -7062,9 +7062,6 @@ article .list-columns > li.list-group-item a:hover {
   .collapse.in {
     display: block !important;
   }
-  .dropdown-menu > li > a:hover {
-    color: #0061aa;
-  }
 }
 .navbar-default .navbar-nav {
   background: transparent;
@@ -7074,6 +7071,9 @@ article .list-columns > li.list-group-item a:hover {
     background: transparent;
     text-align: center;
   }
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  color: #0061aa;
 }
 /*
  * Masthead
