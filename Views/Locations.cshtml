@@ -43,13 +43,17 @@
                                     }
 
                                 <p class="lan__location--state">@location.City, @location.State @location.Zip</p>
-                                <a class="lan__location--phone" href="tel:6304954123">
-                                    P 512.338.4212
+                                <a class="lan__location--phone" href="tel:@location.Phone.Replace(".", "").Replace("-", "").Replace(" ", "")">
+                                    P @location.Phone
                                 </a>
                                 <br>
-                                <p>
-                                    F 512.338.4942
-                                </p>
+                                @if (!string.IsNullOrEmpty(location.Fax))
+                                {
+                                    <p>
+                                        F @location.Fax
+                                    </p>
+                                }
+
                             </div>
                         }
    
