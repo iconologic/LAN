@@ -3,7 +3,7 @@
 @{
     dynamic settings = Umbraco.Content(1055);
 	Response.Write("<!-- " + settings.Name + " -->");
-	string ttl = (! string.IsNullOrEmpty(Umbraco.Field("metaOGTitle").ToString())) ? Umbraco.Field("metaOGTitle").ToString() : settings.GetPropertyValue("siteName") + " - " + Umbraco.Field("metaTitle").ToString();
+	string ttl = (! string.IsNullOrEmpty(Umbraco.Field("metaOGTitle").ToString())) ? Umbraco.Field("metaOGTitle").ToString() : Umbraco.Field("metaTitle").ToString();
 	string des = (! string.IsNullOrEmpty(Umbraco.Field("metaOGDescription").ToString())) ? Umbraco.Field("metaOGDescription").ToString() : Umbraco.Field("metaDescription").ToString();
 	string favico = Umbraco.TypedMedia(settings.GetPropertyValue("favicon")).Url;
 	
