@@ -7132,7 +7132,6 @@ article .list-columns > li.list-group-item a:hover {
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .masthead {
-    height: 340px !important;
     margin-top: 0;
   }
 }
@@ -7598,7 +7597,7 @@ article .list-columns > li.list-group-item a:hover {
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .masthead__container .page__header.vertical-center.text-center {
-    top: 48%;
+    top: 60%;
   }
 }
 .qa__container {
@@ -11797,6 +11796,9 @@ a.header__logo:hover img {
 }
 .container.bleed {
   background: #e6e6e6;
+}
+.content-container {
+  padding-bottom: 50px;
 }
 .main {
   position: relative;
