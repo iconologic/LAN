@@ -1,10 +1,10 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @using System.Xml.XPath
 @using System.Text;
-@using System.Collections;  
+@using System.Collections;	
 @{
-    dynamic homeNode = CurrentPage.AncestorOrSelf(1);
-    int idx = 0;
+	dynamic homeNode = CurrentPage.AncestorOrSelf(1);
+	int idx = 0;
 }
     <header class="header scroller">
         <div class="header__menu text-center">
@@ -27,7 +27,7 @@
 
                     <div class="collapse navbar-collapse" id="lad-mobile-collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="/portfolio">Projects</a></li>
+                            <li><a href="/portfolio">Portfolio</a></li>
                             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Markets<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/markets/airports-aviation/">Airports &amp; Aviation</a></li>
@@ -42,32 +42,32 @@
                                 </ul>
 
                             </li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services<span class="caret"></span></a>
+							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/services/architecture/">Architecture</a></li>
                                     <li><a href="/services/bond-program-management/">Bond Program Mgmt</a></li>
                                     <li><a href="/services/condition-assessment/">Condition Assessment</a></li>
                                     <li><a href="/services/construction-management-inspection/">Construction Mgmt &amp; Inspection</a></li>
-                                    <li><a href="/services/design/">Design</a></li>
-                                    <li><a href="/services/land-site-development/">Land &amp; Site Devel</a></li>
-                                    <li><a href="/services/mep/">MEP</a></li>
-                                    <li><a href="/services/pipeline-design-assessment-rehab/">Pipeline Design, Assessment &amp; Rehab</a></li>
-                                    <li><a href="/services/planning-modeling/">Planning &amp; Modeling</a></li>
-                                    <li><a href="/services/program-management/">Program Management</a></li>
-                                    <li><a href="/services/right-of-way/">Right-of-Way</a></li>
-                                    <li><a href="/services/stormwater-management/">Stormwater Management</a></li>
-                                    <li><a href="/services/structural-engineering/">Structural Engineering</a></li>
-                                    <li><a href="/services/transportation-services/">Transportation Services</a></li>
-                                    <li><a href="/services/wastewater-treatment/">Wastewater Treatment</a></li>
+									<li><a href="/services/design/">Design</a></li>
+									<li><a href="/services/land-site-development/">Land &amp; Site Devel</a></li>
+									<li><a href="/services/mep/">MEP</a></li>
+									<li><a href="/services/pipeline-design-assessment-rehab/">Pipeline Design, Assessment &amp; Rehab</a></li>
+									<li><a href="/services/planning-modeling/">Planning &amp; Modeling</a></li>
+									<li><a href="/services/program-management/">Program Management</a></li>
+									<li><a href="/services/right-of-way/">Right-of-Way</a></li>
+									<li><a href="/services/stormwater-management/">Stormwater Management</a></li>
+									<li><a href="/services/structural-engineering/">Structural Engineering</a></li>
+									<li><a href="/services/transportation-services/">Transportation Services</a></li>
+									<li><a href="/services/wastewater-treatment/">Wastewater Treatment</a></li>
                                     <li class="divider"></li>
                                 </ul>
                             </li>
-                                        
+										
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/about/legacy/">Legacy</a></li>
                                     <li><a href="/about/people/">People</a></li>
-                                    <li><a href="/about/locations/">Locations</a></li>
+									<li><a href="/about/locations/">Locations</a></li>
                                     <li><a href="/about/news/">News</a></li>
                                     <li class="divider"></li>
                                 </ul>
@@ -136,7 +136,7 @@
                                         @if(childFirst.TemplateId > 0 )
                                         {
                                             <li class="container text-left">
-                                                
+												
                                                 <ul class="list-inline clearfix nav-columns" data-columns="@navColumns">
                                                     @foreach (dynamic level2 in child.Children.Where("! hideFromNavigation"))
                                                     {
@@ -150,7 +150,7 @@
                                                     }
                                                 </ul>
 
-                                                
+												
                                             </li>
                                         }
                                         else
@@ -191,17 +191,17 @@
                                     XPathNodeIterator iterator = umbraco.library.GetPreValues(1100);
                                     iterator.MoveNext(); //move to first
                                     XPathNodeIterator preValues = iterator.Current.SelectChildren("preValue", "");
-                                    
+									
                                     <ul class="dropdown-menu megamenu" role="menu" style="display: none;">
                                         <li class="container text-left">
-                                            
+											
                                             <ul class="list-inline clearfix nav-columns" data-columns="@navColumns">
                                                 @while (preValues.MoveNext())
                                                 {
                                                     <li><a href="/portfolio/?type=@preValues.Current.Value">@preValues.Current.Value</a></li>
                                                 }
                                             </ul>
-                                            
+											
                                         </li>
                                     </ul>
                                 }

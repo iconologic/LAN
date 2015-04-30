@@ -1,0 +1,235 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Xml.XPath
+@using System.Text;
+@using System.Collections;	
+@{
+	dynamic homeNode = CurrentPage.AncestorOrSelf(1);
+	int idx = 0;
+}
+    <header class="header scroller">
+        <div class="header__menu text-center">
+
+          <!--Mobile Nav-->
+            <nav class="navbar navbar-default mobileNav">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <!--mobile nav btn-->
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#lad-mobile-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!--LAD LOGO-->
+                        <a href="/" class="navbar-brand text-hide header__mobile--logo">Lockwood, Andrews &amp; Newman, Inc.</a>
+                    </div> <!--end navbar header-->
+
+                    <div class="collapse navbar-collapse" id="lad-mobile-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/portfolio">Portfolio</a></li>
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Markets<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/markets/aviation/">Aviation</a></li>
+                                    <li><a href="/markets/civic/">Civic</a></li>
+                                    <li><a href="/markets/corporate-commercial/">Corporate &amp; Commercial</a></li>
+                                    <li><a href="/markets/education/">Education</a></li>
+                                    <li><a href="/markets/federal/">Federal</a></li>
+                                    <li><a href="/markets/gaming-entertainment/">Gaming &amp; Entertainment</a></li>
+                                    <li><a href="/markets/healthcare/">Healthcare</a></li>
+                                    <li><a href="/markets/hospitality/">Hospitality</a></li>
+                                    <li><a href="/markets/manufacturing-distribution/">Manufacturing &amp; Distribution</a></li>
+                                    <li><a href="/markets/science-plus-technology/">Science + Technology</a></li>
+                                    <li><a href="/markets/venues/">Venues</a></li>
+                                    <li class="divider"></li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/about/overview/">Overview</a></li>
+                                    <li><a href="/about/services/">Services</a></li>
+                                    <li><a href="/about/people/">People</a></li>
+                                    <li><a href="/about/press/">Press</a></li>
+                                    <li class="divider"></li>
+                                </ul>
+                            </li>
+
+                            <!-- locations nav -->
+                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Locations<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><span>North America</span></li>
+                                    <li><a href="/locations/north-america/atlanta/">Atlanta</a></li>
+                                    <li><a href="/locations/north-america/dallas/">Dallas</a></li>
+                                    <li><a href="/locations/north-america/denver/">Denver</a></li>
+                                    <li><a href="/locations/north-america/honolulu/">Honolulu</a></li>
+                                    <li><a href="/locations/north-america/houston/">Houston</a></li>
+                                    <li><a href="/locations/north-america/las-vegas/">Las Vegas</a></li>
+                                    <li><a href="/locations/north-america/los-angeles/">Los Angeles</a></li>
+                                    <li><a href="/locations/north-america/miami/">Miami</a></li>
+                                    <li><a href="/locations/north-america/minneapolis/">Minneapolis</a></li>
+                                    <li><a href="/locations/north-america/omaha/">Omaha</a></li>
+                                    <li><a href="/locations/north-america/washington-dc/">Washington DC</a></li>
+                                    <li><a href="/locations/north-america/west-palm-beach/">West Palm Beach</a></li>
+                                    <li class="divider"></li>
+                                    <li><span>Middle East</span></li>
+                                    <li><a href="/locations/middle-east/abu-dhabi/">Abu Dhabi</a></li>
+                                    <li><a href="/locations/middle-east/doha-qatar/">Doha Qatar</a></li>
+                                    <li><a href="/locations/middle-east/riyadh/">Riyadh</a></li>
+                                    <li class="divider"></li>
+
+                                </ul>
+
+
+                            </li>
+                            <!-- End locations Nav -->
+                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Careers<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/careers/culture/">Culture</a></li>
+                                    <li><a href="/careers/development-education/">Development & education</a></li>
+                                    <li><a href="/careers/community/">Community</a></li>
+                                    <li><a href="/careers/career-opportunities/">Career opportunities</a></li>
+                                    
+                                </ul>
+
+
+                            </li>
+                        </ul>
+
+                    </div> <!--end mobile nav collapse-->
+
+                </div>
+
+            </nav> <!--end mobile nav-->
+
+            <nav class="navbar navbar-default container desktopNav" role="navigation">
+                <div class="navbar-header">
+                    <a href="/" class="header__logo col-sm-8 col-md-8 col-lg-12 col-sm-pull-3 col-md-pull-2 col-lg-pull-0 text-center text-hide" style="float: none;">Lockwood, Andrews &amp; Newman, Inc.</a>
+                    <button type="button" class="navbar-toggle navbar-right" data-toggle="collapse" data-target="#lad-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div id="lad-navbar-collapse-1" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+						@foreach(dynamic child in homeNode.Children.Where("! hideFromNavigation"))
+						{
+							string nm = ((! string.IsNullOrEmpty(child.GetPropertyValue("navigationName"))) ? child.GetPropertyValue("navigationName") : child.Name);
+							string c = string.Empty;
+							string d = string.Empty;
+							if( CurrentPage.AncestorOrSelf(2).Id == child.Id)
+							{
+								c = "active";
+							}
+                            if (child.Id == 3930 || (child.Children.Any() && child.HasProperty("hideSubpagesFromNavigation") && !child.GetPropertyValue("hideSubpagesFromNavigation")))
+							{
+								d = "dropdown";
+								nm += "  <span class=\"caret\"></span>";
+							}
+							string navColumns = "0";
+							if( child.HasProperty("navigationColumnCount") && child.HasValue("navigationColumnCount"))
+							{
+								navColumns = child.GetPropertyValue("navigationColumnCount").ToString();
+							}
+							<li class="@d @c">
+								@if(child.Id == 1060)
+								{
+								<a href="@child.Url?type=Featured">@Html.Raw(nm)</a>
+								} else if(child.Id == 3930 || child.Id == 1112) {
+									<a>@Html.Raw(nm)</a>
+								} else {
+									<a href="@child.Url">@Html.Raw(nm)</a>
+								}
+								@if (child.Id == 3930 || (child.Children.Any() && child.HasProperty("hideSubpagesFromNavigation") && !child.GetPropertyValue("hideSubpagesFromNavigation")))
+								{
+									dynamic childFirst = child.Children.First();
+									<ul class="dropdown-menu megamenu" role="menu">
+										@if(childFirst.TemplateId > 0 || child.Id == 3930)
+										{
+											<li class="container text-left">
+												
+													<ul class="list-inline clearfix nav-columns" data-columns="@navColumns">
+														@foreach(dynamic level2 in child.Children.Where("! hideFromNavigation"))
+														{
+															if( level2.TemplateId > 0 )
+															{
+																string nm2 = ((! string.IsNullOrEmpty(level2.GetPropertyValue("navigationName"))) ? level2.GetPropertyValue("navigationName") : level2.Name);
+																<li><a href="@level2.Url">@nm2</a></li>
+															}
+														}
+													</ul>
+												
+											</li>
+										}
+										else
+										{
+											<li class="container text-left">
+												@foreach(dynamic level2 in child.Children.Where("! hideFromNavigation"))
+												{
+													string nm2 = ((! string.IsNullOrEmpty(level2.GetPropertyValue("navigationName"))) ? level2.GetPropertyValue("navigationName") : level2.Name);
+													string cls = "col-sm-9 col-md-9 col-lg-9";
+													if( idx > 0 )
+													{
+														cls = "col-sm-3 col-md-3 col-lg-3 col-lg-push-1";
+														navColumns = "1";
+													}
+													<ul class="@Html.Raw(cls)">
+														<li><span>@nm2</span></li>
+														<li>
+															<ul class="list-inline clearfix nav-columns" data-columns="@navColumns">
+																@foreach(dynamic level3 in level2.Children.Where("! hideFromNavigation && TemplateId > 0"))
+																{
+																	string nm3 = ((! string.IsNullOrEmpty(level3.GetPropertyValue("navigationName"))) ? level3.GetPropertyValue("navigationName") : level3.Name);
+																	<li><a href="@level3.Url">@nm3</a></li>
+																}
+															</ul>
+														</li>
+													</ul>
+													idx ++;
+												}
+											</li>
+										}
+									</ul>
+								}
+								else if(child.Id == 1060)
+								{
+									List<string> types = new List<string>();
+									XPathNodeIterator iterator = umbraco.library.GetPreValues(1100);
+									iterator.MoveNext(); //move to first
+									XPathNodeIterator preValues = iterator.Current.SelectChildren("preValue", "");
+									
+									<ul class="dropdown-menu megamenu" role="menu" style="display: none;">
+										<li class="container text-left">
+											
+												<ul class="list-inline clearfix nav-columns" data-columns="@navColumns">
+													@while (preValues.MoveNext())
+													{
+														<li><a href="/portfolio/?type=@preValues.Current.Value">@preValues.Current.Value</a></li>
+													}
+												</ul>
+											
+										</li>
+									</ul>
+								}
+							</li>
+						}
+                    </ul>
+                    <div class="nav navbar-nav navbar-right navbar-search">
+                        <div class="search-toggle text-center pull-right hidden-xs">
+                            <a href="#"><span class="glyphicon glyphicon-search"></span></a>
+                        </div>
+                    </div>
+                    <form role="search" method="GET" class="search-form clear hide" action="/Search">
+                        <fieldset class="search-box-wrapper">
+                        	<label for="search" class="sr-only">Search</label>
+                          <input type="search" id="search" class="search-field text-right" placeholder="Search &hellip;" value="" name="q" title="Search for:" />
+                          @* <input type="submit" class="search-submit" value="Submit" /> *@
+                        </fieldset>
+                    </form>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+
+        </div>
+    </header>
