@@ -36,6 +36,6 @@ public class OpportunitiesPage : PageItem
 
     public override string Url
     {
-        get { return "https://careers-leoadaly.icims.com/jobs/"; }
+        get { return "https://careers-lan.icims.com/jobs/intro"; }
     }
 }
