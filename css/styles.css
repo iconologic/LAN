@@ -7131,6 +7131,12 @@ article .list-columns > li.list-group-item a:hover {
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .masthead-home {
+    height: 340px !important;
+    margin-top: 0;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .masthead {
     margin-top: 0;
   }
