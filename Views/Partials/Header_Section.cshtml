@@ -4,6 +4,7 @@
 @using System.Collections;  
 @{
     dynamic homeNode = CurrentPage.AncestorOrSelf(1);
+    var homePage = new HomePage(Umbraco.TypedContent(homeNode.Id));
     int idx = 0;
 }
     <header class="header scroller">
@@ -21,65 +22,52 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <!--LAD LOGO-->
+                        <!--LAN LOGO-->
                         <a href="/" class="navbar-brand text-hide header__mobile--logo">Lockwood, Andrews, &amp; Newnam, Inc.</a>
                     </div> <!--end navbar header-->
 
+
                     <div class="collapse navbar-collapse" id="lad-mobile-collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="/portfolio">Projects</a></li>
-                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Markets<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/markets/airports-aviation/">Airports &amp; Aviation</a></li>
-                                    <li><a href="/markets/education/">Education</a></li>
-                                    <li><a href="/markets/ports-marine/">Ports &amp; Marine</a></li>
-                                    <li><a href="/markets/rail-transit/">Rail &amp; Transit</a></li>
-                                    <li><a href="/markets/roadways-bridges/">Roadways &amp; Bridges</a></li>
-                                    <li><a href="/markets/stormwater-drainage/">Stormwater &amp; Drainage</a></li>
-                                    <li><a href="/markets/wastewater-reuse/">Wastewater &amp; Reuse</a></li>
-                                    <li><a href="/markets/water-supply-transmission/">Water Supply &amp; Transmission</a></li>
-                                    <li class="divider"></li>
-                                </ul>
+                            @foreach (var l1 in homePage.ChildPagesForNavigation)
+                            {
+                                if (l1.ShowChildrenInNavigation)
+                                {
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@l1.Name<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            @for (var j = 0; j < l1.ChildPagesForNavigation.Count(); j++)
+                                            {
+                                                var l2 = l1.ChildPagesForNavigation.ElementAt(j);
+                                                if (l2.HasMasterDocType)
+                                                {
+                                                    <li><a href="@l2.Url">@l2.NavigationTitle</a></li>
+                                                    if (j == (l1.ChildPagesForNavigation.Count() - 1))
+                                                    {
+                                                        <li class="divider"></li>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <li><span>@l2.NavigationTitle</span></li>
+                                                    foreach (var l3 in l2.ChildPagesForNavigation)
+                                                    {
+                                                        <li><a href="@l3.Url">@l3.NavigationTitle</a></li>
+                                                    }
+                                                    <li class="divider"></li>
+                                                }
+                                            }
 
-                            </li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/services/architecture/">Architecture</a></li>
-                                    <li><a href="/services/bond-program-management/">Bond Program Mgmt</a></li>
-                                    <li><a href="/services/condition-assessment/">Condition Assessment</a></li>
-                                    <li><a href="/services/construction-management-inspection/">Construction Mgmt &amp; Inspection</a></li>
-                                    <li><a href="/services/design/">Design</a></li>
-                                    <li><a href="/services/land-site-development/">Land &amp; Site Devel</a></li>
-                                    <li><a href="/services/mep/">MEP</a></li>
-                                    <li><a href="/services/pipeline-design-assessment-rehab/">Pipeline Design, Assessment &amp; Rehab</a></li>
-                                    <li><a href="/services/planning-modeling/">Planning &amp; Modeling</a></li>
-                                    <li><a href="/services/program-management/">Program Management</a></li>
-                                    <li><a href="/services/right-of-way/">Right-of-Way</a></li>
-                                    <li><a href="/services/stormwater-management/">Stormwater Management</a></li>
-                                    <li><a href="/services/structural-engineering/">Structural Engineering</a></li>
-                                    <li><a href="/services/transportation-services/">Transportation Services</a></li>
-                                    <li><a href="/services/wastewater-treatment/">Wastewater Treatment</a></li>
-                                    <li class="divider"></li>
-                                </ul>
-                            </li>
-                                        
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/about/legacy/">Legacy</a></li>
-                                    <li><a href="/about/people/">People</a></li>
-                                    <li><a href="/about/locations/">Locations</a></li>
-                                    <li><a href="/about/news/">News</a></li>
-                                    <li class="divider"></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Careers<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/careers/culture/">Culture</a></li>
-                                    <li><a href="/careers/development-education/">Development &amp; education</a></li>
-                                    <li><a href="/careers/community/">Community</a></li>
-                                    <li><a target="_blank" href="https://careers-lan.icims.com/jobs/intro?hashed=-435738805">Career opportunities</a></li>
-                                </ul>
-                            </li>
+                                        </ul>
+
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li><a href="@l1.Url">@l1.NavigationTitle</a></li>
+                                }
+
+                            }
                         </ul>
 
                     </div> <!--end mobile nav collapse-->

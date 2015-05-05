@@ -238,6 +238,12 @@ public class ContentItem
         get { return true; }
     }
 
+    public bool HasMasterDocType
+    {
+        get { return Content.HasProperty("navigationName"); }
+    }
+
+
     public virtual bool ShowInNavigation
     {
         get
@@ -283,6 +289,8 @@ public class ContentItem
                 return new FaqTopic(content);
             case "Locations":
                 return new LocationsPage(content);
+            case "Portfolio":
+                return new PortfolioPage(content);
             default:
                 return new PageItem(content);
         }

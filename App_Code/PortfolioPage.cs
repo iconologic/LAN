@@ -46,4 +46,14 @@ public class PortfolioPage : PageItem
     {
         get { return Property<IHtmlString>("portfolioIntro"); }
     }
+
+    public override string Url
+    {
+        get { return base.Url + "?type=Featured"; }
+    }
+
+    public override bool ShowChildrenInNavigation
+    {
+        get { return false; }
+    }
 }
